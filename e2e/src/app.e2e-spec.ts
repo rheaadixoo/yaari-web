@@ -10,7 +10,7 @@ describe('workspace-project App', () => {
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('Welcome to can-frontend-boilerplate!');
+    expect(page.getTitleText()).toEqual('ECom-Frontend app is running!');
   });
 
   afterEach(async () => {
