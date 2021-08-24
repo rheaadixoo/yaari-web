@@ -3,34 +3,39 @@
       <div class="menu">
         <ul class="clearfix px-3">
           <li>
-            <a href="" class="nav-link--megamenu active">Home</a>
+            <a href="javascript:void(0)" class="nav-link--megamenu active"
+            [routerLink]="['/home']">Home</a>
           </li>
-          <li>
-            <a href="#" class="nav-link--megamenu">
-              Women's Collection
+          <ng-container *ngFor="let collection of getCollections()">
+          <li (mouseover)="showCategoryDropdown(collection.id)" (mouseout)="hideDropDown(collection.id)">
+            <a href="javascript:void(0)" class="nav-link--megamenu">
+              {{collection.name}}
               <span class="material-icons nav_links_btm_arrow">expand_more</span>
             </a>
-            <ul class="nav-link--megamenu-sub-lg">
+            <ul class="nav-link--megamenu-sub-lg" [id]="'cat-'+collection.id">
               <div class="row mx-0">
-                <div class="col-lg-7 px-2">
-                  <div class="row mx-0">
-                    <div class="col-lg-4 px-2 mb-3">
-                      <li>
-                        <a href="#" class="nav-link--megamenu font-600 font-18 text-uppercase btn-theme-border">
-                          WESTERN WEAR
-                        </a>
-                        <ul>
-                          <li><a href="#" class="nav-link--megamenu">Jeans</a></li>
-                          <li><a href="#" class="nav-link--megamenu">Tops</a></li>
-                          <li><a href="#" class="nav-link--megamenu">Gown</a></li>
-                          <li><a href="#" class="nav-link--megamenu">Maxi</a></li>
-                        </ul>
-                      </li>
-                    </div>
-                    <div class="col-lg-4 px-2 mb-3">
+                <!-- <div class="col-lg-7 px-2"> -->
+                  <!-- <div class="row mx-0"> -->
+                    <ng-container *ngFor="let key of Object.keys(categories)">
+                      <div class="col-lg-3 px-2 mb-3" *ngIf="categories[key]['collection_id'] == collection.id">
+                        <li>
+                          <a href="javascript:void(0)" class="nav-link--megamenu font-600 font-18 text-uppercase btn-theme-border">
+                            {{key}}
+                          </a>
+                          <ul>
+                            <ng-container *ngFor="let ele of categories[key]">
+                              <li *ngIf="ele.category.collectionId == collection.id"><a href="javascript_void(0)" class="nav-link--megamenu"
+                                [routerLink]="['/app/products']">{{ele.name}}</a></li>
+                              </ng-container>
+                              </ul>
+                        </li>
+                      </div>
+                    </ng-container>
+                    <!-- <div class="col-lg-4 px-2 mb-3">
                       <li>
                         <a href="#" class="nav-link--megamenu font-600 font-18 text-uppercase btn-theme-border">
                           SEASONAL WEAR
+
                         </a>
                         <ul>
                           <li><a href="#" class="nav-link--megamenu">Long Gown</a></li>
@@ -91,35 +96,29 @@
                           <li><a href="#" class="nav-link--megamenu">Pyjama</a></li>
                         </ul>
                       </li>
-                    </div>
-                  </div>
+                    </div> -->
+                  <!-- </div> -->
+                <!-- </div> -->
+                 <div class="col-lg-6 px-2">
+                <div class="nav_offer_banner05">
+                  <img src="../../../../assets/images/nav_col_img3.png">
                 </div>
-                <div class="col-lg-5 px-2">
-                  <div class="row">
-                    <div class="col-lg-6 px-2">
-                      <div class="nav_offer_banner01">
-                        <img src="../../../../assets/images/nav_col_img1.png">
-                      </div>
-                      <div class="nav_offer_banner01">
-                        <img src="../../../../assets/images/nav_col_img2.png">
-                      </div>
-                    </div>
-                    <div class="col-lg-6 px-2">
-                      <div class="nav_offer_banner02">
-                        <img src="../../../../assets/images/nav_col_img3.png">
-                      </div>
-                    </div>
-                  </div>
+              </div>
+              <!-- <div class="col-lg-6 px-2">
+                <div class="nav_offer_banner05">
+                  <img src="images/nav_col_img3.png">
                 </div>
+              </div> -->
               </div>
             </ul>
           </li>
-          <li>
+        </ng-container>
+          <!-- <li (mouseover)="showCategoryDropdown('men')" (mouseout)="hideDropDown('men')">
             <a href="#" class="nav-link--megamenu">
               Men's Collection
               <span class="material-icons nav_links_btm_arrow">expand_more</span>
             </a>
-            <ul class="nav-link--megamenu-sub-lg">
+            <ul class="nav-link--megamenu-sub-lg" id="men_cat">
               <div class="row mx-0">
                 <div class="col-lg-6 px-2">
                   <div class="row mx-0">
@@ -395,29 +394,40 @@
                 </div>
               </div>
             </ul>
-          </li>
+          </li> -->
+          <li (mouseover)="showPagesDropdown('others')" (mouseout)="hidePagesDropDown('others')">
+            <a href="javascript:void(0)" class="nav-link--megamenu">
+              Others
+              <span class="material-icons nav_links_btm_arrow">expand_more</span>
+            </a>
+            <ul class="nav-link--megamenu-sub-lg" id="collec_ul">
+              <ng-container *ngFor="let item of remainingCollections()">
+                <li><a href="javacript:void(0)" [routerLink]="['/app/about']" class="nav-link--megamenu">{{item.name}}</a></li>
+              </ng-container>
+            </ul>
+            </li>
           <li>
-          <li>
-            <a href="all_collections.html" class="nav-link--megamenu">
+            <a href="javascript:void(0)" class="nav-link--megamenu"
+            [routerLink]="['/app/all-collections']">
               All Collections
             </a>
           </li>
-          <li>
-            <a href="#" class="nav-link--megamenu">
+          <li (mouseover)="showPagesDropdown('pages')" (mouseout)="hidePagesDropDown('pages')">
+            <a href="javascript:void(0)" class="nav-link--megamenu">
               Pages
               <span class="material-icons nav_links_btm_arrow">expand_more</span>
             </a>
-            <ul class="nav-link--megamenu-sub-lg">
-              <li><a href="#" class="nav-link--megamenu">About</a></li>
-              <li><a href="#" class="nav-link--megamenu">Contact</a></li>
-              <li><a href="#" class="nav-link--megamenu">FAQ</a></li>
-              <li><a href="#" class="nav-link--megamenu border-0">Blogs</a></li>
+            <ul class="nav-link--megamenu-sub-lg" id="pages_ul">
+              <li><a href="javacript:void(0)" [routerLink]="['/app/about']" class="nav-link--megamenu">About</a></li>
+              <li><a href="javacript:void(0)" [routerLink]="['/app/contact']" class="nav-link--megamenu">Contact</a></li>
+              <li><a href="javacript:void(0)" [routerLink]="['/app/faq']" class="nav-link--megamenu">FAQ</a></li>
+              <li><a href="javacript:void(0)" [routerLink]="['/app/blogs']" class="nav-link--megamenu border-0">Blogs</a></li>
             </ul>
           </li>
-          <li class="web_prod_srch_li">
+          <!-- <li class="web_prod_srch_li">
             <input type="text" placeholder="Find the best for you...">
             <img class="img-fluid" width="17" height="17" src="../../../../assets/images/search_icon.svg">
-          </li>
+          </li> -->
         </ul>
       </div>
     </div>

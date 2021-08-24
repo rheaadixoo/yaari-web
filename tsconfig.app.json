@@ -11,5 +11,6 @@
   ],
   "include": [
     "src/**/*.d.ts"
-  ]
+  ],
+  "angularCompilerOptions": { "fullTemplateTypeCheck": false, "strictInjectionParameters": false, "enableIvy": false }
 }

@@ -6,7 +6,8 @@
       <nav aria-label="breadcrumb" class="d-flex justify-content-center">
         <ol class="breadcrumb mb-0 bg-transparent">
           <li class="breadcrumb-item">
-            <a href="#" class="text-gray font-400 text-font-18">Home</a>
+            <a href="javascript:void(0)" class="text-gray font-400 text-font-18"
+            [routerLink]="['/home']">Home</a>
           </li>
           <li class="breadcrumb-item active text-gray font-400 text-font-18" aria-current="page">
             Your Account
@@ -22,13 +23,15 @@
     <div class="container-fluid">
       <div class="row mx-0 px-5">
         <div class="col-lg-6 col-md-10 col-sm-12 mx-auto">
-          <form class="custom_form">
+          <form class="custom_form" [formGroup]="loginForm" (submit)="checkUser()">
             <div class="form-row">
               <div class="form-group col-md-12 mb-4">
-                <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+                <input type="email" class="form-control" id="inputEmail4" placeholder="Email"
+                name="inputEmail4" formControlName="email" value="">
               </div>
               <div class="form-group col-md-12 mb-4">
-                <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+                <input type="password" class="form-control" id="inputPassword4" placeholder="Password"
+                name="inputPassword4" formControlName="password">
               </div>
               <div class="form-group col-md-12 mb-4 text-center py-1">
                 <a href="javaScript:void(0)" class="text-dark font-500 font-18">
@@ -39,7 +42,8 @@
             <button type="submit" class="btn btn-theme font-18 w-100 py-4">Sign in</button>
           </form>
           <div class="d-inline-block w-100 text-center mt-4 mb-2">
-            <a href="javaScript:void(0)" class="text-dark font-400 font-18" style="text-decoration: underline;">
+            <a  class="text-dark font-400 font-18" style="text-decoration: underline;"
+                [routerLink]="['/register']">
               Create account
             </a>
           </div>

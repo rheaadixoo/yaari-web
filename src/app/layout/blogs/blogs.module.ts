@@ -10,6 +10,7 @@ import { BlogsComponent } from './blogs.component';
   imports: [
     CommonModule,
     BlogsRoutingModule
-  ]
+  ],
+  exports : [BlogsComponent]
 })
 export class BlogsModule { }

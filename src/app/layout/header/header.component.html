@@ -1,65 +1,82 @@
 <div class="top_profile_crt_lg_sec p-4">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">
-        <img class="img-fluid" src="../../../assets/images/logo.png">
-      </a>
-      <div class="top_profile_crt_on_rgt d-flex flex-wrap float-right align-items-center">
-        <div class="top_profile_main float-left px-3">
-          <div class="dropdown top_profile_main_drpdwn">
-            <button class="dropdown-toggle text-left d-flex" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <img  class="d-block float-left img-fluid mr-2 my-auto" src="../../../assets/images/profile_default.svg" width="40" height="40">
-              <span class="d-block float-left">
-                <span class="font-400 font-14">Hello, Sign in</span>
-                <br>
-                <span class="font-600 font-16">Your Account</span>
-              </span>
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item my-2 d-inline-block font-16 text-center btn-theme-border" href="sign_in.html">
-                Sing In
-              </a>
-              <span class="my-2 d-inline-block text-center w-100">
-                Don't have an account?
-              </span>
-              <a class="dropdown-item my-2 d-inline-block font-16 text-center btn-theme" href="create_account.html">
-                Create Account
-              </a>
-            </div>
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      <img class="img-fluid" src="../../../assets/images/logo.png">
+    </a>
+    <div class="top_profile_crt_on_rgt d-flex flex-wrap float-right align-items-center">
+      <div class="top_profile_main float-left px-3">
+        <div class="dropdown top_profile_main_drpdwn">
+          <button class="dropdown-toggle text-left d-flex" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false" (click)="isBtnClicked = !isBtnClicked"
+            *ngIf="isUserLoggedIn == false">
+            <img class="d-block float-left img-fluid mr-2 my-auto" src="../../../assets/images/profile_default.svg"
+              width="40" height="40">
+            <span class="d-block float-left">
+              <span class="font-400 font-14">Hello, Sign in</span>
+              <br>
+              <span class="font-600 font-16">Your Account</span>
+            </span>
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" [ngClass]="isBtnClicked ? 'show' : ''">
+            <a class="dropdown-item my-2 d-inline-block font-16 text-center btn-theme-border" href="javascript:void(0)"
+              [routerLink]="['/login']" (click)="isBtnClicked = false">
+              Sign In
+            </a>
+            <span class="my-2 d-inline-block text-center w-100">
+              Don't have an account?
+            </span>
+            <a class="dropdown-item my-2 d-inline-block font-16 text-center btn-theme" href="javascript:void(0)"
+              [routerLink]="['/register']" (click)="isBtnClicked = false">
+              Create Account
+            </a>
           </div>
-        </div>
-        <div class="top_profile_main float-left px-3">
-          <div class="dropdown top_profile_main_drpdwn top_profile_main_drpdwn_on_login">
-            <button class="dropdown-toggle text-left d-flex" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <img  class="d-block float-left img-fluid mr-2 my-auto" src="../../../assets/images/profile_default.svg" width="40" height="40">
-              <span class="d-block float-left">
-                <span class="font-400 font-14">Hello,</span>
-                <br>
-                <span class="font-600 font-16">Pooja Verma</span>
-              </span>
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item font-400 font-16" href="javaScript:void(0)">
-                Your Profile
-              </a>
-              <a class="dropdown-item font-400 font-16" href="javaScript:void(0)">
-                Your Wishlist
-              </a>
-              <a class="dropdown-item font-400 font-16" href="contact_us.html">
-                Contact Us
-              </a>
-              <a class="dropdown-item border-0 font-400 font-16 text-danger" href="javaScript:void(0)">
-                Logout
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="top_crt_main float-left px-3">
-          <img class="img-fluid mr-1" width="23" height="23" src="../../../assets/images/cart_icon.svg">
-          <span class="font-600 font-16">
-            Cart
-          </span>
         </div>
       </div>
+      <div class="top_profile_main float-left px-3">
+        <div class="dropdown top_profile_main_drpdwn top_profile_main_drpdwn_on_login">
+          <button class="dropdown-toggle text-left d-flex" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false" (click)="userOptions = !userOptions" *ngIf="isUserLoggedIn">
+            <img class="d-block float-left img-fluid mr-2 my-auto" src="../../../assets/images/profile_default.svg"
+              width="40" height="40">
+            <span class="d-block float-left">
+              <span class="font-400 font-14">Hello,</span>
+              <br>
+              <span class="font-600 font-16">{{getUserName}}</span>
+            </span>
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" [ngClass]="userOptions ? 'show' : ''">
+            <a class="dropdown-item font-400 font-16" href="javaScript:void(0)">
+              Your Profile
+            </a>
+            <a class="dropdown-item font-400 font-16" href="javaScript:void(0)">
+              Your Wishlist
+            </a>
+            <a class="dropdown-item font-400 font-16" href="contact_us.html">
+              Contact Us
+            </a>
+            <a class="dropdown-item border-0 font-400 font-16 text-danger" href="javaScript:void(0)">
+              Logout
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="top_crt_main float-left px-3">
+        <img class="img-fluid mr-1" width="23" height="23" src="../../../assets/images/cart_icon.svg">
+        <span class="font-600 font-16">
+          Cart
+        </span>
+      </div>
+      <div class="top_crt_main float-left px-3">
+        <span class="web_prod_srch_li">
+          <input type="text" placeholder="Find the best for you...">
+          <img class="img-fluid" width="17" height="17" src="../../../../assets/images/search_icon.svg">
+        </span>
+      </div>
+      <!-- <li class="web_prod_srch_li">
+            <input type="text" placeholder="Find the best for you...">
+            <img class="img-fluid" width="17" height="17" src="../../../../assets/images/search_icon.svg">
+          </li> -->
     </div>
   </div>
-  <yaari-category-menu-bar></yaari-category-menu-bar>
+</div>
+<yaari-category-menu-bar></yaari-category-menu-bar>

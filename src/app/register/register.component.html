@@ -1,1 +1,88 @@
-<p>register works!</p>
+<!-- Breadcrumb section -->
+
+<div class="jumbotron jumbotron-fluid breadcrumb_jumbo_custom">
+    <div class="container text-center">
+      <h1 class="text-dark font-500 mb-0">
+        Create Your Account
+      </h1>
+      <nav aria-label="breadcrumb" class="d-flex justify-content-center">
+        <ol class="breadcrumb mb-0 bg-transparent">
+          <li class="breadcrumb-item">
+            <a href="javascript:void(0)" class="text-gray font-400 text-font-18"
+            [routerLink]="['/home']">Home</a>
+          </li>
+          <li class="breadcrumb-item active text-gray font-400 text-font-18" aria-current="page">
+            Create Account
+          </li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+  
+  <!-- Breadcrumb End -->
+  
+  <!-- Sign In section -->
+  
+  <section class="sing_in_sec">
+    <div class="container-fluid">
+      <div class="row mx-0 px-5">
+        <div class="col-lg-6 col-md-10 col-sm-12 mx-auto">
+          <form class="custom_form" [formGroup]="registerForm" (submit)="createUser()">
+            <div class="form-row">
+              <div class="form-group col-md-12 mb-4">
+                <input type="text" class="form-control" placeholder="First Name"
+                name="firstName" id="firstName" formControlName="first_name"
+                autocomplete="off" (keyup)="validateFormField('name')">
+              </div>
+              <div class="form-group col-md-12 mb-4">
+                <input type="text" class="form-control" placeholder="Last Name"
+                name="lastName" id="lastName" formControlName="last_name"
+                autocomplete="off" (keyup)="validateFormField('last_name')">
+              </div>
+              <div class="form-group col-md-12 mb-4">
+                <input type="email" class="form-control" id="inputEmail4" placeholder="Email"
+                name="email_id" id="email_id" formControlName="email"
+                autocomplete="off" (keyup)="validateFormField('email')">
+              </div>
+              <div class="form-group col-md-12 mb-4">
+                <input [type]="pass_field" class="form-control" id="inputPassword4" placeholder="Password"
+                name="password" id="password" formControlName="password" autocomplete="off"
+                (keyup)="validateFormField('password')">
+                <span class="material-icons pass_hide_icons" *ngIf="showPassword" (click)="showPass('show')">visibility</span>
+                <span class="material-icons pass_hide_icons" *ngIf="!showPassword" (click)="showPass('hide')">visibility_off</span>
+              </div>
+              <div class="form-group col-md-12 mb-4">
+                <input [type]="pass_type" class="form-control" id="inputPassword4" placeholder="Confirm Password"
+                name="confirm_password" id="confirm_password" formControlName="confirm_password"
+                autocomplete="off" (keyup)="validateFormField('confirm')">
+                <span class="material-icons pass_hide_icons" *ngIf="isVisible" (click)="showConfirmPass('show')">visibility</span>
+                <span class="material-icons pass_hide_icons" *ngIf="!isVisible" (click)="showConfirmPass('hide')">visibility_off</span>
+              </div>
+              <!-- <div class="form-group col-md-12 mb-4 text-center py-1">
+                <a href="javaScript:void(0)" class="text-dark font-500 font-18">
+                  Forgot your password ?
+                </a>
+              </div> -->
+            </div>
+            <button type="submit" class="btn btn-theme font-18 w-100 py-4 mt-2"
+            [disabled]="registerForm.invalid">Create account</button>
+          </form>
+          <div class="d-inline-block w-100 text-center mt-4 mb-2">
+            <span class="text-dark font-400 font-18 mr-1">
+              Already have account?
+            </span>
+            <a [routerLink]="['/login']" class="text-dark font-400 font-18" style="text-decoration: underline;">
+              Try signing in
+            </a>
+          </div>
+          <div class="d-inline-block w-100 text-center my-3">
+            <a href="javaScript:void(0)" class="text-dark font-500 font-18">
+              Return to store
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Sign In section End -->
