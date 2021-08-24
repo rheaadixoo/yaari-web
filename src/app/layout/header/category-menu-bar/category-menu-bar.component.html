@@ -24,7 +24,7 @@
                           </a>
                           <ul>
                             <ng-container *ngFor="let ele of categories[key]">
-                              <li *ngIf="ele.category.collectionId == collection.id"><a href="javascript_void(0)" class="nav-link--megamenu"
+                              <li ><a href="javascript_void(0)" class="nav-link--megamenu"
                                 [routerLink]="['/app/products']">{{ele.name}}</a></li>
                               </ng-container>
                               </ul>

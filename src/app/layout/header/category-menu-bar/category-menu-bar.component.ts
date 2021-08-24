@@ -77,11 +77,15 @@ export class CategoryMenuBarComponent implements OnInit {
       // this.categories = res;
       let _that = this;
       this.categories = _.groupBy(res, function (response) {
-        return response.category.name;
+        if(response.category){
+          return response.category.name;
+        }
       })
       for (let keys in this.categories) {
         for (let item of this.categories[keys]) {
-          this.categories[keys]['collection_id'] = item.category.collectionId;
+          if(item.category){
+            this.categories[keys]['collection_id'] = item.category.collectionId;
+          }
         }
       }
     })
