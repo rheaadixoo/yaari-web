@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'yaari-header',
@@ -10,7 +10,7 @@ export class HeaderComponent implements OnInit {
   public isBtnClicked: boolean = false;
   public userOptions: boolean = false;
 
-  constructor() { }
+  constructor( private changeDetectorRef : ChangeDetectorRef) { }
 
   ngOnInit(): void {}
 
@@ -20,6 +20,12 @@ export class HeaderComponent implements OnInit {
     } else {
       return false;
     }
+  }
+
+  logout(){
+    localStorage.clear()
+    this.userOptions = false;
+    this.changeDetectorRef.detectChanges()
   }
   get getUserName() {
     if (localStorage.getItem('user-detail')) {

@@ -81,13 +81,19 @@ export class CategoryMenuBarComponent implements OnInit {
           return response.category.name;
         }
       })
-      for (let keys in this.categories) {
-        for (let item of this.categories[keys]) {
-          if(item.category){
-            this.categories[keys]['collection_id'] = item.category.collectionId;
+      try {
+        for (let keys in this.categories) {
+          for (let item of this.categories[keys]) {
+            if(item.category){
+              this.categories[keys]['collection_id'] = item.category.collectionId;
+            }
           }
         }
+      } catch (error) {
+        console.log("error >>>>>>>>",error);
+        
       }
+ 
     })
 
     // this.categoryService.getAllSubCategories().subscribe(resp => {

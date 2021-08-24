@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { RegisterService } from '../shared/services/register.service';
 @Component({
   selector: 'app-register',
@@ -14,7 +15,10 @@ export class RegisterComponent implements OnInit {
   public pass_field: string = 'password';
   public showPassword: boolean = true;
 
-  constructor(private builder: FormBuilder,private registerService : RegisterService) { }
+  constructor(
+    private builder: FormBuilder,
+    private registerService : RegisterService,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.buildRegistrationForm();
@@ -26,7 +30,8 @@ export class RegisterComponent implements OnInit {
       last_name: ['', Validators.required],
       email: ['', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
       password: ['', [Validators.required, Validators.minLength(8)]],
-      confirm_password: ['', [Validators.required, Validators.minLength(8)]]
+      confirm_password: ['', [Validators.required, Validators.minLength(8)]],
+      mobile: ['', [Validators.required,Validators.maxLength(10),Validators.minLength(10)]]
     })
   }
 
@@ -71,6 +76,10 @@ export class RegisterComponent implements OnInit {
       if (this.registerForm.value.confirm_password.replace(/\s/g, "") === '') {
         this.registerForm.controls.confirm_password.patchValue(null);
       }
+    } else if (type == 'mobile') {
+      if (this.registerForm.value.mobile.replace(/\s/g, "") === '') {
+        this.registerForm.controls.mobile.patchValue(null);
+      }
     }
   }
   
@@ -80,9 +89,10 @@ export class RegisterComponent implements OnInit {
           lastName : this.registerForm.value.last_name,
           email : this.registerForm.value.email,
           password : this.registerForm.value.password,
-          mobile : "1234567890"
+          mobile : this.registerForm.value.mobile
       }
       this.registerService.createUser(payload).subscribe(response =>{
+        this.router.navigateByUrl("/login")
             console.log("-----response-------",response);
       })
   }

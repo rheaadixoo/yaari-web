@@ -81,6 +81,10 @@ export class ProductDetailComponent implements OnInit {
 
   buyNow() {
     console.log("buyNow");
+    if(!this.localStorageService.get('user-detail')){
+      alert('User sign in or sign up is required!')
+      return ;
+    }
     if (this.cookie.get('cart')) {
       const cartObj = JSON.parse(this.cookie.get('cart'));
       const userObj = JSON.parse(this.localStorageService.get('user-detail'));
