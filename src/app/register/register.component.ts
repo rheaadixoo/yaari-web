@@ -18,8 +18,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private builder: FormBuilder,
-    private registerService : RegisterService,
-    private router: Router,private toastr : ToastrService) { }
+    private registerService: RegisterService,
+    private router: Router, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.buildRegistrationForm();
@@ -32,7 +32,7 @@ export class RegisterComponent implements OnInit {
       email: ['', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       confirm_password: ['', [Validators.required, Validators.minLength(8)]],
-      mobile: ['', [Validators.required,Validators.maxLength(10),Validators.minLength(10)]]
+      mobile: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(10)]]
     })
   }
 
@@ -83,20 +83,25 @@ export class RegisterComponent implements OnInit {
       }
     }
   }
-  
-  createUser(){
-      const payload = {
-          firstName : this.registerForm.value.first_name,
-          lastName : this.registerForm.value.last_name,
-          email : this.registerForm.value.email,
-          password : this.registerForm.value.password,
-          mobile : this.registerForm.value.mobile
-      }
-      this.registerService.createUser(payload).subscribe(response =>{
+
+  createUser() {
+    const payload = {
+      firstName: this.registerForm.value.first_name,
+      lastName: this.registerForm.value.last_name,
+      email: this.registerForm.value.email,
+      password: this.registerForm.value.password,
+      mobile: this.registerForm.value.mobile
+    }
+    if (this.registerForm.value.password != this.registerForm.value.confirm_password) {
+      this.toastr.error('Confirm password is incorrect');
+    } else {
+      this.registerService.createUser(payload).subscribe(response => {
         this.toastr.success('User Registered Successfully');
+        this.registerForm.reset();
         this.router.navigateByUrl("/login");
-      },error =>{
+      }, error => {
         this.toastr.error(error);
       })
+    }
   }
 }

@@ -92,6 +92,7 @@ export class CreateOrderComponent implements OnInit {
     this.addressService.createNewAddress(payload).subscribe(res => {
       try {
         this.userAddress = res;
+        this.getUserAddress();
         this.closeModal();
       } catch (error) {
 

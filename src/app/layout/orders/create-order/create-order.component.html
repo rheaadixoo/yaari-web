@@ -153,9 +153,11 @@
                         Order confirmation email will be sent to
                         <span class="font-600">{{userDetails.email}}</span>
                     </h5>
-                    <a href="javascript:void(0)" class="float-right btn-theme px-5 py-3"
+                    <a href="javascript:void(0)" class="float-right px-5 py-3"
                         (click)="createOrder()">
-                        Place Order
+                        <button class="btn-theme" [disabled]="userAddress.length == 0">
+                            Place Order
+                        </button>
                     </a>
                 </div>
             </div>

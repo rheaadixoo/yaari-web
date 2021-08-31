@@ -46,13 +46,13 @@
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" [ngClass]="userOptions ? 'show' : ''">
             <a class="dropdown-item font-400 font-16" href="javaScript:void(0)"
-            [routerLink]="['/app/profile']">
+            [routerLink]="['/app/profile']" (click)="userOptions = false">
               Your Profile
             </a>
             <a class="dropdown-item font-400 font-16" href="javaScript:void(0)">
               Your Wishlist
             </a>
-            <a class="dropdown-item font-400 font-16" href="contact_us.html">
+            <a class="dropdown-item font-400 font-16" href="javaScript:void(0)">
               Contact Us
             </a>
             <a class="dropdown-item border-0 font-400 font-16 text-danger" (click)= "logout()" href="javaScript:void(0)">
