@@ -100,7 +100,11 @@ export class RegisterComponent implements OnInit {
         this.registerForm.reset();
         this.router.navigateByUrl("/login");
       }, error => {
-        this.toastr.error(error);
+        if(error['error'].statusCode == 422){
+          this.toastr.error('User already exist with this number');
+        }else{
+          this.toastr.error(error.error.message);
+        }
       })
     }
   }
