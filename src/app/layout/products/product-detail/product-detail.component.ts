@@ -28,6 +28,7 @@ export class ProductDetailComponent implements OnInit {
   public productId: any = 0;
   public productObj: any = {};
   public showBuyNowBtn: boolean = true;
+  public subTotal : any = 0;
   ngOnInit(): void {
     if (this.route.snapshot.params.id) {
       this.productId = this.route.snapshot.params.id;
@@ -41,6 +42,7 @@ export class ProductDetailComponent implements OnInit {
   getProductDetailById() {
     this.productService.getProductById(this.productId).subscribe(res => {
       this.productObj = res;
+      this.subTotal = this.productObj.sellingPrice
     })
   }
 
@@ -140,12 +142,14 @@ export class ProductDetailComponent implements OnInit {
   increaseQuantity() {
     if (this.quantity != 10) {
       this.quantity = this.quantity + 1;
+      this.subTotal = Math.round(this.productObj.sellingPrice * this.quantity);
     }
   }
 
   decreaseQuantity() {
-    if (this.quantity != 0) {
+    if (this.quantity != 1) {
       this.quantity = this.quantity - 1;
+      this.subTotal = Math.round(this.productObj.sellingPrice * this.quantity);
     }
   }
 }

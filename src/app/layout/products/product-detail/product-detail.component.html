@@ -219,7 +219,7 @@
                 <div class="qty-input">
                   <button class="qty-count qty-count--minus" data-action="minus" type="button"
                     (click)="decreaseQuantity()">-</button>
-                  <input class="product-qty" type="number" name="product-qty" min="0" max="10" value=""
+                  <input class="product-qty" type="number" name="product-qty" min="1" max="10" value=""
                     [(ngModel)]="quantity">
                   <button class="qty-count qty-count--add" data-action="add" type="button"
                     (click)="increaseQuantity()">+</button>
@@ -236,7 +236,7 @@
               </div>
               <div class="col-lg-8 pl-0">
                 <h5 class="font-600 text-dark">
-                  ₹500
+                  ₹{{subTotal}}
                 </h5>
               </div>
             </div>
