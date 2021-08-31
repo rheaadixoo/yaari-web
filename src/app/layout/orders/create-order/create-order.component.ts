@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CartService } from 'src/app/shared/services/cart.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal,NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, FormControl, Validator, Validators } from '@angular/forms';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 import { AddressService } from 'src/app/shared/services/address.service';
@@ -23,6 +23,7 @@ export class CreateOrderComponent implements OnInit {
   public addressForm: FormGroup = new FormGroup({});
   public userAddress: any = [];
   public formType: string = "Add Address"
+  public modalRef : NgbModalRef;
   constructor(private cartService: CartService, private route: ActivatedRoute, private modalService: NgbModal,
     private formBuilder: FormBuilder, private localStorageService: LocalStorageService,
     private addressService: AddressService, private orderService: OrderService,
@@ -60,9 +61,12 @@ export class CreateOrderComponent implements OnInit {
   }
 
   addAddressModal() {
-    this.modalService.open(this.addAddress, { backdrop: 'static', keyboard: false, centered: true })
+    this.modalRef = this.modalService.open(this.addAddress, { backdrop: 'static', keyboard: false, centered: true })
   }
 
+  closeModal(){
+    this.modalRef.close()
+  }
   buildAddAddressForm() {
     this.addressForm = this.formBuilder.group({
       name: new FormControl('', [Validators.required]),
@@ -75,7 +79,6 @@ export class CreateOrderComponent implements OnInit {
   }
 
   addUserAddress() {
-    console.log("this.userDetails", this.userDetails);
     const payload = {
       name: this.addressForm.value.name,
       address: this.addressForm.value.address,
@@ -89,6 +92,7 @@ export class CreateOrderComponent implements OnInit {
     this.addressService.createNewAddress(payload).subscribe(res => {
       try {
         this.userAddress = res;
+        this.closeModal();
       } catch (error) {
 
       }

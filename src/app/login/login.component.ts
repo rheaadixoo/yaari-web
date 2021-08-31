@@ -4,6 +4,8 @@ import { LoginService } from '../shared/services/login.service';
 import { Router } from '@angular/router';
 import { LocalStorageService } from '../shared/services/local-storage.service';
 import { ToastrService } from 'ngx-toastr';
+import { CartService } from '../shared/services/cart.service';
+import { CookieService } from 'ngx-cookie-service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -14,7 +16,8 @@ export class LoginComponent implements OnInit {
   public loginForm: FormGroup = new FormGroup({});
   constructor(private builder: FormBuilder, private loginService: LoginService,
     private router: Router, private localStorageService: LocalStorageService,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService,private cartService : CartService,
+    private cookie : CookieService) { }
 
   ngOnInit(): void {
     this.buildLoginForm();
@@ -39,6 +42,11 @@ export class LoginComponent implements OnInit {
           let token = res['type'] + ' ' + res['token'];
           this.localStorageService.set('token', token);
           this.localStorageService.set('user-detail', atob(res['token'].split('.')[1]));
+          let user = JSON.parse(this.localStorageService.get('user-detail'));
+          let cartObj = JSON.parse(this.cookie.get('cart'));
+          this.cartService.updateCart(cartObj['id'],{userId : user.id}).subscribe(res=>{
+              console.log("cart updated");
+          })
           this.router.navigate(['/home']);
         }
       }, error => {

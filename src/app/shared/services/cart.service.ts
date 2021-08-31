@@ -19,6 +19,12 @@ export class CartService {
     }))
   }
 
+  updateCart(id,payload) {
+    return this.http.patch(this.apiUrl + 'carts/'+id, payload).pipe(map(response => {
+      return response;
+    }))
+  }
+
   createCartDetail(payload) {
     return this.http.post(this.apiUrl + 'cart-details', payload).pipe(map(response => {
       return response;
