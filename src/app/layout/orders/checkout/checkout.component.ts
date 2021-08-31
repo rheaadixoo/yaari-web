@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-
+import { LocationStrategy } from '@angular/common';
 @Component({
   selector: 'yaari-checkout',
   templateUrl: './checkout.component.html',
@@ -17,8 +17,11 @@ export class CheckoutComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private domSanitizer: DomSanitizer,
+    private locationStrategy : LocationStrategy
     // private pageLoaderService: PageLoaderService,
-  ) { }
+  ) {
+    this.preventBackButton();
+   }
 
   ngOnInit(): void {
     this.activatedRoute.queryParamMap.subscribe((queryParam: any) => {
@@ -32,10 +35,19 @@ export class CheckoutComponent implements OnInit {
         this.actionUrl = this.domSanitizer.bypassSecurityTrustResourceUrl
           (`${environment.apiUrl}payments/checkout?txnToken=${this.txnToken}&orderNumber=${this.orderNumber}`)
         // this.pageLoaderService.stopLoading()
-        console.log("----action url----------",this.actionUrl);
+        console.log("----action url----------", this.actionUrl);
       }
     }
     )
   }
+
+
+// Define a function to handle back button and use anywhere
+preventBackButton() {
+  history.pushState(null, null, location.href);
+  this.locationStrategy.onPopState(() => {
+    history.pushState(null, null, location.href);
+  })
+}
 
 }

@@ -29,6 +29,7 @@ export class CategoriesComponent implements OnInit {
   getCategories() {
     this.categoryService.getAllSubCategories().subscribe(response => {
       this.productCategories = _.groupBy(response, (item) => {
+        if(item.category)
         return item.category.name;
       });
     })

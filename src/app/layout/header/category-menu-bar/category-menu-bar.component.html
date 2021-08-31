@@ -24,8 +24,8 @@
                           </a>
                           <ul>
                             <ng-container *ngFor="let ele of categories[key]">
-                              <li ><a href="javascript_void(0)" class="nav-link--megamenu"
-                                [routerLink]="['/app/products']">{{ele.name}}</a></li>
+                              <li *ngIf="ele.category.collectionId == collection.id"><a href="javascript_void(0)" class="nav-link--megamenu"
+                                [routerLink]="['/app/products',{'sub_id':ele.id}]">{{ele.name}}</a></li>
                               </ng-container>
                               </ul>
                         </li>
@@ -400,9 +400,9 @@
               Others
               <span class="material-icons nav_links_btm_arrow">expand_more</span>
             </a>
-            <ul class="nav-link--megamenu-sub-lg" id="collec_ul">
+            <ul class="nav-link--megamenu-sub-lg normal-sub" id="collec_ul">
               <ng-container *ngFor="let item of remainingCollections()">
-                <li><a href="javacript:void(0)" [routerLink]="['/app/about']" class="nav-link--megamenu">{{item.name}}</a></li>
+                <li><a href="javacript:void(0)" [routerLink]="['/app/products']" class="nav-link--megamenu">{{item.name}}</a></li>
               </ng-container>
             </ul>
             </li>
@@ -417,7 +417,7 @@
               Pages
               <span class="material-icons nav_links_btm_arrow">expand_more</span>
             </a>
-            <ul class="nav-link--megamenu-sub-lg" id="pages_ul">
+            <ul class="nav-link--megamenu-sub-lg normal-sub" id="pages_ul">
               <li><a href="javacript:void(0)" [routerLink]="['/app/about']" class="nav-link--megamenu">About</a></li>
               <li><a href="javacript:void(0)" [routerLink]="['/app/contact']" class="nav-link--megamenu">Contact</a></li>
               <li><a href="javacript:void(0)" [routerLink]="['/app/faq']" class="nav-link--megamenu">FAQ</a></li>

@@ -1,38 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 import { CookieService } from 'ngx-cookie-service';
-import "../../../../assets/js/product_zoom.js";
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from 'src/app/shared/services/product.service.js';
 import { CartService } from 'src/app/shared/services/cart.service.js';
 import { OrderService } from 'src/app/shared/services/order.service.js';
-
+import { ToastrService } from 'ngx-toastr';
+import { NgbModalConfig, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import "../../../../assets/js/product_zoom.js";
 @Component({
   selector: 'yaari-product-detail',
   templateUrl: './product-detail.component.html',
   styleUrls: ['./product-detail.component.scss']
 })
 export class ProductDetailComponent implements OnInit {
-
+  @ViewChild('warningModal') warningModal;
   constructor(private localStorageService: LocalStorageService, private cookie: CookieService,
     private readonly http: HttpClient, private route: ActivatedRoute,
     private productService: ProductService, private cartService: CartService,
-    private orderService: OrderService, private router: Router) {
+    private orderService: OrderService, private router: Router,
+    private toastr: ToastrService, private modalService: NgbModal) {
   }
 
-  public productJson = [
-    {
-      id: 1,
-      name: 'Velvet Long Gown',
-      description: 'Nam tempus turpis at scelerisque in placerat turpis at scelerisque',
-      brand_id: '',
-      category_id: '',
-      price: 500,
-      quantity: 1,
-      img: '../../../../assets/images/product_list_img.png'
-    }
-  ];
+  public modalRef: NgbModalRef;
   public quantity: number = 1;
   public productId: any = 0;
   public productObj: any = {};
@@ -59,48 +50,89 @@ export class ProductDetailComponent implements OnInit {
         if (res['id']) {
           this.productObj['productId'] = JSON.parse(this.productId);
           this.productObj['cartId'] = res['id'];
-          this.productObj['status'] = 'active';
+          // this.productObj['status'] = 'active';
           this.showBuyNowBtn = true;
+          const payload = {
+            cartId: res['id'],
+            productId: JSON.parse(this.productId),
+            quantity: this.quantity,
+            businessId: this.productObj['businessId']
+          }
+          this.cartService.createCartDetail(payload).subscribe(response => {
+            console.log("response---", response);
+            try {
+              this.toastr.success('Product added successfully');
+            } catch (error) {
+              this.toastr.error('Error,', error);
+            }
+          })
         }
+        this.cookie.set('cart', JSON.stringify({id : res['id']}), { expires: 365, path: '/' });
       })
-      if (this.productObj['productId']) {
-        this.cartService.createCartDetail(this.productObj).subscribe(response => {
-          console.log("response---", response);
-        })
-      }
-      this.cookie.set('cart', JSON.stringify(this.productObj), { expires: 365, sameSite: 'Lax' });
     } else {
-      const cardObj = JSON.parse(this.cookie.get('cart'));
+      const cartObj = JSON.parse(this.cookie.get('cart'));
       this.productObj['productId'] = JSON.parse(this.productId);
-      this.productObj['cartId'] = cardObj['id'];
-      this.productObj['status'] = 'active';
+      this.productObj['cartId'] = cartObj['id'];
+      // this.productObj['status'] = 'active';
       this.showBuyNowBtn = true;
+      const payload = {
+        cartId: cartObj['id'],
+        productId: JSON.parse(this.productId),
+        quantity: this.quantity
+      }
+      this.cartService.createCartDetail(payload).subscribe(response => {
+        console.log("response---", response);
+        this.toastr.success('Product added successfully',);
+      })
     }
-    // this.localStorageService.set('cart-items', JSON.stringify(this.productObj));
   }
 
   buyNow() {
-    console.log("buyNow");
-    if(!this.localStorageService.get('user-detail')){
-      alert('User sign in or sign up is required!')
-      return ;
+    if (!this.localStorageService.get('user-detail')) {
+      // alert('User sign in or sign up is required!')
+      this.warningModal.open();
     }
     if (this.cookie.get('cart')) {
       const cartObj = JSON.parse(this.cookie.get('cart'));
-      const userObj = JSON.parse(this.localStorageService.get('user-detail'));
-      const payload = {
-        cartId: cartObj['id'],
-        addressId: 5,
-        userId: userObj['id']
-      }
-      this.orderService.createOrder(payload).subscribe(res => {
-        this.localStorageService.set('order-success', JSON.stringify(res));
-        let orderDetail = this.localStorageService.get('order-success');
-        let ordr = JSON.parse(orderDetail);
-        console.log("ordr amount", res['order'])
-        console.log("res", res);
-        this.router.navigateByUrl(
-          `app/orders/checkout?txnToken=${res['txnToken']}&orderNumber=${res['order'].orderNumber}`);
+      this.router.navigate(['/app/orders/place-order'], { queryParams: { id: cartObj['id'] } })
+    } else if (!this.cookie.get('cart')) {
+      this.cartService.createCart().subscribe(res => {
+        if (res['id']) {
+          this.productObj['productId'] = JSON.parse(this.productId);
+          this.productObj['cartId'] = res['id'];
+          // this.productObj['status'] = 'active';
+          this.showBuyNowBtn = true;
+          const payload = {
+            cartId: res['id'],
+            productId: JSON.parse(this.productId),
+            quantity: this.quantity
+          }
+          this.cartService.createCartDetail(payload).subscribe(response => {
+            console.log("response---", response);
+            try {
+              this.toastr.success('Product added successfully',);
+            } catch (error) {
+              this.toastr.error('Error,', error);
+            }
+          })
+        }
+        this.cookie.set('cart', JSON.stringify({id : res['id']}), { expires: 365, path: '/' });
+        if (this.cookie.get('cart')) {
+          const cartObj = JSON.parse(this.cookie.get('cart'));
+          this.router.navigate(['/app/place-order'], { queryParams: { id: cartObj['id'] } })
+          // const userObj = JSON.parse(this.localStorageService.get('user-detail'));
+          // const payload = {
+          //   cartId: cartObj['id'],
+          //   addressId: 5,
+          //   userId: userObj['id']
+          // }
+          // this.orderService.createOrder(payload).subscribe(res => {
+          //   try {
+          //   } catch (error) {
+          //     console.error("Error--------",error);  
+          //   }
+          // })
+        }
       })
     }
   }

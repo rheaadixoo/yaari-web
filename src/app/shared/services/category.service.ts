@@ -13,7 +13,18 @@ export class CategoryService {
   constructor(private http: HttpClient) { }
 
   getAllCategories() {
-    return this.http.get(this.apiUrl + 'categories').pipe(map(response => {
+    const query = {
+      where: {
+        and: [{ status: 'active' },]
+      },
+      include: [{ "all": true }]
+    };
+    const filter = JSON.stringify(query);
+    const options = {
+      params: new HttpParams()
+        .append("filter", filter)
+    };
+    return this.http.get(this.apiUrl + 'categories', options).pipe(map(response => {
       return response;
     }))
   }
@@ -24,7 +35,7 @@ export class CategoryService {
       where: {
         and: [{ status: 'active' },]
       },
-      include:[{ "all": true }]
+      include: [{ "all": true }]
     };
     const filter = JSON.stringify(query);
     const options = {
@@ -32,5 +43,22 @@ export class CategoryService {
         .append("filter", filter)
     };
     return this.http.get(this.apiUrl + 'sub-categories', options);
+  }
+
+  getCategoryByCollectionId(id) {
+    const query = {
+      where: {
+        and: [{ status: 'active', collectionId: id },]
+      },
+      include: [{ "all": true }]
+    };
+    const filter = JSON.stringify(query);
+    const options = {
+      params: new HttpParams()
+        .append("filter", filter)
+    };
+    return this.http.get(this.apiUrl + 'categories', options).pipe(map(response => {
+      return response;
+    }))
   }
 }

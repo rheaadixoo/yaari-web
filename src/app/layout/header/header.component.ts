@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-
+import "../../../assets/js/popper.min.js";
 @Component({
   selector: 'yaari-header',
   templateUrl: './header.component.html',

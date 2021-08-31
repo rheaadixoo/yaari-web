@@ -9,15 +9,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { ShopByMaterialComponent } from './shop-by-material/shop-by-material.component';
 import { ShopByBrandsComponent } from './shop-by-brands/shop-by-brands.component';
 import { ShopByColorComponent } from './shop-by-color/shop-by-color.component';
-import { ShopBySizeComponent } from './shop-by-size/shop-by-size.component';
+import { ShopBySizeComponent } from './shop-by-size/shop-by-size.component';  
 import { CategoriesComponent } from './categories/categories.component';
+import { ModalsModule } from '../modals/modals.module';
 @NgModule({
   declarations: [ProductsComponent, ProductsListComponent, ProductDetailComponent, ShopByMaterialComponent, ShopByBrandsComponent, ShopByColorComponent, ShopBySizeComponent,CategoriesComponent],
   imports: [
     CommonModule,
     ProductsRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ModalsModule
   ]
 })
 export class ProductsModule { }

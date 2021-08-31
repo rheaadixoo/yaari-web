@@ -26,150 +26,27 @@
   <section class="all_collections_sec">
     <div class="container-fluid">
       <div class="row mx-0">
+        <ng-container *ngFor="let key of Object.keys(allCollections)">
         <div class="col-lg-3 col-md-6 col-sm-12 mb-5">
-          <div class="al_col_sec_crd">
-            <div class="al_col_sec_crd_img">
-              <img class="img-fluid" src="../../../assets/images/col_img_1.png">
-            </div>
-            <div class="al_col_sec_crd_content text-center">
-              <h5 class="font-500">
-                ACCESSORIES
-              </h5>
-              <span class="font-400 font-16 text-gray d-block mb-4">
-                11 Items
-              </span>
-              <a href="javaScript:void(0)" class="btn-theme-border font-500 my-1 d-inline-block font-18">
-                Read More
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-12 mb-5">
-          <div class="al_col_sec_crd">
-            <div class="al_col_sec_crd_img">
-              <img class="img-fluid" src="../../../assets/images/col_img_1.png">
-            </div>
-            <div class="al_col_sec_crd_content text-center">
-              <h5 class="font-500">
-                BAGS
-              </h5>
-              <span class="font-400 font-16 text-gray d-block mb-4">
-                11 Items
-              </span>
-              <a href="javaScript:void(0)" class="btn-theme-border font-500 my-1 d-inline-block font-18">
-                Read More
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-12 mb-5">
-          <div class="al_col_sec_crd">
-            <div class="al_col_sec_crd_img">
-              <img class="img-fluid" src="../../../assets/images/col_img_1.png">
-            </div>
-            <div class="al_col_sec_crd_content text-center">
-              <h5 class="font-500">
-                CLOTHES
-              </h5>
-              <span class="font-400 font-16 text-gray d-block mb-4">
-                11 Items
-              </span>
-              <a href="javaScript:void(0)" class="btn-theme-border font-500 my-1 d-inline-block font-18">
-                Read More
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-12 mb-5">
-          <div class="al_col_sec_crd">
-            <div class="al_col_sec_crd_img">
-              <img class="img-fluid" src="../../../assets/images/col_img_1.png">
-            </div>
-            <div class="al_col_sec_crd_content text-center">
-              <h5 class="font-500">
-                JEWELS
-              </h5>
-              <span class="font-400 font-16 text-gray d-block mb-4">
-                11 Items
-              </span>
-              <a href="javaScript:void(0)" class="btn-theme-border font-500 my-1 d-inline-block font-18">
-                Read More
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-12 mb-5">
-          <div class="al_col_sec_crd">
-            <div class="al_col_sec_crd_img">
-              <img class="img-fluid" src="../../../assets/images/col_img_1.png">
-            </div>
-            <div class="al_col_sec_crd_content text-center">
-              <h5 class="font-500">
-                FASHION
-              </h5>
-              <span class="font-400 font-16 text-gray d-block mb-4">
-                11 Items
-              </span>
-              <a href="javaScript:void(0)" class="btn-theme-border font-500 my-1 d-inline-block font-18">
-                Read More
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-12 mb-5">
-          <div class="al_col_sec_crd">
-            <div class="al_col_sec_crd_img">
-              <img class="img-fluid" src="../../../assets/images/col_img_1.png">
-            </div>
-            <div class="al_col_sec_crd_content text-center">
-              <h5 class="font-500">
-                SHOES
-              </h5>
-              <span class="font-400 font-16 text-gray d-block mb-4">
-                11 Items
-              </span>
-              <a href="javaScript:void(0)" class="btn-theme-border font-500 my-1 d-inline-block font-18">
-                Read More
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-12 mb-5">
-          <div class="al_col_sec_crd">
-            <div class="al_col_sec_crd_img">
-              <img class="img-fluid" src="../../../assets/images/col_img_1.png">
-            </div>
-            <div class="al_col_sec_crd_content text-center">
-              <h5 class="font-500">
-                GADGETS
-              </h5>
-              <span class="font-400 font-16 text-gray d-block mb-4">
-                11 Items
-              </span>
-              <a href="javaScript:void(0)" class="btn-theme-border font-500 my-1 d-inline-block font-18">
-                Read More
-              </a>
-            </div>
-          </div>
-          </div>
-          <div class="col-lg-3 col-md-6 col-sm-12 mb-5">
             <div class="al_col_sec_crd">
               <div class="al_col_sec_crd_img">
-                <img class="img-fluid" src="../../../assets/images/col_img_1.png">
+                <img class="img-fluid" [src]="allCollections[key].banner_img">
               </div>
               <div class="al_col_sec_crd_content text-center">
                 <h5 class="font-500">
-                  GOWN
+                  {{key}}
                 </h5>
                 <span class="font-400 font-16 text-gray d-block mb-4">
-                  11 Items
+                  {{allCollections[key].length}} Items
                 </span>
-                <a href="javaScript:void(0)" class="btn-theme-border font-500 my-1 d-inline-block font-18">
-                  Read More
-                </a>
-              </div>
+              <a href="javaScript:void(0)" class="btn-theme-border font-500 my-1 d-inline-block font-18"
+                (click)="collectionItemList(allCollections[key].collectionId)">
+                Read More
+              </a>
             </div>
           </div>
+        </div>
+      </ng-container>
       </div>
       <div class="col-lg-12 text-center">
         <nav aria-label="Page navigation example">

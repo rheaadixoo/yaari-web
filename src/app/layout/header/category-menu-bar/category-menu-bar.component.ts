@@ -16,18 +16,18 @@ export class CategoryMenuBarComponent implements OnInit {
   constructor(private collectionService: CollectionsService, private categoryService: CategoryService) { }
 
   ngOnInit(): void {
-    $('.menu > ul > li:has( > ul)').addClass('menu-dropdown-icon');
-    $('.menu > ul > li > ul:not(:has(ul))').addClass('normal-sub');
-    $(".menu > ul").before("<a href=\"#\" class=\"menu-mobile\">&nbsp;</a>");
-    $(".menu > ul > li").click(function () {
-      if ($(window).width() <= 943) {
-        $(this).children("ul").fadeToggle(150);
-      }
-    });
-    $(".menu-mobile").click(function (e) {
-      $(".menu > ul").toggleClass('show-on-mobile');
-      e.preventDefault();
-    });
+    // $('.menu > ul > li:has( > ul)').addClass('menu-dropdown-icon');
+    // $('.menu > ul > li > ul:not(:has(ul))').addClass('normal-sub');
+    // $(".menu > ul").before("<a href=\"#\" class=\"menu-mobile\">&nbsp;</a>");
+    // $(".menu > ul > li").click(function () {
+    //   if ($(window).width() <= 943) {
+    //     $(this).children("ul").fadeToggle(150);
+    //   }
+    // });
+    // $(".menu-mobile").click(function (e) {
+    //   $(".menu > ul").toggleClass('show-on-mobile');
+    //   e.preventDefault();
+    // });
     this.getAllCollection();
     this.getAllCategory();
   }
@@ -56,7 +56,6 @@ export class CategoryMenuBarComponent implements OnInit {
   getAllCollection() {
     this.collectionService.getAllCollections().subscribe(res => {
       this.collections = res;
-      console.log("this.collections", this.collections);
     })
   }
 
@@ -74,26 +73,25 @@ export class CategoryMenuBarComponent implements OnInit {
    */
   getAllCategory() {
     this.categoryService.getAllSubCategories().subscribe(res => {
-      // this.categories = res;
-      let _that = this;
       this.categories = _.groupBy(res, function (response) {
-        if(response.category){
+        if (response.category) {
           return response.category.name;
         }
       })
       try {
+        // console.log("-----tgsu0000",this.categories);
         for (let keys in this.categories) {
           for (let item of this.categories[keys]) {
-            if(item.category){
+            if (item.category) {
               this.categories[keys]['collection_id'] = item.category.collectionId;
             }
           }
         }
       } catch (error) {
-        console.log("error >>>>>>>>",error);
-        
+        console.log("error >>>>>>>>", error);
+
       }
- 
+
     })
 
     // this.categoryService.getAllSubCategories().subscribe(resp => {
