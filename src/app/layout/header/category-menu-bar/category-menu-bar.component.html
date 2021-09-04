@@ -24,8 +24,12 @@
                           </a>
                           <ul>
                             <ng-container *ngFor="let ele of categories[key]">
-                              <li *ngIf="ele.category.collectionId == collection.id"><a href="javascript_void(0)" class="nav-link--megamenu"
-                                [routerLink]="['/app/products',{'sub_id':ele.id}]">{{ele.name}}</a></li>
+                              <li *ngIf="ele.category.collectionId == collection.id">
+                                <a href="javascript:void(0)" class="nav-link--megamenu"
+                                (click)="onChange(ele,key)">{{ele.name}}
+                              </a>
+                                <!-- [routerLink]="['/app/products',{'sub_id':ele.id,'sub_name':ele.name , 'cat':key}]" -->
+                              </li>
                               </ng-container>
                               </ul>
                         </li>
@@ -99,11 +103,11 @@
                     </div> -->
                   <!-- </div> -->
                 <!-- </div> -->
-                 <div class="col-lg-6 px-2">
+                 <!-- <div class="col-lg-6 px-2">
                 <div class="nav_offer_banner05">
                   <img src="../../../../assets/images/nav_col_img3.png">
                 </div>
-              </div>
+              </div> -->
               <!-- <div class="col-lg-6 px-2">
                 <div class="nav_offer_banner05">
                   <img src="images/nav_col_img3.png">

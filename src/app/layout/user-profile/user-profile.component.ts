@@ -14,6 +14,7 @@ export class UserProfileComponent implements OnInit {
   public userForm: FormGroup = new FormGroup({});
   public userObj: any = {};
   public activeTab : string = 'profile';
+  public imgUrl : string = '';
   constructor(private toastr: ToastrService, private builder: FormBuilder, private localStorageService: LocalStorageService, private userService: UserProfileService, private addressService: AddressService) { }
 
   ngOnInit(): void {
@@ -45,6 +46,7 @@ export class UserProfileComponent implements OnInit {
   getUserRecord() {
     this.addressService.getAddressByUserId(this.userData.id).subscribe(response => {
       this.userObj = response[0];
+      this.imgUrl = this.userObj.user['profileImage'];
       this.UForm.first_name.patchValue(this.userObj.user.firstName);
       this.UForm.last_name.patchValue(this.userObj.user.lastName);
       this.UForm.email.patchValue(this.userObj.user.email);
@@ -64,7 +66,8 @@ export class UserProfileComponent implements OnInit {
       firstName: this.userForm.value.first_name,
       lastName: this.userForm.value.last_name,
       email: this.userForm.value.email,
-      mobile: this.userForm.value.mobile
+      mobile: this.userForm.value.mobile,
+      profileImage : this.imgUrl
     }
 
     const addressPayload = {
@@ -73,7 +76,7 @@ export class UserProfileComponent implements OnInit {
       city: this.userForm.value.city,
       state: this.userForm.value.state,
       pinCode: this.userForm.value.pincode,
-      country: "India",
+      country: "India"
     }
 
     this.userService.updateUserRecord(payload, this.userData.id).subscribe(response => {
@@ -121,5 +124,18 @@ export class UserProfileComponent implements OnInit {
         this.userForm.controls.address.patchValue(null);
       }
     }
+  }
+
+  systemFilesPicked(ev){
+    let file: File = ev[0];
+    let formData:FormData = new FormData();
+    console.log("file.name",file.name);
+    formData.append('files', file, file.name);
+    console.log("formData",formData);
+    this.userService.uploadProfilePhoto(formData).subscribe(res =>{
+          if(res['files'][0]['path']){
+              this.imgUrl = res['files'][0]['path'];
+          }
+    })
   }
 }

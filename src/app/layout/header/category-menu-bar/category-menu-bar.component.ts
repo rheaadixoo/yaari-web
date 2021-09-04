@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import * as $ from "jquery";
 import { CollectionsService } from 'src/app/shared/services/collections.service';
 import { CategoryService } from 'src/app/shared/services/category.service';
 import * as _ from "lodash";
+import { Router } from '@angular/router';
+import { ProductService } from 'src/app/shared/services/product.service';
 @Component({
   selector: 'yaari-category-menu-bar',
   templateUrl: './category-menu-bar.component.html',
@@ -13,7 +14,7 @@ export class CategoryMenuBarComponent implements OnInit {
   public categories: any = [];
   public hoveredItemId: number = 0;
   public Object = Object;
-  constructor(private collectionService: CollectionsService, private categoryService: CategoryService) { }
+  constructor(private productService : ProductService , private router : Router,private collectionService: CollectionsService, private categoryService: CategoryService) { }
 
   ngOnInit(): void {
     // $('.menu > ul > li:has( > ul)').addClass('menu-dropdown-icon');
@@ -130,4 +131,13 @@ export class CategoryMenuBarComponent implements OnInit {
   returnZero() {
     return 0;
   }
+
+  onChange(item,categoryName) {
+    const obj = {'item_id' : item.id , item_name : item.name ,category : categoryName}
+    this.productService.stage.next(obj);
+    if (this.router.url.includes('/products')) {
+      } else {
+        this.router.navigate([`app/products`],{queryParams : {'sub_id' : item.id , item_name : item.name ,category : categoryName}});
+      }
+    }
 }

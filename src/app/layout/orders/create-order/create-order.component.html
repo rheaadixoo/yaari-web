@@ -153,10 +153,14 @@
                         Order confirmation email will be sent to
                         <span class="font-600">{{userDetails.email}}</span>
                     </h5>
-                    <a href="javascript:void(0)" class="float-right px-5 py-3"
+                    <a href="javascript:void(0)" class="float-right px-5 py-3">
+                        <button class="btn-theme" [disabled]="userAddress.length == 0"
                         (click)="createOrder()">
-                        <button class="btn-theme" [disabled]="userAddress.length == 0">
-                            Place Order
+                            Pay Now
+                        </button>
+                        <button class="btn-theme" [disabled]="userAddress.length == 0"
+                        (click)="createPayLaterOrder()" style="margin-left: 10px;">
+                            Pay Later
                         </button>
                     </a>
                 </div>

@@ -12,4 +12,9 @@ export class LayoutComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  onActivate(e, scrollContainer) {
+    document.body.scrollTop = 0;
+    scrollContainer.scrollTop = 0;
+    window.scrollTo(0, 0);
+  }
 }

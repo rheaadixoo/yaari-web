@@ -2,6 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CartService } from 'src/app/shared/services/cart.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
+import { WishlistService } from 'src/app/shared/services/wishlist.service.js';
+import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-cart',
@@ -16,7 +19,9 @@ export class CartComponent implements OnInit {
   public totalAmount: any = 0;
   public totalQuantity: any = 0;
   public cartObj: any = {};
-  constructor(private cartService: CartService, private cookie: CookieService, private router: Router) { }
+  constructor(private cartService: CartService, private cookie: CookieService, private router: Router,
+              private toastr: ToastrService,private wishlistService: WishlistService,
+              private localStorageService : LocalStorageService) { }
 
   ngOnInit(): void {
     this.getCartDetail();
@@ -97,5 +102,53 @@ export class CartComponent implements OnInit {
     },error =>{
         console.log("error remove product",error);
     })
+  }
+
+  moveToWishlist(item) {
+    let payload;
+    if (this.userDetail) {
+      payload = { userId: this.userDetail.id };
+    } else {
+      payload = { userId: null };
+    }
+    if (!this.cookie.get('wishlist')) {
+      this.wishlistService.createWishList(payload).subscribe(res => {
+        if (res['id']) {
+          const data = {
+            wishlistId: res['id'],
+            productId: JSON.parse(item.productId),
+            quantity: item.quantity,
+            businessId: item['businessId']
+          }
+          this.addToWishListDetails(data,item);
+          this.cookie.set('wishlist', JSON.stringify({ id: res['id'] }), { expires: 365, path: '/' });
+        }
+      })
+    } else if (this.cookie.get('wishlist')) {
+      const data = {
+        wishlistId: this.wishlistObj['id'],
+        productId: JSON.parse(item.productId),
+        quantity: item.quantity,
+        businessId: item['businessId']
+      }
+      this.addToWishListDetails(data,item);
+    }
+  }
+
+  get wishlistObj() {
+    return JSON.parse(this.cookie.get('wishlist'));
+  }
+
+  addToWishListDetails(data,item) {
+    this.wishlistService.createWishListDetail(data).subscribe(res => {
+      this.removeProductFromCart(item.id);
+      this.toastr.success('Successfully added to wishlist');
+    }, error => {
+      this.toastr.error('Some error occurred while adding to wishlist please try again');
+    })
+  }
+
+  get userDetail() {
+    return JSON.parse(this.localStorageService.get('user-detail'));
   }
 }

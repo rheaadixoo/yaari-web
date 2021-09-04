@@ -8,6 +8,7 @@ import { CartService } from 'src/app/shared/services/cart.service.js';
 import { OrderService } from 'src/app/shared/services/order.service.js';
 import { ToastrService } from 'ngx-toastr';
 import { NgbModalConfig, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { WishlistService } from 'src/app/shared/services/wishlist.service.js';
 import "../../../../assets/js/product_zoom.js";
 @Component({
   selector: 'yaari-product-detail',
@@ -20,7 +21,15 @@ export class ProductDetailComponent implements OnInit {
     private readonly http: HttpClient, private route: ActivatedRoute,
     private productService: ProductService, private cartService: CartService,
     private orderService: OrderService, private router: Router,
-    private toastr: ToastrService, private modalService: NgbModal) {
+    private toastr: ToastrService, private modalService: NgbModal,
+    private wishlistService: WishlistService) {
+
+    this.productService.currentProductStage.subscribe(res => {
+      if (res && res.id) {
+        this.productId = res.id;
+      }
+      this.getProductDetailById();
+    })
   }
 
   public modalRef: NgbModalRef;
@@ -28,7 +37,7 @@ export class ProductDetailComponent implements OnInit {
   public productId: any = 0;
   public productObj: any = {};
   public showBuyNowBtn: boolean = true;
-  public subTotal : any = 0;
+  public subTotal: any = 0;
   ngOnInit(): void {
     if (this.route.snapshot.params.id) {
       this.productId = this.route.snapshot.params.id;
@@ -40,10 +49,14 @@ export class ProductDetailComponent implements OnInit {
   }
 
   getProductDetailById() {
-    this.productService.getProductById(this.productId).subscribe(res => {
-      this.productObj = res;
-      this.subTotal = this.productObj.sellingPrice
-    })
+    if (this.productId) {
+      this.productService.getProductById(this.productId).subscribe(res => {
+        this.productObj = res;
+        this.subTotal = this.productObj.sellingPrice
+      })
+    } else {
+      return;
+    }
   }
 
   addToCart() {
@@ -69,7 +82,7 @@ export class ProductDetailComponent implements OnInit {
             }
           })
         }
-        this.cookie.set('cart', JSON.stringify({id : res['id']}), { expires: 365, path: '/' });
+        this.cookie.set('cart', JSON.stringify({ id: res['id'] }), { expires: 365, path: '/' });
       })
     } else {
       const cartObj = JSON.parse(this.cookie.get('cart'));
@@ -80,7 +93,8 @@ export class ProductDetailComponent implements OnInit {
       const payload = {
         cartId: cartObj['id'],
         productId: JSON.parse(this.productId),
-        quantity: this.quantity
+        quantity: this.quantity,
+        businessId: this.productObj['businessId']
       }
       this.cartService.createCartDetail(payload).subscribe(response => {
         console.log("response---", response);
@@ -107,7 +121,8 @@ export class ProductDetailComponent implements OnInit {
           const payload = {
             cartId: res['id'],
             productId: JSON.parse(this.productId),
-            quantity: this.quantity
+            quantity: this.quantity,
+            businessId: this.productObj['businessId']
           }
           this.cartService.createCartDetail(payload).subscribe(response => {
             console.log("response---", response);
@@ -118,26 +133,60 @@ export class ProductDetailComponent implements OnInit {
             }
           })
         }
-        this.cookie.set('cart', JSON.stringify({id : res['id']}), { expires: 365, path: '/' });
+        if (!this.cookie.get('cart')) {
+          this.cookie.set('cart', JSON.stringify({ id: res['id'] }), { expires: 365, path: '/' });
+        }
         if (this.cookie.get('cart')) {
           const cartObj = JSON.parse(this.cookie.get('cart'));
           this.router.navigate(['/app/place-order'], { queryParams: { id: cartObj['id'] } })
-          // const userObj = JSON.parse(this.localStorageService.get('user-detail'));
-          // const payload = {
-          //   cartId: cartObj['id'],
-          //   addressId: 5,
-          //   userId: userObj['id']
-          // }
-          // this.orderService.createOrder(payload).subscribe(res => {
-          //   try {
-          //   } catch (error) {
-          //     console.error("Error--------",error);  
-          //   }
-          // })
         }
       })
     }
   }
+
+  addToWishList() {
+    let payload;
+    if (this.userDetail) {
+      payload = { userId: this.userDetail.id };
+    } else {
+      payload = { userId: null };
+    }
+    if (!this.cookie.get('wishlist')) {
+      this.wishlistService.createWishList(payload).subscribe(res => {
+        if (res['id']) {
+          const data = {
+            wishlistId: res['id'],
+            productId: JSON.parse(this.productId),
+            quantity: this.quantity,
+            businessId: this.productObj['businessId']
+          }
+          this.addToWishListDetails(data);
+          this.cookie.set('wishlist', JSON.stringify({ id: res['id'] }), { expires: 365, path: '/' });
+        }
+      })
+    } else if (this.cookie.get('wishlist')) {
+      const data = {
+        wishlistId: this.wishlistObj['id'],
+        productId: JSON.parse(this.productId),
+        quantity: this.quantity,
+        businessId: this.productObj['businessId']
+      }
+      this.addToWishListDetails(data);
+    }
+  }
+
+  get wishlistObj() {
+    return JSON.parse(this.cookie.get('wishlist'));
+  }
+
+  addToWishListDetails(data) {
+    this.wishlistService.createWishListDetail(data).subscribe(res => {
+      this.toastr.success('Successfully added to wishlist');
+    }, error => {
+      this.toastr.error('Some error occurred while adding to wishlist please try again');
+    })
+  }
+
 
   increaseQuantity() {
     if (this.quantity != 10) {
@@ -151,5 +200,9 @@ export class ProductDetailComponent implements OnInit {
       this.quantity = this.quantity - 1;
       this.subTotal = Math.round(this.productObj.sellingPrice * this.quantity);
     }
+  }
+
+  get userDetail() {
+    return JSON.parse(this.localStorageService.get('user-detail'));
   }
 }

@@ -1,4 +1,4 @@
-<div class="top_profile_crt_lg_sec p-4">
+<div class="top_profile_crt_lg_sec p-4" (click)="closePopUp($event)">
   <div class="container-fluid">
     <a class="navbar-brand" href="javascript:void(0)" [routerLink]="['/home']">
       <img class="img-fluid" src="../../../assets/images/halfpricebazaar.png">
@@ -17,16 +17,17 @@
               <span class="font-600 font-16">Your Account</span>
             </span>
           </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" [ngClass]="isBtnClicked ? 'show' : ''">
-            <a class="dropdown-item my-2 d-inline-block font-16 text-center btn-theme-border" href="javascript:void(0)"
-              [routerLink]="['/login']" (click)="isBtnClicked = false">
+          <div class="dropdown-menu before_login" aria-labelledby="dropdownMenuButton" [ngClass]="isBtnClicked ? 'show' : ''"
+          id="sign_in_option">
+            <a class="dropdown-item my-2 d-inline-block font-16 text-center btn-theme-border anchor" href="javascript:void(0)"
+              [routerLink]="['/login']" (click)="isBtnClicked = false" id="sign_in_option">
               Sign In
             </a>
-            <span class="my-2 d-inline-block text-center w-100">
+            <span class="my-2 d-inline-block text-center w-100 anchor" id="sign_in_option">
               Don't have an account?
             </span>
-            <a class="dropdown-item my-2 d-inline-block font-16 text-center btn-theme" href="javascript:void(0)"
-              [routerLink]="['/register']" (click)="isBtnClicked = false">
+            <a class="dropdown-item my-2 d-inline-block font-16 text-center btn-theme anchor" href="javascript:void(0)"
+              [routerLink]="['/register']" (click)="isBtnClicked = false" id="sign_in_option">
               Create Account
             </a>
           </div>
@@ -34,7 +35,7 @@
       </div>
       <div class="top_profile_main float-left px-3">
         <div class="dropdown top_profile_main_drpdwn top_profile_main_drpdwn_on_login">
-          <button class="dropdown-toggle text-left d-flex" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+          <button class="dropdown-toggle text-left d-flex sign_in_btn" type="button" id="dropdownMenuButton" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false" (click)="userOptions = !userOptions" *ngIf="isUserLoggedIn">
             <img class="d-block float-left img-fluid mr-2 my-auto" src="../../../assets/images/profile_default.svg"
               width="40" height="40">
@@ -44,24 +45,27 @@
               <span class="font-600 font-16">{{getUserName}}</span>
             </span>
           </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" [ngClass]="userOptions ? 'show' : ''">
-            <a class="dropdown-item font-400 font-16" href="javaScript:void(0)"
-            [routerLink]="['/app/profile']" (click)="userOptions = false">
+          <div class="dropdown-menu before_login" aria-labelledby="dropdownMenuButton" [ngClass]="userOptions ? 'show' : ''">
+            <a class="dropdown-item font-400 font-16" href="javaScript:void(0)" [routerLink]="['/app/profile']"
+              (click)="userOptions = false" id="sign_in_option">
               Your Profile
             </a>
-            <a class="dropdown-item font-400 font-16" href="javaScript:void(0)">
+            <a class="dropdown-item font-400 font-16" href="javaScript:void(0)" id="sign_in_option"
+            [routerLink]="['app/wishlist']">
               Your Wishlist
             </a>
-            <a class="dropdown-item font-400 font-16" href="javaScript:void(0)">
+            <a class="dropdown-item font-400 font-16" href="javaScript:void(0)" id="sign_in_option"
+            [routerLink]="['app/contact']">
               Contact Us
             </a>
-            <a class="dropdown-item border-0 font-400 font-16 text-danger" (click)= "logout()" href="javaScript:void(0)">
+            <a class="dropdown-item border-0 font-400 font-16 text-danger" (click)="logout()" href="javaScript:void(0)"
+            id="sign_in_option">
               Logout
             </a>
           </div>
         </div>
       </div>
-      <div class="top_crt_main float-left px-3" >
+      <div class="top_crt_main float-left px-3">
         <img class="img-fluid mr-1" width="23" height="23" src="../../../assets/images/cart_icon.svg">
         <span class="font-600 font-16" style="cursor: pointer;">
           <a [routerLink]="['/app/cart']">
@@ -69,16 +73,26 @@
           </a>
         </span>
       </div>
-      <div class="top_crt_main float-left px-3">
-        <span class="web_prod_srch_li">
-          <input type="text" placeholder="Find the best for you...">
-          <img class="img-fluid" width="17" height="17" src="../../../../assets/images/search_icon.svg">
-        </span>
-      </div>
+      <!-- <div class="form_elem__search"> -->
+      <!-- <span class="web_prod_srch_li"> -->
+      <!-- <input type="text" placeholder="Find the best for you..." 
+            (keyup)="searchProduct()" [(ngModel)]="searchValue">
+            <img class="img-fluid" width="17" height="17" src="../../../../assets/images/search_icon.svg"> -->
+      <!-- </span> -->
       <!-- <li class="web_prod_srch_li">
-            <input type="text" placeholder="Find the best for you...">
-            <img class="img-fluid" width="17" height="17" src="../../../../assets/images/search_icon.svg">
-          </li> -->
+        <input type="text" placeholder="Find the best for you...">
+        <img class="img-fluid" width="17" height="17" src="../../../../assets/images/search_icon.svg">
+      </li> -->
+      <ng-select (search)="searchProduct($event)" [(ngModel)]="searchValue"
+      bindLabel="name" [items]="productList" 
+      (change)="onChange($event)"></ng-select>
+      <button class="search_icon"><svg height="16" viewBox="0 0 16.001 16" width="16.001" xmlns="http://www.w3.org/2000/svg">
+        <path
+        d="M14.8 16a1.2 1.2 0 01-.821-.323l-2.4-2.4a1.226 1.226 0 01-.353-.914l-.881-.881a6.345 6.345 0 01-3.928 1.348 6.414 6.414 0 115.058-2.479l.01-.01.879.884h.059a1.213 1.213 0 01.855.354l2.4 2.4A1.2 1.2 0 0114.8 16zM6.415 1.6a4.81 4.81 0 104.807 4.81A4.814 4.814 0 006.415 1.6z"
+        fill="#63707e"></path>
+      </svg>
+    </button>
+      <!-- </div> -->
     </div>
   </div>
 </div>

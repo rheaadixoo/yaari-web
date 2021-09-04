@@ -7,6 +7,7 @@ import { LocalStorageService } from 'src/app/shared/services/local-storage.servi
 import { AddressService } from 'src/app/shared/services/address.service';
 import { OrderService } from 'src/app/shared/services/order.service';
 import { CookieService } from 'ngx-cookie-service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-create-order',
   templateUrl: './create-order.component.html',
@@ -27,7 +28,8 @@ export class CreateOrderComponent implements OnInit {
   constructor(private cartService: CartService, private route: ActivatedRoute, private modalService: NgbModal,
     private formBuilder: FormBuilder, private localStorageService: LocalStorageService,
     private addressService: AddressService, private orderService: OrderService,
-    private cookie: CookieService, private router: Router) {
+    private cookie: CookieService, private router: Router,
+    private toastr : ToastrService) {
     if (this.route.snapshot.queryParams.id) {
       this.cartId = this.route.snapshot.queryParams.id;
     }
@@ -132,11 +134,28 @@ export class CreateOrderComponent implements OnInit {
         userId: userObj['id']
       }
       this.orderService.createOrder(payload).subscribe(res => {
-        try {
-          this.router.navigate(['/app/orders/checkout'], { queryParams: { txnToken: res['txnToken'], orderNumber: res['order']['orderNumber'] } })
-        } catch (error) {
-          console.error("Error--------", error);
-        }
+        this.router.navigate(['/app/orders/checkout'], { queryParams: { txnToken: res['txnToken'], orderNumber: res['order']['orderNumber'] } })
+        this.toastr.success('Order created successfully');
+          },error =>{
+        this.toastr.success(error['error']['message']);
+      })
+    }
+  }
+
+  createPayLaterOrder(){
+    if (this.cookie.get('cart')) {
+      const cartObj = JSON.parse(this.cookie.get('cart'));
+      const userObj = JSON.parse(this.localStorageService.get('user-detail'));
+      const payload = {
+        cartId: cartObj['id'],
+        addressId: 5,
+        userId: userObj['id'],
+        payLater : true
+      }
+      this.orderService.createOrder(payload).subscribe(res => {
+        this.toastr.success('Order created successfully');
+      },error =>{
+        this.toastr.success(error['error']['message']);
       })
     }
   }

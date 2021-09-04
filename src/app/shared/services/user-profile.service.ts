@@ -21,8 +21,14 @@ export class UserProfileService {
     }))
   }
 
-  updateUserRecord(payload,id) {
-    return this.http.patch(this.apiUrl + "users/"+id , payload).pipe(map(response => {
+  updateUserRecord(payload, id) {
+    return this.http.patch(this.apiUrl + "users/" + id, payload).pipe(map(response => {
+      return response;
+    }))
+  }
+
+  uploadProfilePhoto(formData) {
+    return this.http.post(this.apiUrl + 'files/upload', formData).pipe(map(response => {
       return response;
     }))
   }

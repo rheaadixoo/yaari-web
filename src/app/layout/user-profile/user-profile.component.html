@@ -12,7 +12,8 @@
                     </a>
                 </li>
                 <li>
-                    <a href="javascript:void(0)" class="font-16 font-400 d-flex p-3 text-light">
+                    <a href="javascript:void(0)" class="font-16 font-400 d-flex p-3 text-light"
+                    (click)="activeTab = 'wishlist'" [ngClass]="activeTab == 'wishlist' ? 'active' : ''">
                         <span class="material-icons mr-2">favorite</span>
                         My Wishlist
                     </a>
@@ -70,14 +71,17 @@
                                         <div class="avatar-upload">
                                             <div id="camera" style="height:auto;width:auto; text-align:left;"></div>
                                             <div class="avatar-edit">
-                                                <input type="file" id="imageUpload" name="profilePic"
-                                                    accept=".png, .jpg, .jpeg">
+                                                <input #file type="file" id="imageUpload" name="profilePic"
+                                                    accept=".png, .jpg, .jpeg" 
+                                                    (change)="systemFilesPicked(file.files)">
                                                 <label for="imageUpload">
                                                     <span class="material-icons text-light">edit</span>
                                                 </label>
                                             </div>
                                             <div class="avatar-preview">
-                                                <div id="imagePreview" style="background-image: url('');">
+                                                <div id="imagePreview" [ngStyle]="{
+                                                    'background-image': (imgUrl) ? 'url(' + imgUrl + ')' : ''         
+                                                }">
                                                 </div>
                                             </div>
                                         </div>
@@ -156,6 +160,7 @@
     </div>
     <yaari-change-password *ngIf="activeTab == 'password'"></yaari-change-password>
     <yaari-my-orders *ngIf="activeTab == 'order'"></yaari-my-orders>
+    <yaari-my-wishlist *ngIf="activeTab =='wishlist'"></yaari-my-wishlist>
 </section>
 
 <!-- Profile section End -->

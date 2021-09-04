@@ -8,6 +8,7 @@ import { FooterModule } from './layout/footer/footer.module';
 import { CookieService } from 'ngx-cookie-service';
 import { ToastrModule } from 'ngx-toastr';
 import { NgbModule,NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgSelectModule } from '@ng-select/ng-select';
 @NgModule({
   declarations: [
     AppComponent
@@ -24,6 +25,7 @@ import { NgbModule,NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
       positionClass: 'toast-top-right',
       preventDuplicates: true,
     }),
+    NgSelectModule
   ],
   providers: [CookieService],
   bootstrap: [AppComponent]
