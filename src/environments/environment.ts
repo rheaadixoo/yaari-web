@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  // apiUrl : "http://localhost:3000/v1/",
-  apiUrl : "https://api.halfpricebazar.com/v1/"
+  apiUrl : "http://localhost:3000/v1/",
+  // apiUrl : "https://api.halfpricebazar.com/v1/"
 
 };
 
