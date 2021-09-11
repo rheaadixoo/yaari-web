@@ -804,7 +804,79 @@
       </div>
     </div>
     <div class="row w-100 px-5 mx-0 mt-4">
+      <ng-container *ngFor="let product of productList">
       <div class="col-lg-3 my-3">
+        <div class="prdct_sec_list_crd_mn">
+          <div class="prdct_sec_list_crd_mn_img">
+            <span class="sale_badge">
+              Sale
+            </span>
+            <img class="img-fluid" [src]="product?.thumbImages">
+            <span id="heart" class="wishlist_icon">
+              <span class="material-icons">favorite_border</span>
+            </span>
+          </div>
+          <div class="prdct_sec_list_crd_mn_content p-3 w-100 d-inline-block">
+            <h5 class="prdct_list_title mb-3 font-500 text-dark">
+              {{product.name}}
+            </h5>
+            <p class="prdct_list_sub_title text-gray mb-3">
+              {{product.description}}
+            </p>
+            <div class="prdct_list_price_det w-100 mb-3">
+              <h5>
+                <span class="font-600 text-dark price_fnl mr-1">
+                  ₹{{product.sellingPrice}}
+                </span>
+                <span class="font-500 text-gray price_cross position-relative font-16 mr-1">
+                  ₹{{product.price}}
+                </span>
+                <span class="font-500 text-success offer_dis font-16 mr-1">
+                  50% off
+                </span>
+              </h5>
+            </div>
+            <div class="prdct_list_rating_ovrvw w-100 mb-2">
+              <span class="bg-success py-1 font-14 px-2 rounded text-light">
+                5.0
+                <span class="material-icons font-18 position-relative" style="top:3px;">star</span>
+              </span>
+              <span class="text-gray font-16 font-400 ml-2">
+                10,350 ratings
+              </span>
+            </div>
+            <span class="free_del_tg d-inline-block py-1 font-14 px-2 rounded mt-2">
+              Free delivery
+            </span>
+            <div class="row prdct_sec_list_crd_mn_btm_imgs mt-4">
+              <ng-container *ngFor="let image of product.images">
+              <div class="col-lg-3 col-md-3 col-3 px-2 text-center mx-auto">
+                <div class="prdct_sec_list_crd_mn_btm_imgs_cntnr mx-auto">
+                  <img class="img-fluid" [src]="image">
+                </div>
+              </div>
+            </ng-container>
+              <!-- <div class="col-lg-3 col-md-3 col-3 px-2 text-center mx-auto">
+                <div class="prdct_sec_list_crd_mn_btm_imgs_cntnr mx-auto">
+                  <img class="img-fluid" src="../../../../assets/images/product_list_img_btm.png">
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-3 px-2 text-center mx-auto">
+                <div class="prdct_sec_list_crd_mn_btm_imgs_cntnr mx-auto">
+                  <img class="img-fluid" src="../../../../assets/images/product_list_img_btm.png">
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-3 px-2 text-center mx-auto">
+                <div class="prdct_sec_list_crd_mn_btm_imgs_cntnr mx-auto">
+                  <img class="img-fluid" src="../../../../assets/images/product_list_img_btm.png">
+                </div>
+              </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+      <!-- <div class="col-lg-3 my-3">
         <div class="prdct_sec_list_crd_mn">
           <div class="prdct_sec_list_crd_mn_img">
             <span class="sale_badge">
@@ -1016,78 +1088,7 @@
             </div>
           </div>
         </div>
-      </div>
-      <div class="col-lg-3 my-3">
-        <div class="prdct_sec_list_crd_mn">
-          <div class="prdct_sec_list_crd_mn_img">
-            <span class="sale_badge">
-              Sale
-            </span>
-            <img class="img-fluid" src="../../../../assets/images/product_list_img.png">
-            <span id="heart" class="wishlist_icon">
-              <span class="material-icons">favorite_border</span>
-            </span>
-          </div>
-          <div class="prdct_sec_list_crd_mn_content p-3 w-100 d-inline-block">
-            <h5 class="prdct_list_title mb-3 font-500 text-dark">
-              Velvet Long Gown
-              Velvet Long Gown
-              Velvet Long Gown
-            </h5>
-            <p class="prdct_list_sub_title text-gray mb-3">
-              Nam tempus turpis at scelerisque in placerat
-              turpis at scelerisque Nam tempus turpis at in placerat
-            </p>
-            <div class="prdct_list_price_det w-100 mb-3">
-              <h5>
-                <span class="font-600 text-dark price_fnl mr-1">
-                  ₹500.0
-                </span>
-                <span class="font-500 text-gray price_cross position-relative font-16 mr-1">
-                  ₹10000
-                </span>
-                <span class="font-500 text-success offer_dis font-16 mr-1">
-                  50% off
-                </span>
-              </h5>
-            </div>
-            <div class="prdct_list_rating_ovrvw w-100 mb-2">
-              <span class="bg-success py-1 font-14 px-2 rounded text-light">
-                5.0
-                <span class="material-icons font-18 position-relative" style="top:3px;">star</span>
-              </span>
-              <span class="text-gray font-16 font-400 ml-2">
-                10,350 ratings
-              </span>
-            </div>
-            <span class="free_del_tg d-inline-block py-1 font-14 px-2 rounded mt-2">
-              Free delivery
-            </span>
-            <div class="row prdct_sec_list_crd_mn_btm_imgs mt-4">
-              <div class="col-lg-3 col-md-3 col-3 px-2 text-center mx-auto">
-                <div class="prdct_sec_list_crd_mn_btm_imgs_cntnr mx-auto">
-                  <img class="img-fluid" src="../../../../assets/images/product_list_img_btm.png">
-                </div>
-              </div>
-              <div class="col-lg-3 col-md-3 col-3 px-2 text-center mx-auto">
-                <div class="prdct_sec_list_crd_mn_btm_imgs_cntnr mx-auto">
-                  <img class="img-fluid" src="../../../../assets/images/product_list_img_btm.png">
-                </div>
-              </div>
-              <div class="col-lg-3 col-md-3 col-3 px-2 text-center mx-auto">
-                <div class="prdct_sec_list_crd_mn_btm_imgs_cntnr mx-auto">
-                  <img class="img-fluid" src="../../../../assets/images/product_list_img_btm.png">
-                </div>
-              </div>
-              <div class="col-lg-3 col-md-3 col-3 px-2 text-center mx-auto">
-                <div class="prdct_sec_list_crd_mn_btm_imgs_cntnr mx-auto">
-                  <img class="img-fluid" src="../../../../assets/images/product_list_img_btm.png">
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </section>

@@ -28,7 +28,11 @@ export class UserProfileService {
   }
 
   uploadProfilePhoto(formData) {
-    return this.http.post(this.apiUrl + 'files/upload', formData).pipe(map(response => {
+    const options = {
+      params: new HttpParams()
+        .append("channel", 'cloudinary')
+    };
+    return this.http.post(this.apiUrl + 'files/upload', formData,options).pipe(map(response => {
       return response;
     }))
   }

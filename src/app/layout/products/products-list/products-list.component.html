@@ -9,7 +9,7 @@
             <ol class="breadcrumb mb-0 bg-transparent">
                 <li class="breadcrumb-item">
                     <a href="javascript:void(0)" class="text-gray font-400 text-font-18"
-                    [routerLink]="['/home']">Home</a>
+                        [routerLink]="['/home']">Home</a>
                 </li>
                 <li class="breadcrumb-item active text-gray font-400 text-font-18" aria-current="page">
                     {{catName}}
@@ -109,91 +109,74 @@
                     <select #selectList class="custom_select" (change)="sortProductList(selectList.value)">
                         <option value="low">Price -- Low to High</option>
                         <option value="feature">Featured</option>
-                        <option value="high" >Price -- High to Low</option>
+                        <option value="high">Price -- High to Low</option>
                         <option value="new">Newest First</option>
                     </select>
                 </div>
                 <div class="row w-100 mx-0" *ngIf="products.length > 0">
                     <ng-container *ngFor="let product of products">
-                    <div class="col-lg-4 col-md-6 my-3">
-                        <div class="prdct_sec_list_crd_mn">
-                            <div class="prdct_sec_list_crd_mn_img" (click)="showProductDetailView(product.id)">
-                                <span class="sale_badge">
-                                    Sale
-                                </span>
-                                <img class="img-fluid" [src]="product.thumbImages">
-                                <span id="heart" class="wishlist_icon">
-                                    <span class="material-icons">favorite_border</span>
-                                </span>
-                            </div>
-                            <div class="prdct_sec_list_crd_mn_content p-3 w-100 d-inline-block">
-                                <h5 class="prdct_list_title mb-3 font-500 text-dark">
-                                    {{product.name}}
-                                </h5>
-                                <p class="prdct_list_sub_title text-gray mb-3">
-                                    {{product.description}}
-                                </p>
-                                <div class="prdct_list_price_det w-100 mb-3">
-                                    <h5>
-                                        <span class="font-600 text-dark price_fnl mr-1">
-                                            ₹{{product.sellingPrice}}
-                                        </span>
-                                        <span class="font-500 text-gray price_cross position-relative font-16 mr-1">
-                                            ₹{{product.price}}
-                                        </span>
-                                        <span class="font-500 text-success offer_dis font-16 mr-1">
-                                            50% off
-                                        </span>
+                        <div class="col-lg-4 col-md-6 my-3">
+                            <div class="prdct_sec_list_crd_mn">
+                                <div class="prdct_sec_list_crd_mn_img" (click)="showProductDetailView(product.id)">
+                                    <span class="sale_badge">
+                                        Sale
+                                    </span>
+                                    <img class="img-fluid" [src]="product.thumbImages">
+                                    <span id="heart" class="wishlist_icon">
+                                        <span class="material-icons">favorite_border</span>
+                                    </span>
+                                </div>
+                                <div class="prdct_sec_list_crd_mn_content p-3 w-100 d-inline-block">
+                                    <h5 class="prdct_list_title mb-3 font-500 text-dark">
+                                        {{product.name}}
                                     </h5>
-                                </div>
-                                <div class="prdct_list_rating_ovrvw w-100 mb-2">
-                                    <span class="bg-success py-1 font-14 px-2 rounded text-light">
-                                        5.0
-                                        <span class="material-icons font-18 position-relative"
-                                            style="top:3px;">star</span>
+                                    <p class="prdct_list_sub_title text-gray mb-3">
+                                        {{product.description}}
+                                    </p>
+                                    <div class="prdct_list_price_det w-100 mb-3">
+                                        <h5>
+                                            <span class="font-600 text-dark price_fnl mr-1">
+                                                ₹{{product.sellingPrice}}
+                                            </span>
+                                            <span class="font-500 text-gray price_cross position-relative font-16 mr-1">
+                                                ₹{{product.price}}
+                                            </span>
+                                            <span class="font-500 text-success offer_dis font-16 mr-1">
+                                                50% off
+                                            </span>
+                                        </h5>
+                                    </div>
+                                    <div class="prdct_list_rating_ovrvw w-100 mb-2">
+                                        <span class="bg-success py-1 font-14 px-2 rounded text-light">
+                                            5.0
+                                            <span class="material-icons font-18 position-relative"
+                                                style="top:3px;">star</span>
+                                        </span>
+                                        <span class="text-gray font-16 font-400 ml-2">
+                                            10,350 ratings
+                                        </span>
+                                    </div>
+                                    <span class="free_del_tg d-inline-block py-1 font-14 px-2 rounded mt-2">
+                                        Free delivery
                                     </span>
-                                    <span class="text-gray font-16 font-400 ml-2">
-                                        10,350 ratings
-                                    </span>
-                                </div>
-                                <span class="free_del_tg d-inline-block py-1 font-14 px-2 rounded mt-2">
-                                    Free delivery
-                                </span>
-                                <div class="row prdct_sec_list_crd_mn_btm_imgs mt-4">
-                                    <div class="col-lg-3 col-md-3 col-3 px-2 text-center mx-auto">
-                                        <div class="prdct_sec_list_crd_mn_btm_imgs_cntnr mx-auto">
-                                            <img class="img-fluid"
-                                                src="../../../../assets/images/product_list_img_btm.png">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-md-3 col-3 px-2 text-center mx-auto">
-                                        <div class="prdct_sec_list_crd_mn_btm_imgs_cntnr mx-auto">
-                                            <img class="img-fluid"
-                                                src="../../../../assets/images/product_list_img_btm.png">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-md-3 col-3 px-2 text-center mx-auto">
-                                        <div class="prdct_sec_list_crd_mn_btm_imgs_cntnr mx-auto">
-                                            <img class="img-fluid"
-                                                src="../../../../assets/images/product_list_img_btm.png">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3 col-md-3 col-3 px-2 text-center mx-auto">
-                                        <div class="prdct_sec_list_crd_mn_btm_imgs_cntnr mx-auto">
-                                            <img class="img-fluid"
-                                                src="../../../../assets/images/product_list_img_btm.png">
-                                        </div>
+                                    <div class="row prdct_sec_list_crd_mn_btm_imgs mt-4">
+                                        <ng-container *ngFor="let image of product?.images">
+                                            <div class="col-lg-3 col-md-3 col-3 px-2 text-center mx-auto">
+                                                <div class="prdct_sec_list_crd_mn_btm_imgs_cntnr mx-auto">
+                                                    <img class="img-fluid" [src]="image">
+                                                </div>
+                                            </div>
+                                        </ng-container>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </ng-container>
+                    </ng-container>
                 </div>
                 <div class="row w-100 mx-0" *ngIf="products.length == 0">
-                   <p class="prdct_list_sub_title text-gray mb-3">
-                      No products available for selected filter.  
-                   </p> 
+                    <p class="prdct_list_sub_title text-gray mb-3">
+                        No products available for selected filter.
+                    </p>
                 </div>
             </div>
 

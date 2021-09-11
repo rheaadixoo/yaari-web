@@ -16,8 +16,8 @@ export class LoginComponent implements OnInit {
   public loginForm: FormGroup = new FormGroup({});
   constructor(private builder: FormBuilder, private loginService: LoginService,
     private router: Router, private localStorageService: LocalStorageService,
-    private toastr: ToastrService,private cartService : CartService,
-    private cookie : CookieService) { }
+    private toastr: ToastrService, private cartService: CartService,
+    private cookie: CookieService) { }
 
   ngOnInit(): void {
     this.buildLoginForm();
@@ -43,10 +43,12 @@ export class LoginComponent implements OnInit {
           this.localStorageService.set('token', token);
           this.localStorageService.set('user-detail', atob(res['token'].split('.')[1]));
           let user = JSON.parse(this.localStorageService.get('user-detail'));
-          let cartObj = JSON.parse(this.cookie.get('cart'));
-          this.cartService.updateCart(cartObj['id'],{userId : user.id}).subscribe(res=>{
+          if (this.cookie.get('cart')) {
+            let cartObj = JSON.parse(this.cookie.get('cart'));
+            this.cartService.updateCart(cartObj['id'], { userId: user.id }).subscribe(res => {
               console.log("cart updated");
-          })
+            })
+          }
           this.router.navigate(['/home']);
         }
       }, error => {

@@ -75,4 +75,20 @@ export class ProductService {
       return response;
     }))
   }
+
+  getProductListById(id) {
+    let  query = {
+      where: {
+        and: [{ sub_category_id: id , productStatus: 'approved', status: 'active'}]
+      }
+    };
+    const filter = JSON.stringify(query);
+    const options = {
+      params: new HttpParams()
+        .append("filter", filter)
+    };
+    return this.http.get(this.apiUrl + 'products' , options).pipe(map(response => {
+      return response;
+    }))
+  }
 }

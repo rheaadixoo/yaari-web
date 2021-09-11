@@ -38,6 +38,7 @@ export class ProductDetailComponent implements OnInit {
   public productObj: any = {};
   public showBuyNowBtn: boolean = true;
   public subTotal: any = 0;
+  public productList : any = [];
   ngOnInit(): void {
     if (this.route.snapshot.params.id) {
       this.productId = this.route.snapshot.params.id;
@@ -52,7 +53,8 @@ export class ProductDetailComponent implements OnInit {
     if (this.productId) {
       this.productService.getProductById(this.productId).subscribe(res => {
         this.productObj = res;
-        this.subTotal = this.productObj.sellingPrice
+        this.subTotal = this.productObj.sellingPrice;
+        this.getProductListById(this.productObj['subCategoryId']);
       })
     } else {
       return;
@@ -204,5 +206,13 @@ export class ProductDetailComponent implements OnInit {
 
   get userDetail() {
     return JSON.parse(this.localStorageService.get('user-detail'));
+  }
+
+  getProductListById(productId){
+    this.productService.getProductListById(productId).subscribe(res =>{
+        this.productList = res;
+    },error =>{
+
+    })
   }
 }

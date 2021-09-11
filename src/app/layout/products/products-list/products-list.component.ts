@@ -32,7 +32,7 @@ export class ProductsListComponent implements OnInit {
       this.catName = this.route.snapshot.queryParams['category'];
     }
     this.getProductsList();
-    this.sortProductList('low');
+    // this.sortProductList('low');
   }
 
   getProductsList() {
