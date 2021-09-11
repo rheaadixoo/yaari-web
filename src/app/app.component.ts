@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { PageLoaderService } from './layout/page-loader/page-loader.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -7,7 +8,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class AppComponent {
   title = 'Yaari-Frontend';
-  constructor(private router : Router , private route : ActivatedRoute){}
+  constructor(
+    public pageLoaderService: PageLoaderService,
+    private router : Router , private route : ActivatedRoute){}
 
   get isNotCheckoutRoute(){
     if(this.route.snapshot.queryParams.txnToken){

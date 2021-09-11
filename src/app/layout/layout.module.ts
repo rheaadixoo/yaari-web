@@ -6,10 +6,18 @@ import { LayoutComponent } from './layout.component';
 import { BrandsComponent } from './brands/brands.component';
 import { FrequentlyAskedQuestionsComponent } from './frequently-asked-questions/frequently-asked-questions.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+import { PageLoaderComponent } from './page-loader/page-loader.component';
 
 
 @NgModule({
-  declarations: [LayoutComponent, BrandsComponent, FrequentlyAskedQuestionsComponent, PrivacyPolicyComponent],
+  declarations: [
+    LayoutComponent, 
+    BrandsComponent, 
+    FrequentlyAskedQuestionsComponent, 
+    PrivacyPolicyComponent, 
+    PageLoaderComponent
+  ],
+  exports:[PageLoaderComponent],
   imports: [
     CommonModule,
     LayoutRoutingModule

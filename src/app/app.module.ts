@@ -9,6 +9,8 @@ import { CookieService } from 'ngx-cookie-service';
 import { ToastrModule } from 'ngx-toastr';
 import { NgbModule,NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { LayoutModule } from './layout/layout.module';
+import { PageLoaderService } from './layout/page-loader/page-loader.service';
 @NgModule({
   declarations: [
     AppComponent
@@ -20,6 +22,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     FooterModule,
     BrowserAnimationsModule,
     NgbModule,
+    LayoutModule,
     ToastrModule.forRoot({
       timeOut: 10000,
       positionClass: 'toast-top-right',
@@ -27,7 +30,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     }),
     NgSelectModule
   ],
-  providers: [CookieService],
+  providers: [CookieService, PageLoaderService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
