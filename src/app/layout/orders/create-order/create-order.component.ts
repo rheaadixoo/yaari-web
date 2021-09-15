@@ -25,6 +25,7 @@ export class CreateOrderComponent implements OnInit {
   public userAddress: any = [];
   public formType: string = "Add Address"
   public modalRef : NgbModalRef;
+  public editModeAddressId : any = 0;
   constructor(private cartService: CartService, private route: ActivatedRoute, private modalService: NgbModal,
     private formBuilder: FormBuilder, private localStorageService: LocalStorageService,
     private addressService: AddressService, private orderService: OrderService,
@@ -67,7 +68,9 @@ export class CreateOrderComponent implements OnInit {
   }
 
   closeModal(){
-    this.modalRef.close()
+    this.editModeAddressId = 0;
+    this.addressForm.reset();
+    this.modalRef.close();
   }
   buildAddAddressForm() {
     this.addressForm = this.formBuilder.group({
@@ -91,15 +94,26 @@ export class CreateOrderComponent implements OnInit {
       userId: this.userDetails.id
     }
 
-    this.addressService.createNewAddress(payload).subscribe(res => {
-      try {
-        this.userAddress = res;
-        this.getUserAddress();
-        this.closeModal();
-      } catch (error) {
-
-      }
-    })
+    if(this.formType == 'Add Address'){
+      this.addressService.createNewAddress(payload).subscribe(res => {
+        try {
+          this.userAddress = res;
+          this.getUserAddress();
+          this.closeModal();
+        } catch (error) {
+        }
+      })  
+    }else{
+      this.addressService.updateUserAddress(payload,this.editModeAddressId).subscribe(res => {
+        try {
+          this.userAddress = res;
+          this.getUserAddress();
+          this.closeModal();
+        } catch (error) {
+        }
+      })
+    }
+    
   }
 
   getUserAddress() {
@@ -111,9 +125,16 @@ export class CreateOrderComponent implements OnInit {
     })
   }
 
-  editAddress() {
-    this.modalService.open(this.addAddress, { backdrop: 'static', keyboard: false });
-    // this.addFrm.name.patchValue(this.addAddress)    
+  editAddress(item) {
+    this.formType = "Edit Address";
+    this.editModeAddressId = item.id;
+    this.modalRef = this.modalService.open(this.addAddress, { backdrop: 'static', keyboard: false });
+    this.addFrm.name.patchValue(item.name);
+    this.addFrm.address.patchValue(item.address);
+    this.addFrm.city.patchValue(item.city);
+    this.addFrm.state.patchValue(item.state);
+    this.addFrm.pincode.patchValue(item.pinCode);
+    this.addFrm.country.patchValue(item.country);    
   }
 
   get addFrm() {
@@ -157,6 +178,30 @@ export class CreateOrderComponent implements OnInit {
       },error =>{
         this.toastr.success(error['error']['message']);
       })
+    }
+  }
+
+  validateFormField(type) {
+    if (type == 'name') {
+      if (this.addressForm.value.name.replace(/\s/g, "") === '') {
+        this.addressForm.controls.name.patchValue(null);
+      }
+    } else if (type == 'address') {
+      if (this.addressForm.value.address.replace(/\s/g, "") === '') {
+        this.addressForm.controls.address.patchValue(null);
+      }
+    } else if (type == 'city') {
+      if (this.addressForm.value.city.replace(/\s/g, "") === '') {
+        this.addressForm.controls.city.patchValue(null);
+      }
+    } else if (type == 'pincode') {
+      if (this.addressForm.value.pincode.replace(/\s/g, "") === '') {
+        this.addressForm.controls.pincode.patchValue(null);
+      }
+    } else if (type == 'state') {
+      if (this.addressForm.value.state.replace(/\s/g, "") === '') {
+        this.addressForm.controls.state.patchValue(null);
+      }
     }
   }
 }

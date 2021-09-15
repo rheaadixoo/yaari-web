@@ -35,7 +35,7 @@
                             <div class="delivery_addrs_crd_sec mt-4 mb-3">
                                 <div class="form-check border-bottom position-relative py-4">
                                     <input class="form-check-input mb-0" type="radio" name="exampleRadios"
-                                        id="exampleRadios1" value="option1" checked style="width: 18px; height: 18px;">
+                                        [id]="'exampleRadios'+item.id" value="option1" checked style="width: 18px; height: 18px;">
                                     <label class="form-check-label ml-2" for="exampleRadios1">
                                         <span class="font-500 font-18 d-block">{{item.name}}</span>
                                         <span class="font-400 font-16 text-dark d-block mt-2">
@@ -43,7 +43,8 @@
                                         </span>
                                     </label>
                                     <a href="javascript:void(0)"
-                                        class="text-dark font-16 font-500 edit_btn_of_del_adrs_plc_ordr">
+                                        class="text-dark font-16 font-500 edit_btn_of_del_adrs_plc_ordr"
+                                        (click)="editAddress(item)">
                                         EDIT
                                     </a>
                                 </div>
@@ -173,7 +174,7 @@
 
 <ng-template #addAddress>
     <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Add Address</h4>
+        <h4 class="modal-title" id="modal-basic-title">{{formType}}</h4>
         <button type="button" class="close" aria-label="Close" (click)="closeModal()">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -184,33 +185,38 @@
                 <label for="name">Name</label>
                 <div class="input-group">
                     <input id="name" class="form-control" placeholder="Add Name" name="name"
-                        formControlName="address">
+                        formControlName="name"
+                        (keyup)="validateFormField('name')">
                 </div>
             </div>
             <div class="form-group">
                 <label for="address">Address</label>
                 <div class="input-group">
                     <input id="address" class="form-control" placeholder="Add Address" name="address"
-                        formControlName="address">
+                        formControlName="address"
+                        (keyup)="validateFormField('address')">
                 </div>
             </div>
             <div class="form-group">
                 <label for="city">City</label>
                 <div class="input-group">
-                    <input id="city" class="form-control" placeholder="Add City" name="city" formControlName="city">
+                    <input id="city" class="form-control" placeholder="Add City" name="city" formControlName="city"
+                    (keyup)="validateFormField('city')">
                 </div>
             </div>
             <div class="form-group">
                 <label for="pincode">Add Pincode</label>
                 <div class="input-group">
                     <input id="pincode" class="form-control" placeholder="Add Pincode" name="pincode"
-                        formControlName="pincode">
+                        formControlName="pincode" type="number" [min]="0"
+                        (keyup)="validateFormField('pincode')">
                 </div>
             </div>
             <div class="form-group">
                 <label for="state">State</label>
                 <div class="input-group">
-                    <input id="state" class="form-control" placeholder="Add State" name="state" formControlName="state">
+                    <input id="state" class="form-control" placeholder="Add State" name="state" formControlName="state"
+                    (keyup)="validateFormField('state')">
                 </div>
             </div>
             <div class="form-group">
@@ -222,7 +228,7 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button type="submit" class="btn btn-outline-dark">Save</button>
+            <button type="submit" class="btn btn-outline-dark" [disabled]="addressForm.invalid">Save</button>
         </div>
     </form>
 </ng-template>

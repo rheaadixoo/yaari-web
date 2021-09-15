@@ -61,9 +61,9 @@
           <!-- Main IMG -->
           <div class="col-lg-8">
             <div id="product-image">
-              <a href="https://dl.dropboxusercontent.com/s/kk4d3bw3be3q1kw/KVSKR7135RT.JPG">
+              <a [href]="productObj?.thumbImages">
                 <img class="cloudzoom"
-                   src="https://dl.dropboxusercontent.com/s/kk4d3bw3be3q1kw/KVSKR7135RT.JPG"
+                   [src]="productObj?.thumbImages"
                    alt=""
                    data-cloudzoom="
                    zoomPosition:'inside',

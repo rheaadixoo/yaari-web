@@ -110,7 +110,7 @@ export class ProductDetailComponent implements OnInit {
   }
 
   buyNow() {
-    if (!this.localStorageService.get('user-detail')) {
+    if (this.localStorageService.get('user-detail') == false) {
       // alert('User sign in or sign up is required!')
       this.warningModal.open();
     }
