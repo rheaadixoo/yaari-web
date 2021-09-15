@@ -30,6 +30,10 @@ export class ProductDetailComponent implements OnInit {
       }
       this.getProductDetailById();
     })
+    // this is for routerLink on same component when only queryParameter changes
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
   }
 
   public modalRef: NgbModalRef;
@@ -38,7 +42,7 @@ export class ProductDetailComponent implements OnInit {
   public productObj: any = {};
   public showBuyNowBtn: boolean = true;
   public subTotal: any = 0;
-  public productList : any = [];
+  public productList: any = [];
   ngOnInit(): void {
     if (this.route.snapshot.params.id) {
       this.productId = this.route.snapshot.params.id;
@@ -208,11 +212,27 @@ export class ProductDetailComponent implements OnInit {
     return JSON.parse(this.localStorageService.get('user-detail'));
   }
 
-  getProductListById(productId){
-    this.productService.getProductListById(productId).subscribe(res =>{
-        this.productList = res;
-    },error =>{
+  getProductListById(productId) {
+    if(productId){
+      this.productService.getProductListById(productId).subscribe((res : any[]) => {
+        if(res && res.length > 0){
+          this.productList = res;
+        }
+      }, error => {
+      })
+    }else{
+      this.productList = [this.productObj];
+    }
+  }
+  /**
+   * Method for setting dynamic background image url on the zoom overlay div when product image get clicked
+   */
+  setZoomOverlayUrl() {
+    document.getElementById('zoom-overlay').style.background = `url(${this.productObj.thumbImages})`
+    console.log('document.getElementByIdstyle.background: ', document.getElementById('zoom-overlay').style.background);
+  }
 
-    })
+  openInDetailView(item) {
+    this.router.navigate([`app/products/detail/${item.id}`]);
   }
 }

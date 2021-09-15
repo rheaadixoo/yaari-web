@@ -134,10 +134,6 @@ export class CategoryMenuBarComponent implements OnInit {
 
   onChange(item,categoryName) {
     const obj = {'item_id' : item.id , item_name : item.name ,category : categoryName}
-    this.productService.stage.next(obj);
-    if (this.router.url.includes('/products')) {
-      } else {
-        this.router.navigate([`app/products`],{queryParams : {'sub_id' : item.id , item_name : item.name ,category : categoryName}});
-      }
+     this.router.navigate([`app/products`],{queryParams : {'sub_id' : item.id , item_name : item.name ,category : categoryName}});
     }
 }

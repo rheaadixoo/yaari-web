@@ -76,11 +76,11 @@ export class HeaderComponent implements OnInit {
 
   onChange(product) {
     if (product) {
-      if (this.router.url.includes('/products/detail')) {
-        this.productService.stage.next(product);
-      } else {
-        this.router.navigateByUrl(`app/products/detail/${product.id}`);
-      }
+      this.router.navigateByUrl(`app/products/detail/${product.id}`);
+      // if (this.router.url.includes('/products/detail')) {
+      //   this.productService.stage.next(product);
+      // } else {
+      // }
     }
   }
 }

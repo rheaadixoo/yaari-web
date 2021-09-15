@@ -26,7 +26,7 @@
                             <ng-container *ngFor="let ele of categories[key]">
                               <li *ngIf="ele.category.collectionId == collection.id">
                                 <a href="javascript:void(0)" class="nav-link--megamenu"
-                                (click)="onChange(ele,key)">{{ele.name}}
+                                (click)="onChange(ele,key);hideDropDown(collection.id)">{{ele.name}}
                               </a>
                                 <!-- [routerLink]="['/app/products',{'sub_id':ele.id,'sub_name':ele.name , 'cat':key}]" -->
                               </li>
@@ -425,7 +425,7 @@
               <li><a href="javacript:void(0)" [routerLink]="['/app/about']" class="nav-link--megamenu">About</a></li>
               <li><a href="javacript:void(0)" [routerLink]="['/app/contact']" class="nav-link--megamenu">Contact</a></li>
               <li><a href="javacript:void(0)" [routerLink]="['/app/faq']" class="nav-link--megamenu">FAQ</a></li>
-              <li><a href="javacript:void(0)" [routerLink]="['/app/blogs']" class="nav-link--megamenu border-0">Blogs</a></li>
+              <!-- <li><a href="javacript:void(0)" [routerLink]="['/app/blogs']" class="nav-link--megamenu border-0">Blogs</a></li> -->
             </ul>
           </li>
           <!-- <li class="web_prod_srch_li">

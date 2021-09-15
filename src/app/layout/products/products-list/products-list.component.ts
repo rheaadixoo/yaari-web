@@ -16,13 +16,17 @@ export class ProductsListComponent implements OnInit {
   public subCatName: string = '';
   public catName: string = '';
   constructor(private productService: ProductService, private router: Router, private route: ActivatedRoute) {
-    this.productService.currentProductStage.subscribe(res => {
-      this.subCatId = res['item_id'];
-      this.subCatName = res['item_name'];
-      this.catName = res['category'];
-      this.getProductsList();
-      this.sortProductList('low');
-    })
+    // this.productService.currentProductStage.subscribe(res => {
+    //   this.subCatId = res['item_id'];
+    //   this.subCatName = res['item_name'];
+    //   this.catName = res['category'];
+    //   this.getProductsList();
+    //   this.sortProductList('low');
+    // })
+    // this is for routerLink on same component when only queryParameter changes
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
   }
 
   ngOnInit(): void {
@@ -36,9 +40,11 @@ export class ProductsListComponent implements OnInit {
   }
 
   getProductsList() {
-    this.productService.getProductsList(this.subCatId).subscribe(response => {
-      this.products = response;
-    })
+    if(this.subCatId){
+      this.productService.getProductsList(this.subCatId).subscribe(response => {
+        this.products = response;
+      })
+    }
   }
 
   filterProductData(payload) {
@@ -46,6 +52,7 @@ export class ProductsListComponent implements OnInit {
       this.products = response;
     })
   }
+
   showProductDetailView(id) {
     this.router.navigateByUrl(`app/products/detail/${id}`)
   }

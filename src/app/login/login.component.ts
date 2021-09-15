@@ -6,6 +6,7 @@ import { LocalStorageService } from '../shared/services/local-storage.service';
 import { ToastrService } from 'ngx-toastr';
 import { CartService } from '../shared/services/cart.service';
 import { CookieService } from 'ngx-cookie-service';
+import { PreviousRouteService } from '../shared/services/previous-route.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -14,12 +15,15 @@ import { CookieService } from 'ngx-cookie-service';
 export class LoginComponent implements OnInit {
 
   public loginForm: FormGroup = new FormGroup({});
+  public previousUrl : any = '';
   constructor(private builder: FormBuilder, private loginService: LoginService,
     private router: Router, private localStorageService: LocalStorageService,
     private toastr: ToastrService, private cartService: CartService,
-    private cookie: CookieService) { }
+    private cookie: CookieService,private previousRouteService : PreviousRouteService) { }
 
   ngOnInit(): void {
+    this.previousUrl = this.previousRouteService.getPreviousUrl();
+    console.log('this.previousUrl: ', this.previousUrl);
     this.buildLoginForm();
   }
 
@@ -49,7 +53,11 @@ export class LoginComponent implements OnInit {
               console.log("cart updated");
             })
           }
-          this.router.navigate(['/home']);
+          if(this.previousUrl.includes('/login')){
+            this.router.navigate(['/home']);
+          }else{
+            this.router.navigate([this.previousUrl]);
+          }
         }
       }, error => {
         this.toastr.error('Invalid', 'User Record');

@@ -12,6 +12,7 @@ import { ShopByColorComponent } from './shop-by-color/shop-by-color.component';
 import { ShopBySizeComponent } from './shop-by-size/shop-by-size.component';  
 import { CategoriesComponent } from './categories/categories.component';
 import { ModalsModule } from '../modals/modals.module';
+import "../../../assets/js/product_zoom.js";
 @NgModule({
   declarations: [ProductsComponent, ProductsListComponent, ProductDetailComponent, ShopByMaterialComponent, ShopByBrandsComponent, ShopByColorComponent, ShopBySizeComponent,CategoriesComponent],
   imports: [

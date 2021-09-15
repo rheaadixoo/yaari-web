@@ -13,9 +13,10 @@ import { ToastrService } from 'ngx-toastr';
 export class UserProfileComponent implements OnInit {
   public userForm: FormGroup = new FormGroup({});
   public userObj: any = {};
-  public activeTab : string = 'profile';
-  public imgUrl : string = '';
-  constructor(private toastr: ToastrService, private builder: FormBuilder, private localStorageService: LocalStorageService, private userService: UserProfileService, private addressService: AddressService) { }
+  public activeTab: string = 'profile';
+  public imgUrl: string = '';
+  constructor(private toastr: ToastrService, private builder: FormBuilder, private localStorageService: LocalStorageService,
+    private userService: UserProfileService, private addressService: AddressService) { }
 
   ngOnInit(): void {
     this.getUserRecord();
@@ -35,7 +36,7 @@ export class UserProfileComponent implements OnInit {
       address: ['', Validators.required],
       city: ['', Validators.required],
       state: ['', Validators.required],
-      pincode: ['', [Validators.required , Validators.maxLength(6), Validators.minLength(6)] ]
+      pincode: ['', [Validators.required, Validators.maxLength(6), Validators.minLength(6)]]
     })
   }
 
@@ -44,18 +45,32 @@ export class UserProfileComponent implements OnInit {
   }
 
   getUserRecord() {
-    this.addressService.getAddressByUserId(this.userData.id).subscribe(response => {
-      this.userObj = response[0];
-      this.imgUrl = this.userObj.user['profileImage'];
-      this.UForm.first_name.patchValue(this.userObj.user.firstName);
-      this.UForm.last_name.patchValue(this.userObj.user.lastName);
-      this.UForm.email.patchValue(this.userObj.user.email);
-      this.UForm.mobile.patchValue(this.userObj.user.mobile);
-      this.UForm.city.patchValue(this.userObj.city);
-      this.UForm.state.patchValue(this.userObj.state);
-      this.UForm.pincode.patchValue(this.userObj.pinCode);
-      this.UForm.address.patchValue(this.userObj.address);
-      console.log("0this-", this.UForm);
+    this.addressService.getAddressByUserId(this.userData.id).subscribe((response: any[]) => {
+      if (response.length > 0) {
+        this.userObj = response[0];
+        this.imgUrl = this.userObj.user['profileImage'];
+        this.UForm.first_name.patchValue(this.userObj.user.firstName);
+        this.UForm.last_name.patchValue(this.userObj.user.lastName);
+        this.UForm.email.patchValue(this.userObj.user.email);
+        this.UForm.mobile.patchValue(this.userObj.user.mobile);
+        this.UForm.city.patchValue(this.userObj.city);
+        this.UForm.state.patchValue(this.userObj.state);
+        this.UForm.pincode.patchValue(this.userObj.pinCode);
+        this.UForm.address.patchValue(this.userObj.address);
+        console.log("0this-", this.UForm);
+      } else {
+        this.userService.getUserDetails().subscribe((response: any[]) => {
+          this.userObj = response;
+          this.imgUrl = this.userObj['profileImage'];
+          this.UForm.first_name.patchValue(this.userObj.firstName);
+          this.UForm.last_name.patchValue(this.userObj.lastName);
+          this.UForm.email.patchValue(this.userObj.email);
+          this.UForm.mobile.patchValue(this.userObj.mobile);
+        }, error => {
+          console.log("user details error",error);  
+        })
+      }
+
     }, error => {
       console.log("uuuuser========", error);
     })
@@ -67,7 +82,7 @@ export class UserProfileComponent implements OnInit {
       lastName: this.userForm.value.last_name,
       email: this.userForm.value.email,
       mobile: this.userForm.value.mobile,
-      profileImage : this.imgUrl
+      profileImage: this.imgUrl
     }
 
     const addressPayload = {
@@ -76,15 +91,25 @@ export class UserProfileComponent implements OnInit {
       city: this.userForm.value.city,
       state: this.userForm.value.state,
       pinCode: this.userForm.value.pincode,
+      userId : this.userObj.id,
       country: "India"
     }
 
     this.userService.updateUserRecord(payload, this.userData.id).subscribe(response => {
-      this.addressService.updateUserAddress(addressPayload, this.userObj.id).subscribe(res =>{
-        this.toastr.success('Profile Updated Successfully');
-      },err =>{
-        this.toastr.error(err , "Address");  
-      })
+      if(this.userObj.address){
+        this.addressService.updateUserAddress(addressPayload, this.userObj.id).subscribe(res => {
+          this.toastr.success('Profile Updated Successfully');
+        }, err => {
+          this.toastr.error(err, "Address");
+        })
+      }else{
+        this.addressService.createNewAddress(addressPayload).subscribe(res => {
+          this.toastr.success('Profile Updated Successfully');
+        }, err => {
+          this.toastr.error(err, "Address");
+        })
+      }
+      
     }, error => {
       this.toastr.error(error);
     })
@@ -126,16 +151,16 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
-  systemFilesPicked(ev){
+  systemFilesPicked(ev) {
     let file: File = ev[0];
-    let formData:FormData = new FormData();
-    console.log("file.name",file.name);
+    let formData: FormData = new FormData();
+    console.log("file.name", file.name);
     formData.append('files', file, file.name);
-    console.log("formData",formData);
-    this.userService.uploadProfilePhoto(formData).subscribe(res =>{
-          if(res['files'][0]['path']){
-              this.imgUrl = res['files'][0]['path'];
-          }
+    console.log("formData", formData);
+    this.userService.uploadProfilePhoto(formData).subscribe(res => {
+      if (res['files'][0]['path']) {
+        this.imgUrl = res['files'][0]['path'];
+      }
     })
   }
 }
