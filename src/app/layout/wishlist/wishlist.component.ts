@@ -17,23 +17,25 @@ export class WishlistComponent implements OnInit {
   public totalAmount: any = 0;
   public totalQuantity: any = 0;
   public wishlistObj: any = {};
-  constructor(private cartService : CartService ,private wishlistService: WishlistService, private cookie: CookieService,
-              private router: Router,private toastr : ToastrService) { }
+  constructor(private cartService: CartService, private wishlistService: WishlistService, private cookie: CookieService,
+    private router: Router, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.getWishlistDetail();
   }
 
   getWishlistDetail() {
-    this.wishlistObj = JSON.parse(this.cookie.get('wishlist'));
-    this.wishlistService.fetchWishListDetails(this.wishlistObj.id).subscribe(res => {
-      this.wishlistDetails = res;
-      this.totalAmount = 0;
-      this.totalDiscount = 0;
-      this.totalQuantity = 0;
-      this.totalPrice = 0; 
-      this.setTotalAmount();
-    })
+    if (this.cookie.get('wishlist')) {
+      this.wishlistObj = JSON.parse(this.cookie.get('wishlist'));
+      this.wishlistService.fetchWishListDetails(this.wishlistObj.id).subscribe(res => {
+        this.wishlistDetails = res;
+        this.totalAmount = 0;
+        this.totalDiscount = 0;
+        this.totalQuantity = 0;
+        this.totalPrice = 0;
+        this.setTotalAmount();
+      })
+    }
   }
 
   setTotalAmount() {
@@ -79,7 +81,7 @@ export class WishlistComponent implements OnInit {
     }
   }
 
-  get isUserLoggedIn(){
+  get isUserLoggedIn() {
     return localStorage.getItem('token');
   }
 
@@ -92,12 +94,12 @@ export class WishlistComponent implements OnInit {
   //   }
   // }
 
-  removeProductFromWishlist(id){
-    this.wishlistService.deleteWishlistDetail(id).subscribe(res =>{
-        console.log("-success-- remove product");
-        this.getWishlistDetail();
-    },error =>{
-        console.log("error remove product",error);
+  removeProductFromWishlist(id) {
+    this.wishlistService.deleteWishlistDetail(id).subscribe(res => {
+      console.log("-success-- remove product");
+      this.getWishlistDetail();
+    }, error => {
+      console.log("error remove product", error);
     })
   }
 
@@ -113,6 +115,9 @@ export class WishlistComponent implements OnInit {
           }
           this.cartService.createCartDetail(payload).subscribe(response => {
             console.log("response---", response);
+            this.cartService.getCart(res['id']).subscribe((res: any[]) => {
+              this.cartService.cartItemCount.next(res.length);
+            })
             try {
               this.toastr.success('Product added successfully');
             } catch (error) {
@@ -132,8 +137,11 @@ export class WishlistComponent implements OnInit {
       }
       this.cartService.createCartDetail(payload).subscribe(response => {
         this.toastr.success('Product added successfully',);
+        this.cartService.getCart(cartObj['id']).subscribe((res: any[]) => {
+          this.cartService.cartItemCount.next(res.length);
+        })
         this.removeProductFromWishlist(item.id);
-      },err =>{
+      }, err => {
         this.toastr.success('Error occurred while moving product',);
       })
     }

@@ -15,11 +15,11 @@ import { PreviousRouteService } from '../shared/services/previous-route.service'
 export class LoginComponent implements OnInit {
 
   public loginForm: FormGroup = new FormGroup({});
-  public previousUrl : any = '';
+  public previousUrl: any = '';
   constructor(private builder: FormBuilder, private loginService: LoginService,
     private router: Router, private localStorageService: LocalStorageService,
     private toastr: ToastrService, private cartService: CartService,
-    private cookie: CookieService,private previousRouteService : PreviousRouteService) { }
+    private cookie: CookieService, private previousRouteService: PreviousRouteService) { }
 
   ngOnInit(): void {
     this.previousUrl = this.previousRouteService.getPreviousUrl();
@@ -47,15 +47,43 @@ export class LoginComponent implements OnInit {
           this.localStorageService.set('token', token);
           this.localStorageService.set('user-detail', atob(res['token'].split('.')[1]));
           let user = JSON.parse(this.localStorageService.get('user-detail'));
-          if (this.cookie.get('cart')) {
-            let cartObj = JSON.parse(this.cookie.get('cart'));
-            this.cartService.updateCart(cartObj['id'], { userId: user.id }).subscribe(res => {
-              console.log("cart updated");
-            })
-          }
-          if(this.previousUrl.includes('/login')){
+          this.cartService.getCartWithUserId(user.id).subscribe((res: any[]) => {
+            if (res.length > 0) {
+              if (this.cookie.get('cart')) {
+                let cartObj = JSON.parse(this.cookie.get('cart'));
+                if (cartObj.id == res['id']) {
+                  return;
+                } else {
+                  this.cookie.deleteAll();
+                  this.cookie.set('cart', JSON.stringify({ id: res[0]['id'] }), { expires: 365, path: '/' });
+                }
+              }else{
+                 console.log("rs",res[0]);
+                 this.cookie.set('cart', JSON.stringify({ id: res[0]['id'] }), { expires: 365, path: '/' });  
+              }
+            } else if (!res.length) {
+              if (this.cookie.get('cart')) {
+                let cartObj = JSON.parse(this.cookie.get('cart'));
+                this.cartService.updateCart(cartObj['id'], { userId: user.id }).subscribe(res => {
+                  console.log("cart updated");
+                })
+              } else {
+                this.cartService.createCartWithUserId(user.id).subscribe(response => {
+                  console.log("cart created with user id");
+                  this.cookie.set('cart', JSON.stringify({ id: response['id'] }), { expires: 365, path: '/' });
+                })
+              }
+            }
+          })
+          // if (this.cookie.get('cart')) {
+          //   let cartObj = JSON.parse(this.cookie.get('cart'));
+          //   this.cartService.updateCart(cartObj['id'], { userId: user.id }).subscribe(res => {
+          //     console.log("cart updated");
+          //   })
+          // }
+          if (this.previousUrl.includes('/login')) {
             this.router.navigate(['/home']);
-          }else{
+          } else {
             this.router.navigate([this.previousUrl]);
           }
         }

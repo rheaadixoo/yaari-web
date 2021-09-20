@@ -42,13 +42,14 @@
               </div>
               <ul class="w-100">
                 <ng-container *ngFor="let imgUrl of productObj?.images">
-                <li>
-                  <a href="javascript:void(0)" title="View">
-                    <img class="cloudzoom-gallery" [src]="imgUrl" alt="thumbnail"
+                <li *ngIf="imgUrl">
+                  <a href="javascript:void(0)" title="View" id="zoom1">
+                    <img class="cloudzoom-gallery" src="{{imgUrl}}" alt="thumbnail"
                       data-cloudzoom="
-                          useZoom:'.cloudzoom',
-                          image: imgUrl ? imgUrl : imgUrl
-                      ">
+                      useZoom:'.cloudzoom', 
+                      image: imgUrl ? imgUrl : imgUrl,
+                      zoomPosition: 'inside',
+                      autoInside : true">
                   </a>
                 </li>
               </ng-container>
@@ -61,9 +62,9 @@
           <!-- Main IMG -->
           <div class="col-lg-8">
             <div id="product-image">
-              <a [href]="productObj?.thumbImages">
+              <a href="javascript:void(0)">
                 <img class="cloudzoom"
-                   [src]="productObj?.thumbImages"
+                   src="{{productObj?.thumbImages}}"
                    alt=""
                    data-cloudzoom="
                    zoomPosition:'inside',
@@ -78,17 +79,27 @@
             </div>
             <div class="row mx-0 mt-5 ad_crt_wish_by_btn_prdct_det">
               <div class="col-lg-6 col-md-6 px-2 mb-3">
-                <a href="javascript:void(0)"
+                <a href="javascript:void(0)" *ngIf="isProductExist == false"
                   class="font-18 font-600 w-100 d-flex text-center justify-content-center py-4" (click)="addToCart()">
                   <img src="../../../../assets/images/cart_icon.svg" class="img-fluid mr-2">
                   Add to cart
                 </a>
+                <a href="javascript:void(0)" [routerLink]="['/app/cart']" *ngIf="isProductExist"
+                  class="font-18 font-600 w-100 d-flex text-center justify-content-center py-4">
+                  <img src="../../../../assets/images/cart_icon.svg" class="img-fluid mr-2">
+                  Go to cart
+                </a>
               </div>
               <div class="col-lg-6 col-md-6 px-2 mb-3">
-                <a href="javascript:void(0)" (click)="addToWishList()"
+                <a href="javascript:void(0)" (click)="addToWishList()" *ngIf="isProductExistInWishlist == false"
                   class="font-18 font-600 w-100 d-flex text-center justify-content-center py-4">
                   <img src="../../../../assets/images/wishlist_icon.svg" class="img-fluid mr-2">
                   Add to wishlist
+                </a>
+                <a href="javascript:void(0)" *ngIf="isProductExistInWishlist" [routerLink]="['/app/wishlist']"
+                  class="font-18 font-600 w-100 d-flex text-center justify-content-center py-4">
+                  <img src="../../../../assets/images/wishlist_icon.svg" class="img-fluid mr-2">
+                  Go to wishlist
                 </a>
               </div>
               <div class="col-lg-12 col-md-12 px-2" *ngIf="showBuyNowBtn">

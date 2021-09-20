@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { ProductService } from 'src/app/shared/services/product.service.js';
 import "../../../assets/js/popper.min.js";
 import * as $ from "jquery"
+import { CookieService } from 'ngx-cookie-service';
+import { CartService } from 'src/app/shared/services/cart.service';
 @Component({
   selector: 'yaari-header',
   templateUrl: './header.component.html',
@@ -15,11 +17,20 @@ export class HeaderComponent implements OnInit {
   public userOptions: boolean = false;
   public searchValue: string = '';
   public productList: any = [];
+  public placeValue : any = 'Search Products...'
   private docEle: any = {};
+  public productCount : any = 0;
   constructor(private changeDetectorRef: ChangeDetectorRef, private router: Router,
-    private productService: ProductService) { }
+    private productService: ProductService,private cookie : CookieService,
+    private cartService : CartService) {
+        this.cartService.cartItemCount.subscribe(response =>{
+          this.productCount = response;
+        })
+     }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+      this.getCartDetail();
+  }
 
   get isUserLoggedIn() {
     if (localStorage.getItem('token')) {
@@ -51,6 +62,7 @@ export class HeaderComponent implements OnInit {
     let _that = this;
     localStorage.clear()
     this.userOptions = false;
+    this.cookie.deleteAll();
     _that.router.navigate(['/home']);
     this.changeDetectorRef.detectChanges()
   }
@@ -65,9 +77,11 @@ export class HeaderComponent implements OnInit {
   searchProduct(event) {
     let text = event.term;
     this.productList = [];
-    if (text === '' || text.length < 2) {
+    if (text === '' || text.length < 1) {
+      this.placeValue = "Search Products...";
       return
     }
+    this.placeValue = "";
     this.productService.searchProducts(text).subscribe(res => {
       // console.log("Re-s---", res);
       this.productList = res;
@@ -83,4 +97,22 @@ export class HeaderComponent implements OnInit {
       // }
     }
   }
+
+  getCartDetail() {
+    let cartObj = {};
+    if(this.cookie.get('cart')){
+      cartObj = JSON.parse(this.cookie.get('cart'));
+      if(cartObj){
+        this.cartService.getCart(cartObj['id']).subscribe((res : any[]) => {
+          this.productCount = res.length;
+        })
+      }
+    }else {
+      this.productCount = 0;
+    }
+  }
+
+  // get cartProductCount(){
+  //   return this.productCount;
+  // }
 }

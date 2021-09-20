@@ -11,7 +11,7 @@ export class HomeComponent implements OnInit {
 
   customOptions: OwlOptions = {
     loop: true,
-    autoplay: false,
+    autoplay: true,
     center: true,
     dots: true,
     autoHeight: true,
@@ -32,6 +32,7 @@ export class HomeComponent implements OnInit {
 
   customOptions1: OwlOptions = {
     loop: true,
+    autoplay: true,
     navText: ['', ''],
     margin: 30,
     nav: false,

@@ -65,11 +65,11 @@
                                         <span class="float-left font-500 px-0 py-1 mr-2">
                                             <div class="qty-input">
                                                 <button class="qty-count qty-count--minus" data-action="minus"
-                                                    type="button" (click)="decreaseQuantity(items.quantity,items.product.id)">-</button>
+                                                    type="button" (click)="decreaseQuantity(items.quantity,items.product.id,items.id)">-</button>
                                                 <input class="product-qty" type="number" name="product-qty" min="1"
                                                     max="10" [(ngModel)]="items.quantity">
                                                 <button class="qty-count qty-count--add" data-action="add"
-                                                    type="button" (click)="increaseQuantity(items.quantity,items.product.id)">+</button>
+                                                    type="button" (click)="increaseQuantity(items.quantity,items.product.id,items.id)">+</button>
                                             </div>
                                         </span>
                                     </div>

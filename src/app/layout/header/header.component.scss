@@ -45,16 +45,16 @@
 }
 .ng-select .ng-select-container .ng-value-container .ng-placeholder {
     position: absolute;
-    top : 15px;
+    top: 34px;
     left: 10px;
-    font-size: 16px;
-    color: #616e7c!important;
+    font-size: 20px;
+    color: #616e7c !important;
     transform-origin: left 0;
-    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), color 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .ng-dropdown-panel.ng-select-bottom {
-    top: calc(100% - 0em);
+    top: calc(104% - 0em);
     box-shadow: 0 5px 5px -3px rgb(0 0 0 / 20%), 0 8px 10px 1px rgb(0 0 0 / 14%), 0 3px 14px 2px rgb(0 0 0 / 12%);
 }
 
@@ -91,4 +91,46 @@
 
 .hide{
     opacity: 0;
+}
+
+.ng-select .ng-select-container:after {
+    border-bottom: none;
+}
+
+.cart_item_count{
+    // font-size: 14px;
+    // top: 28px;
+    // /* left: 71px; */
+    // font-weight: 900;
+    // padding: 5px;
+    // position: absolute;
+    // /* border: solid blue; */
+    // border-radius: 70%;
+    // height: 5px;
+    // width: 19px;
+    font-size: 14px;
+    top: 0px;
+    text-align: center;
+    font-weight: 900;
+    bottom: 0;
+    text-align: end;
+    margin-bottom: -8px;
+    /* margin: 5px; */
+    /* position: absolute; */
+    display: table;
+    position: inherit;
+    border-radius: 70%;
+    height: 5px;
+    background: #fff;
+    width: 19px;
+}
+
+.cart_text{
+    font-weight : 600;
+    font-size: 16px;
+    color: #363636;
+}
+
+.cart_text:hover{
+    color: #363636;
 }

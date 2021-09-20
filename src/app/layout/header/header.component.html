@@ -51,24 +51,25 @@
               Your Profile
             </a>
             <a class="dropdown-item font-400 font-16" href="javaScript:void(0)" id="sign_in_option"
-            [routerLink]="['app/wishlist']">
+            [routerLink]="['app/wishlist']" (click)="userOptions = false">
               Your Wishlist
             </a>
             <a class="dropdown-item font-400 font-16" href="javaScript:void(0)" id="sign_in_option"
-            [routerLink]="['app/contact']">
+            [routerLink]="['app/contact']" (click)="userOptions = false">
               Contact Us
             </a>
             <a class="dropdown-item border-0 font-400 font-16 text-danger" (click)="logout()" href="javaScript:void(0)"
-            id="sign_in_option">
+            id="sign_in_option" (click)="userOptions = false">
               Logout
             </a>
           </div>
         </div>
       </div>
       <div class="top_crt_main float-left px-3">
+        <span class="cart_item_count"> {{productCount}} </span>
         <img class="img-fluid mr-1" width="23" height="23" src="../../../assets/images/cart_icon.svg">
         <span class="font-600 font-16" style="cursor: pointer;">
-          <a [routerLink]="['/app/cart']">
+          <a [routerLink]="['/app/cart']" class="cart_text">
             Cart
           </a>
         </span>
@@ -84,7 +85,7 @@
         <img class="img-fluid" width="17" height="17" src="../../../../assets/images/search_icon.svg">
       </li> -->
       <ng-select (search)="searchProduct($event)" [(ngModel)]="searchValue"
-      bindLabel="name" [items]="productList" 
+      bindLabel="name" [items]="productList" [placeholder]="placeValue"
       (change)="onChange($event)"></ng-select>
       <button class="search_icon"><svg height="16" viewBox="0 0 16.001 16" width="16.001" xmlns="http://www.w3.org/2000/svg">
         <path

@@ -406,7 +406,7 @@
             </a>
             <ul class="nav-link--megamenu-sub-lg normal-sub" id="collec_ul">
               <ng-container *ngFor="let item of remainingCollections()">
-                <li><a href="javacript:void(0)" [routerLink]="['/app/products']" class="nav-link--megamenu">{{item.name}}</a></li>
+                <li><a href="javacript:void(0)" (click)="onChange(item,'Others')" class="nav-link--megamenu">{{item.name}}</a></li>
               </ng-container>
             </ul>
             </li>

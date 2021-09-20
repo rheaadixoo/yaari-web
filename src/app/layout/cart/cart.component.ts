@@ -20,23 +20,26 @@ export class CartComponent implements OnInit {
   public totalQuantity: any = 0;
   public cartObj: any = {};
   constructor(private cartService: CartService, private cookie: CookieService, private router: Router,
-              private toastr: ToastrService,private wishlistService: WishlistService,
-              private localStorageService : LocalStorageService) { }
+    private toastr: ToastrService, private wishlistService: WishlistService,
+    private localStorageService: LocalStorageService) { }
 
   ngOnInit(): void {
     this.getCartDetail();
   }
 
   getCartDetail() {
-    this.cartObj = JSON.parse(this.cookie.get('cart'));
-    this.cartService.getCart(this.cartObj.id).subscribe(res => {
-      this.cartDetails = res;
-      this.totalAmount = 0;
-      this.totalDiscount = 0;
-      this.totalQuantity = 0;
-      this.totalPrice = 0; 
-      this.setTotalAmount();
-    })
+    if (this.cookie.get('cart')) {
+      this.cartObj = JSON.parse(this.cookie.get('cart'));
+      this.cartService.getCart(this.cartObj.id).subscribe((res: any[]) => {
+        this.cartService.cartItemCount.next(res.length ? res.length : 0);
+        this.cartDetails = res;
+        this.totalAmount = 0;
+        this.totalDiscount = 0;
+        this.totalQuantity = 0;
+        this.totalPrice = 0;
+        this.setTotalAmount();
+      })
+    }
   }
 
   setTotalAmount() {
@@ -46,12 +49,15 @@ export class CartComponent implements OnInit {
       this.totalDiscount += Math.round((ele.product.price * ele.quantity) - (ele.product.sellingPrice * ele.quantity));
     }
     this.totalAmount = Math.round(this.totalPrice - this.totalDiscount);
-    console.log("quantity after", typeof this.totalAmount);
   }
 
-  increaseQuantity(quantity, id) {
+  increaseQuantity(quantity, id , cartDetailId) {
     if (quantity != 10) {
       quantity = quantity + 1;
+      const payload = {quantity : quantity};
+      this.cartService.updateCartDetail(cartDetailId ,payload).subscribe(res =>{
+          console.log("res",res);
+      })
       for (let item of this.cartDetails) {
         if (item.product.id == id) {
           item.quantity = quantity;
@@ -65,9 +71,13 @@ export class CartComponent implements OnInit {
     }
   }
 
-  decreaseQuantity(quantity, id) {
+  decreaseQuantity(quantity, id, cartDetailId) {
     if (quantity > 1) {
       quantity = quantity - 1;
+      const payload = {quantity : quantity};
+      this.cartService.updateCart(cartDetailId , payload).subscribe(res =>{
+          console.log("res",res);
+      })
       for (let item of this.cartDetails) {
         if (item.product.id == id) {
           item.quantity = quantity;
@@ -82,25 +92,25 @@ export class CartComponent implements OnInit {
     }
   }
 
-  get isUserLoggedIn(){
+  get isUserLoggedIn() {
     return localStorage.getItem('token');
   }
 
   placeOrder() {
-    if(!this.isUserLoggedIn){
-        this.WarningModal.open();
-    }else{
+    if (!this.isUserLoggedIn) {
+      this.WarningModal.open();
+    } else {
 
       this.router.navigate(['/app/orders/place-order'], { queryParams: { id: this.cartObj.id } });
     }
   }
 
-  removeProductFromCart(id){
-    this.cartService.deleteCartDetail(id).subscribe(res =>{
-        console.log("-success-- remove product");
-        this.getCartDetail();
-    },error =>{
-        console.log("error remove product",error);
+  removeProductFromCart(id) {
+    this.cartService.deleteCartDetail(id).subscribe(res => {
+      console.log("-success-- remove product");
+      this.getCartDetail();
+    }, error => {
+      console.log("error remove product", error);
     })
   }
 
@@ -120,7 +130,7 @@ export class CartComponent implements OnInit {
             quantity: item.quantity,
             businessId: item['businessId']
           }
-          this.addToWishListDetails(data,item);
+          this.addToWishListDetails(data, item);
           this.cookie.set('wishlist', JSON.stringify({ id: res['id'] }), { expires: 365, path: '/' });
         }
       })
@@ -131,7 +141,7 @@ export class CartComponent implements OnInit {
         quantity: item.quantity,
         businessId: item['businessId']
       }
-      this.addToWishListDetails(data,item);
+      this.addToWishListDetails(data, item);
     }
   }
 
@@ -139,7 +149,7 @@ export class CartComponent implements OnInit {
     return JSON.parse(this.cookie.get('wishlist'));
   }
 
-  addToWishListDetails(data,item) {
+  addToWishListDetails(data, item) {
     this.wishlistService.createWishListDetail(data).subscribe(res => {
       this.removeProductFromCart(item.id);
       this.toastr.success('Successfully added to wishlist');
@@ -149,6 +159,10 @@ export class CartComponent implements OnInit {
   }
 
   get userDetail() {
-    return JSON.parse(this.localStorageService.get('user-detail'));
+    if (this.localStorageService.get('user-detail')) {
+      return JSON.parse(this.localStorageService.get('user-detail'));
+    } else {
+      return false;
+    }
   }
 }

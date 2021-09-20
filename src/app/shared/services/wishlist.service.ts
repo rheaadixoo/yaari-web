@@ -21,6 +21,20 @@ export class WishlistService {
     }))
   }
 
+  isProductExistInWishlist(id,product_id) {
+    const query = {
+      where: { wishlistId : id, productId : product_id }
+    }
+    const filter = JSON.stringify(query);
+    const options = {
+      params: new HttpParams()
+        .append("filter", filter)
+    };
+    return this.http.get(this.apiUrl + "wishlist-details", options).pipe(map(response => {
+      return response;
+    }))
+  }
+
   fetchWishListDetails(wishlist_id) {
     const query = {
       where: {

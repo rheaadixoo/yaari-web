@@ -43,12 +43,31 @@ export class ProductDetailComponent implements OnInit {
   public showBuyNowBtn: boolean = true;
   public subTotal: any = 0;
   public productList: any = [];
+  public isProductExist: boolean = false;
+  public isProductExistInWishlist: boolean = false;
   ngOnInit(): void {
     if (this.route.snapshot.params.id) {
       this.productId = this.route.snapshot.params.id;
     }
     if (this.cookie.get('cart')) {
+      const cartObj = JSON.parse(this.cookie.get('cart'));
       this.showBuyNowBtn = true;
+      this.cartService.isProductExistInCart(cartObj['id'], JSON.parse(this.productId)).subscribe((response: any[]) => {
+        if (response.length) {
+          this.isProductExist = true;
+        } else {
+          this.isProductExist = false;
+        }
+      })
+    }
+    if (this.cookie.get('wishlist')) {
+      this.wishlistService.isProductExistInWishlist(this.wishlistObj['id'], JSON.parse(this.productId)).subscribe((response: any[]) => {
+        if (response.length) {
+          this.isProductExistInWishlist = true;
+        } else {
+          this.isProductExistInWishlist = false;
+        }
+      })
     }
     this.getProductDetailById();
   }
@@ -80,14 +99,18 @@ export class ProductDetailComponent implements OnInit {
             businessId: this.productObj['businessId']
           }
           this.cartService.createCartDetail(payload).subscribe(response => {
-            console.log("response---", response);
             try {
               this.toastr.success('Product added successfully');
             } catch (error) {
               this.toastr.error('Error,', error);
             }
+          }, error => {
+            this.toastr.error('Error,', error['error'].message);
           })
         }
+        this.cartService.getCart(res['id']).subscribe((resp: any[]) => {
+          this.cartService.cartItemCount.next(resp.length);
+        })
         this.cookie.set('cart', JSON.stringify({ id: res['id'] }), { expires: 365, path: '/' });
       })
     } else {
@@ -102,15 +125,25 @@ export class ProductDetailComponent implements OnInit {
         quantity: this.quantity,
         businessId: this.productObj['businessId']
       }
-      this.cartService.createCartDetail(payload).subscribe(response => {
-        console.log("response---", response);
-        this.toastr.success('Product added successfully',);
+      this.cartService.isProductExistInCart(cartObj['id'], JSON.parse(this.productId)).subscribe((response: any[]) => {
+        if (!response.length) {
+          this.isProductExist = false;
+          this.cartService.createCartDetail(payload).subscribe(response => {
+            this.cartService.getCart(cartObj['id']).subscribe((res: any[]) => {
+              this.isProductExist = true;
+              this.cartService.cartItemCount.next(res.length);
+            })
+            this.toastr.success('Product added successfully',);
+          })
+        } else {
+          this.isProductExist = true;
+        }
       })
     }
   }
 
   buyNow() {
-    if (this.localStorageService.get('user-detail') == false) {
+    if (!this.localStorageService.get('user-detail')) {
       // alert('User sign in or sign up is required!')
       this.warningModal.open();
     }
@@ -177,7 +210,14 @@ export class ProductDetailComponent implements OnInit {
         quantity: this.quantity,
         businessId: this.productObj['businessId']
       }
-      this.addToWishListDetails(data);
+      this.wishlistService.isProductExistInWishlist(this.wishlistObj['id'], JSON.parse(this.productId)).subscribe((response: any[]) => {
+        if (!response.length) {
+          this.isProductExistInWishlist = false;
+          this.addToWishListDetails(data);
+        } else {
+          this.isProductExistInWishlist = true;
+        }
+      })
     }
   }
 
@@ -187,6 +227,7 @@ export class ProductDetailComponent implements OnInit {
 
   addToWishListDetails(data) {
     this.wishlistService.createWishListDetail(data).subscribe(res => {
+      this.isProductExistInWishlist = true;
       this.toastr.success('Successfully added to wishlist');
     }, error => {
       this.toastr.error('Some error occurred while adding to wishlist please try again');
@@ -213,14 +254,14 @@ export class ProductDetailComponent implements OnInit {
   }
 
   getProductListById(productId) {
-    if(productId){
-      this.productService.getProductListById(productId).subscribe((res : any[]) => {
-        if(res && res.length > 0){
+    if (productId) {
+      this.productService.getProductListById(productId).subscribe((res: any[]) => {
+        if (res && res.length > 0) {
           this.productList = res;
         }
       }, error => {
       })
-    }else{
+    } else {
       this.productList = [this.productObj];
     }
   }
@@ -234,5 +275,9 @@ export class ProductDetailComponent implements OnInit {
 
   openInDetailView(item) {
     this.router.navigate([`app/products/detail/${item.id}`]);
+  }
+
+  get productImage() {
+    return this.productObj.thumbImages
   }
 }

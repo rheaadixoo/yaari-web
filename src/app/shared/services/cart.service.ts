@@ -1,6 +1,6 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpXhrBackend } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
 })
 export class CartService {
   private apiUrl: string = environment.apiUrl
+  public cartItemCount: BehaviorSubject<any> = new BehaviorSubject([]);
   constructor(private http: HttpClient) { }
 
   createCart() {
@@ -19,8 +20,21 @@ export class CartService {
     }))
   }
 
-  updateCart(id,payload) {
-    return this.http.patch(this.apiUrl + 'carts/'+id, payload).pipe(map(response => {
+  createCartWithUserId(user_id) {
+    const info = { totalAmount: 0, userId: user_id }
+    return this.http.post(this.apiUrl + 'carts', info).pipe(map(response => {
+      return response;
+    }))
+  }
+
+  updateCart(id, payload) {
+    return this.http.patch(this.apiUrl + 'carts/' + id, payload).pipe(map(response => {
+      return response;
+    }))
+  }
+
+  updateCartDetail(id , payload) {
+    return this.http.patch(this.apiUrl + 'cart-details/' + id , payload).pipe(map(response => {
       return response;
     }))
   }
@@ -34,7 +48,7 @@ export class CartService {
   getCart(cart_id) {
     const query = {
       where: {
-        and: [{ cartId : cart_id},]
+        and: [{ cartId: cart_id },]
       },
       include: [{ "all": true }]
     };
@@ -43,13 +57,43 @@ export class CartService {
       params: new HttpParams()
         .append("filter", filter)
     };
-    return this.http.get(this.apiUrl + "cart-details" , options).pipe(map(response => {
+    return this.http.get(this.apiUrl + "cart-details", options).pipe(map(response => {
       return response;
     }))
   }
 
-  deleteCartDetail(id){
-    return this.http.delete(this.apiUrl + "cart-details/"+id).pipe(map(response => {
+  getCartWithUserId(user_id) {
+    const query = {
+      where: {
+        and: [{ userId: user_id },]
+      },
+    };
+    const filter = JSON.stringify(query);
+    const options = {
+      params: new HttpParams()
+        .append("filter", filter)
+    };
+    return this.http.get(this.apiUrl + "carts", options).pipe(map(response => {
+      return response;
+    }))
+  }
+
+  isProductExistInCart(id,product_id) {
+    const query = {
+      where: { cartId : id, productId : product_id }
+    }
+    const filter = JSON.stringify(query);
+    const options = {
+      params: new HttpParams()
+        .append("filter", filter)
+    };
+    return this.http.get(this.apiUrl + "cart-details", options).pipe(map(response => {
+      return response;
+    }))
+  }
+
+  deleteCartDetail(id) {
+    return this.http.delete(this.apiUrl + "cart-details/" + id).pipe(map(response => {
       return response;
     }))
   }
