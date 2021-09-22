@@ -17,11 +17,11 @@ export class CheckoutComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private domSanitizer: DomSanitizer,
-    private locationStrategy : LocationStrategy
+    private locationStrategy: LocationStrategy
     // private pageLoaderService: PageLoaderService,
   ) {
     this.preventBackButton();
-   }
+  }
 
   ngOnInit(): void {
     this.activatedRoute.queryParamMap.subscribe((queryParam: any) => {
@@ -32,22 +32,24 @@ export class CheckoutComponent implements OnInit {
       if (!this.txnToken || !this.orderNumber) {
         this.router.navigateByUrl("/")
       } else {
-        this.actionUrl = this.domSanitizer.bypassSecurityTrustResourceUrl
-          (`${environment.apiUrl}payments/checkout?txnToken=${this.txnToken}&orderNumber=${this.orderNumber}`)
+        // this.actionUrl = this.domSanitizer.bypassSecurityTrustResourceUrl
+        //   (`${environment.apiUrl}payments/checkout?txnToken=${this.txnToken}&orderNumber=${this.orderNumber}`)
         // this.pageLoaderService.stopLoading()
-        console.log("----action url----------", this.actionUrl);
+        this.actionUrl = `${environment.apiUrl}payments/checkout?txnToken=${this.txnToken}&orderNumber=${this.orderNumber}`;
+        window.open(this.actionUrl);
+        this.router.navigateByUrl("/")        
       }
     }
     )
   }
 
 
-// Define a function to handle back button and use anywhere
-preventBackButton() {
-  history.pushState(null, null, location.href);
-  this.locationStrategy.onPopState(() => {
+  // Define a function to handle back button and use anywhere
+  preventBackButton() {
     history.pushState(null, null, location.href);
-  })
-}
+    this.locationStrategy.onPopState(() => {
+      history.pushState(null, null, location.href);
+    })
+  }
 
 }
