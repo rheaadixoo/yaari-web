@@ -4,6 +4,7 @@ import { CategoryService } from 'src/app/shared/services/category.service';
 import * as _ from "lodash";
 import { Router } from '@angular/router';
 import { ProductService } from 'src/app/shared/services/product.service';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'yaari-category-menu-bar',
   templateUrl: './category-menu-bar.component.html',
@@ -11,8 +12,11 @@ import { ProductService } from 'src/app/shared/services/product.service';
 })
 export class CategoryMenuBarComponent implements OnInit {
   public collections: any = [];
+  public headerCollections:any =[];
+  public otherCollections: any =[];
   public categories: any = [];
   public hoveredItemId: number = 0;
+  public headerCollectionLength:number = environment.headerCollectionLength;
   public Object = Object;
   constructor(private productService : ProductService , private router : Router,private collectionService: CollectionsService, private categoryService: CategoryService) { }
 
@@ -57,10 +61,20 @@ export class CategoryMenuBarComponent implements OnInit {
   getAllCollection() {
     this.collectionService.getAllCollections().subscribe(res => {
       this.collections = res;
+      for (let index = 0; index < this.collections.length; index++) {
+        const element = res[index];
+        if(this.headerCollectionLength > index){
+          this.headerCollections.push(this.collections[index])
+        }else{
+          this.otherCollections.push(this.collections[index])
+        }
+        
+      }
     })
   }
 
   getCollections() {
+
     return this.collections.filter(x => x.name == 'Women' || x.name == 'Men' || x.name == 'Kids'
       || x.name == 'Beauty & Personal Care' || x.name == 'Home & Kitchen');
   }
