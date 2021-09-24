@@ -81,8 +81,11 @@ export class LoginComponent implements OnInit {
           //     console.log("cart updated");
           //   })
           // }
+          console.log("this.previousUrl >>>>>>>>>>",this.previousUrl);
+          
           if (this.previousUrl.includes('/login')) {
             this.router.navigate(['/home']);
+
           } else {
             if(!this.previousUrl.includes('register')){
               this.router.navigate([this.previousUrl]);

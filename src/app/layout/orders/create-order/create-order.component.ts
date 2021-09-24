@@ -64,6 +64,7 @@ export class CreateOrderComponent implements OnInit {
   }
 
   addAddressModal() {
+    this.buildAddAddressForm()
     this.modalRef = this.modalService.open(this.addAddress, { backdrop: 'static', keyboard: false, centered: true })
   }
 
