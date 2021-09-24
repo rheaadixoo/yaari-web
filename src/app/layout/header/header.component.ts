@@ -35,7 +35,8 @@ export class HeaderComponent implements OnInit {
   get isUserLoggedIn() {
     if (localStorage.getItem('token')) {
       return true;
-    } else {
+    } 
+    else {
       return false;
     }
   }
@@ -73,7 +74,7 @@ export class HeaderComponent implements OnInit {
       return userObj.name;
     }
   }
-
+  
   searchProduct(event) {
     let text = event.term;
     this.productList = [];
@@ -89,6 +90,7 @@ export class HeaderComponent implements OnInit {
   }
 
   onChange(product) {
+    console.log(product)
     if (product) {
       this.router.navigateByUrl(`app/products/detail/${product.id}`);
       // if (this.router.url.includes('/products/detail')) {

@@ -6,7 +6,7 @@
             <a href="javascript:void(0)" class="nav-link--megamenu active"
             [routerLink]="['/home']">Home</a>
           </li>
-          <ng-container *ngFor="let collection of getCollections()">
+          <ng-container *ngFor="let collection of headerCollections">
           <li (mouseover)="showCategoryDropdown(collection.id)" (mouseout)="hideDropDown(collection.id)">
             <a href="javascript:void(0)" class="nav-link--megamenu">
               {{collection.name}}
@@ -405,8 +405,8 @@
               <span class="material-icons nav_links_btm_arrow">expand_more</span>
             </a>
             <ul class="nav-link--megamenu-sub-lg normal-sub" id="collec_ul">
-              <ng-container *ngFor="let item of remainingCollections()">
-                <li><a href="javacript:void(0)" (click)="onChange(item,'Others')" class="nav-link--megamenu">{{item.name}}</a></li>
+              <ng-container *ngFor="let item of otherCollections">
+                <li><a href="javacript:void(0)" [routerLink]="['/app/products']" class="nav-link--megamenu">{{item.name}}</a></li>
               </ng-container>
             </ul>
             </li>
