@@ -38,7 +38,7 @@ export class ProductsListComponent implements OnInit {
     }
     setTimeout(()=>{
       this.isProductListLoaded = true;
-    },2000);
+    },120000);
     this.getProductsList();
     // this.sortProductList('low');
   }

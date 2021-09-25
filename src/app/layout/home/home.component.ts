@@ -109,7 +109,6 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void { 
     setTimeout(()=>{
       this.isViewLoaded = true;
-    },30000)
+    },120000)
   }
-
 }
