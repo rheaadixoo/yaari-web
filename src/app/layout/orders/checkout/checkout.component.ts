@@ -37,7 +37,7 @@ export class CheckoutComponent implements OnInit {
         // this.pageLoaderService.stopLoading()
         this.actionUrl = `${environment.apiUrl}payments/checkout?txnToken=${this.txnToken}&orderNumber=${this.orderNumber}`;
         window.open(this.actionUrl);
-        this.router.navigateByUrl("/")        
+        this.router.navigateByUrl("/");
       }
     }
     )

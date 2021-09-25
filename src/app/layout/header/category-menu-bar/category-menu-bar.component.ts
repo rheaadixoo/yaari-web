@@ -33,8 +33,10 @@ export class CategoryMenuBarComponent implements OnInit {
     //   $(".menu > ul").toggleClass('show-on-mobile');
     //   e.preventDefault();
     // });
-    this.getAllCollection();
-    this.getAllCategory();
+    setTimeout(()=>{
+      this.getAllCollection();
+      this.getAllCategory();
+    },2000)
   }
 
   /**
@@ -61,12 +63,13 @@ export class CategoryMenuBarComponent implements OnInit {
   getAllCollection() {
     this.collectionService.getAllCollections().subscribe(res => {
       this.collections = res;
-      for (let index = 0; index < this.collections.length; index++) {
+      let collectionArr = _.orderBy(this.collections,['id'],['asc']);
+      for (let index = 0; index < collectionArr.length; index++) {
         const element = res[index];
         if(this.headerCollectionLength > index){
-          this.headerCollections.push(this.collections[index])
+          this.headerCollections.push(collectionArr[index])
         }else{
-          this.otherCollections.push(this.collections[index])
+          this.otherCollections.push(collectionArr[index])
         }
         
       }

@@ -1,3 +1,4 @@
+<ng-container *ngIf="isViewLoaded">
 <header>
   <owl-carousel-o [options]="customOptions">
     <ng-template carouselSlide [width]="1279" class="slide" style="height:679px">
@@ -200,7 +201,6 @@
 
 <!-- Blogs Section -->
 <!-- Blog Section -->
-
 <section class="pt-0 pb-0 my-5 blog_section">
   <div class="container-fluid">
     <div class="row mx-0">
@@ -258,5 +258,5 @@
     </div>
   </div>
 </section>
-
+</ng-container>
 <!-- Blog Section End -->

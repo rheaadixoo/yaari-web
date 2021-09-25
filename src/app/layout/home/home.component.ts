@@ -8,7 +8,7 @@ import * as $ from "jquery";
   encapsulation: ViewEncapsulation.None
 })
 export class HomeComponent implements OnInit {
-
+  public isViewLoaded : boolean = false;
   customOptions: OwlOptions = {
     loop: true,
     autoplay: true,
@@ -106,6 +106,10 @@ export class HomeComponent implements OnInit {
     console.log(this.activeSlides);
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+    setTimeout(()=>{
+      this.isViewLoaded = true;
+    },3000)
+  }
 
 }

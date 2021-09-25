@@ -63,7 +63,8 @@ export class HeaderComponent implements OnInit {
     let _that = this;
     localStorage.clear()
     this.userOptions = false;
-    this.cookie.deleteAll();
+    this.cookie.deleteAll('/');
+    window.location.reload();
     _that.router.navigate(['/home']);
     this.changeDetectorRef.detectChanges()
   }

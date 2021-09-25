@@ -15,12 +15,13 @@ export class ProductsListComponent implements OnInit {
   public subCatId: number = 0;
   public subCatName: string = '';
   public catName: string = '';
+  public isProductListLoaded : boolean = false;
   constructor(private productService: ProductService, private router: Router, private route: ActivatedRoute) {
     // this.productService.currentProductStage.subscribe(res => {
     //   this.subCatId = res['item_id'];
     //   this.subCatName = res['item_name'];
     //   this.catName = res['category'];
-    //   this.getProductsList();
+    //   this.getProductsList();`
     //   this.sortProductList('low');
     // })
     // this is for routerLink on same component when only queryParameter changes
@@ -35,6 +36,9 @@ export class ProductsListComponent implements OnInit {
       this.subCatName = this.route.snapshot.queryParams['item_name'];
       this.catName = this.route.snapshot.queryParams['category'];
     }
+    setTimeout(()=>{
+      this.isProductListLoaded = true;
+    },2000);
     this.getProductsList();
     // this.sortProductList('low');
   }

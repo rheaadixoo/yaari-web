@@ -75,7 +75,7 @@ export class CartComponent implements OnInit {
     if (quantity > 1) {
       quantity = quantity - 1;
       const payload = {quantity : quantity};
-      this.cartService.updateCart(cartDetailId , payload).subscribe(res =>{
+      this.cartService.updateCartDetail(cartDetailId , payload).subscribe(res =>{
           console.log("res",res);
       })
       for (let item of this.cartDetails) {
