@@ -37,7 +37,7 @@ export class CategoryMenuBarComponent implements OnInit {
       this.getAllCollection();
       this.getAllCategory();
       console.log("all category");
-    },1200000)
+    },5000)
   }
 
   /**
