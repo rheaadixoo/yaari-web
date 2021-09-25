@@ -1,6 +1,6 @@
 <!-- Breadcrumb section -->
-
-<div class="jumbotron jumbotron-fluid breadcrumb_jumbo_custom">
+<ng-container *ngIf="isCollectionLoaded">
+<div class="jumbotron jumbotron-fluid breadcrumb_jumbo_custom" *ngIf="isCollectionLoaded">
     <div class="container text-center">
       <h1 class="text-dark font-500 mb-0">
         All Collections
@@ -69,5 +69,5 @@
       </div>
     </div>
   </section>
-  
+</ng-container>
   <!-- All Collection section End -->

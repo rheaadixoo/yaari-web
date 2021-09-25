@@ -36,7 +36,8 @@ export class CategoryMenuBarComponent implements OnInit {
     setTimeout(()=>{
       this.getAllCollection();
       this.getAllCategory();
-    },120000)
+      console.log("all category");
+    },1200000)
   }
 
   /**

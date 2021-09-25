@@ -15,11 +15,16 @@ export class AllCollectionsComponent implements OnInit {
    */
   public allCollections: any = [];
   public Object = Object;
+  isCollectionLoaded : boolean = false;
   constructor(private collectionService: CollectionsService, private categoryService: CategoryService,
     private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.getAllCollection();
+    setTimeout(()=>{
+      this.isCollectionLoaded = true;
+      console.log('this.isCollectionLoaded: ', this.isCollectionLoaded);
+    },120000)
   }
   /**
    * 
