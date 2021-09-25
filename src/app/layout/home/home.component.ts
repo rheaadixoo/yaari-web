@@ -110,6 +110,6 @@ export class HomeComponent implements OnInit {
     setTimeout(()=>{
       this.isViewLoaded = true;
       console.log('this.isViewLoaded: ', this.isViewLoaded);
-    },1200000)
+    },5000)
   }
 }
