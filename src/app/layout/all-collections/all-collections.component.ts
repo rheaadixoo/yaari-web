@@ -24,7 +24,7 @@ export class AllCollectionsComponent implements OnInit {
     setTimeout(()=>{
       this.isCollectionLoaded = true;
       console.log('this.isCollectionLoaded: ', this.isCollectionLoaded);
-    },120000)
+    },5000)
   }
   /**
    * 
