@@ -33,11 +33,11 @@ export class CategoryMenuBarComponent implements OnInit {
     //   $(".menu > ul").toggleClass('show-on-mobile');
     //   e.preventDefault();
     // });
-    setTimeout(()=>{
+    // setTimeout(()=>{
       this.getAllCollection();
       this.getAllCategory();
       console.log("all category");
-    },5000)
+    // },5000)
   }
 
   /**

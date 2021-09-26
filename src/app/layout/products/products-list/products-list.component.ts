@@ -36,10 +36,10 @@ export class ProductsListComponent implements OnInit {
       this.subCatName = this.route.snapshot.queryParams['item_name'];
       this.catName = this.route.snapshot.queryParams['category'];
     }
-    setTimeout(()=>{
+    // setTimeout(()=>{
       this.isProductListLoaded = true;
       console.log('this.isProductListLoaded: ', this.isProductListLoaded);
-    },5000);
+    // },5000);
     this.getProductsList();
     // this.sortProductList('low');
   }
