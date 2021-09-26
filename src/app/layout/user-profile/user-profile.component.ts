@@ -92,13 +92,13 @@ export class UserProfileComponent implements OnInit {
       city: this.userForm.value.city,
       state: this.userForm.value.state,
       pinCode: this.userForm.value.pincode,
-      userId : this.userObj.id,
+      userId : this.userObj.user.id,
       country: "India"
     }
 
     this.userService.updateUserRecord(payload, this.userData.id).subscribe(response => {
       if(this.userObj.address){
-        this.addressService.updateUserAddress(addressPayload, this.userObj.id).subscribe(res => {
+        this.addressService.updateUserAddress(addressPayload, this.userObj.user.id).subscribe(res => {
           this.toastr.success('Profile Updated Successfully');
         }, err => {
           this.toastr.error(err, "Address");

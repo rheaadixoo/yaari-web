@@ -21,10 +21,10 @@ export class AllCollectionsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllCollection();
-    setTimeout(()=>{
+    // setTimeout(()=>{
       this.isCollectionLoaded = true;
       console.log('this.isCollectionLoaded: ', this.isCollectionLoaded);
-    },5000)
+    // },5000)
   }
   /**
    * 
