@@ -274,6 +274,7 @@ export class ProductDetailComponent implements OnInit {
   }
 
   openInDetailView(item) {
+    console.log("Item:"+item);
     this.router.navigate([`app/products/detail/${item.id}`]);
   }
 
