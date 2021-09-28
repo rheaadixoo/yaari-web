@@ -9,7 +9,7 @@
           <button class="dropdown-toggle text-left d-flex" type="button" id="dropdownMenuButton" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false" (click)="isBtnClicked = !isBtnClicked"
             *ngIf="isUserLoggedIn == false">
-            <img class="d-block float-left img-fluid mr-2 my-auto" src="../../../assets/images/profile_default.svg"
+            <img class="d-block float-left img-fluid mr-2 my-auto" src = "../../../assets/images/profile_default.svg"
               width="40" height="40">
             <span class="d-block float-left">
               <span class="font-400 font-14">Hello, Sign in</span>
@@ -50,10 +50,10 @@
               (click)="userOptions = false" id="sign_in_option">
               Your Profile
             </a>
-            <a class="dropdown-item font-400 font-16" href="javaScript:void(0)" id="sign_in_option"
+            <!-- <a class="dropdown-item font-400 font-16" href="javaScript:void(0)" id="sign_in_option"
             [routerLink]="['app/wishlist']" (click)="userOptions = false">
               Your Wishlist
-            </a>
+            </a> -->
             <a class="dropdown-item font-400 font-16" href="javaScript:void(0)" id="sign_in_option"
             [routerLink]="['app/contact']" (click)="userOptions = false">
               Contact Us
