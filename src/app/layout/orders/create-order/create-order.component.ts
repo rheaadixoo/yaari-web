@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { CartService } from 'src/app/shared/services/cart.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbModal,NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, FormControl, Validator, Validators } from '@angular/forms';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 import { AddressService } from 'src/app/shared/services/address.service';
@@ -11,10 +11,12 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-create-order',
   templateUrl: './create-order.component.html',
-  styleUrls: ['./create-order.component.scss']
+  styleUrls: ['./create-order.component.scss'],
+  encapsulation : ViewEncapsulation.None
 })
 export class CreateOrderComponent implements OnInit {
   @ViewChild('addAddress') addAddress;
+  @ViewChild('payLaterOrderSummary') payLaterOrderSummary;
   public cartId: any = 0;
   public cartDetails: any = [];
   public totalPrice: any = 0;
@@ -24,13 +26,18 @@ export class CreateOrderComponent implements OnInit {
   public addressForm: FormGroup = new FormGroup({});
   public userAddress: any = [];
   public formType: string = "Add Address"
-  public modalRef : NgbModalRef;
-  public editModeAddressId : any = 0;
+  public modalRef: NgbModalRef;
+  public editModeAddressId: any = 0;
+  public isPayLaterClicked: boolean = false;
+  public couponCode: string = '';
+  public coupon_code_check = 'HPB50';
+  public deliveryCharges: any = 0;
+  public isCouponApplied : boolean = false;
   constructor(private cartService: CartService, private route: ActivatedRoute, private modalService: NgbModal,
     private formBuilder: FormBuilder, private localStorageService: LocalStorageService,
     private addressService: AddressService, private orderService: OrderService,
     private cookie: CookieService, private router: Router,
-    private toastr : ToastrService) {
+    private toastr: ToastrService) {
     if (this.route.snapshot.queryParams.id) {
       this.cartId = this.route.snapshot.queryParams.id;
     }
@@ -60,6 +67,12 @@ export class CreateOrderComponent implements OnInit {
       this.totalDiscount += Math.round((ele.product.price * ele.quantity) - (ele.product.sellingPrice * ele.quantity));
     }
     this.totalAmount = Math.round(this.totalPrice - this.totalDiscount);
+    if (this.totalAmount < 500) {
+      this.deliveryCharges = 100;
+      this.totalAmount = this.totalAmount + this.deliveryCharges;
+    } else {
+      this.deliveryCharges = 0;
+    }
     console.log("quantity after", this.totalAmount);
   }
 
@@ -68,7 +81,7 @@ export class CreateOrderComponent implements OnInit {
     this.modalRef = this.modalService.open(this.addAddress, { backdrop: 'static', keyboard: false, centered: true })
   }
 
-  closeModal(){
+  closeModal() {
     this.editModeAddressId = 0;
     this.addressForm.reset();
     this.modalRef.close();
@@ -95,7 +108,7 @@ export class CreateOrderComponent implements OnInit {
       userId: this.userDetails.id
     }
 
-    if(this.formType == 'Add Address'){
+    if (this.formType == 'Add Address') {
       this.addressService.createNewAddress(payload).subscribe(res => {
         try {
           this.userAddress = res;
@@ -103,9 +116,9 @@ export class CreateOrderComponent implements OnInit {
           this.closeModal();
         } catch (error) {
         }
-      })  
-    }else{
-      this.addressService.updateUserAddress(payload,this.editModeAddressId).subscribe(res => {
+      })
+    } else {
+      this.addressService.updateUserAddress(payload, this.editModeAddressId).subscribe(res => {
         try {
           this.userAddress = res;
           this.getUserAddress();
@@ -114,11 +127,11 @@ export class CreateOrderComponent implements OnInit {
         }
       })
     }
-    
+
   }
 
   getUserAddress() {
-    this.addressService.getAddressByUserId(this.userDetails.id).subscribe(res => {
+    this.addressService.getAddressByUserId(this.userDetails.id).subscribe((res: any[]) => {
       try {
         this.userAddress = res;
       } catch (error) {
@@ -135,7 +148,7 @@ export class CreateOrderComponent implements OnInit {
     this.addFrm.city.patchValue(item.city);
     this.addFrm.state.patchValue(item.state);
     this.addFrm.pincode.patchValue(item.pinCode);
-    this.addFrm.country.patchValue(item.country);    
+    this.addFrm.country.patchValue(item.country);
   }
 
   get addFrm() {
@@ -153,31 +166,48 @@ export class CreateOrderComponent implements OnInit {
       const payload = {
         cartId: cartObj['id'],
         addressId: 5,
-        userId: userObj['id']
+        userId: userObj['id'],
+        coupon : this.isCouponApplied ? this.isCouponApplied : false
       }
       this.orderService.createOrder(payload).subscribe(res => {
+        let data = { status: 'closed' };
+        this.cartService.updateCart(cartObj['id'], data).subscribe((res: []) => {
+          console.log('res: ', res);
+          this.cookie.delete('cart', '/');
+          this.cartService.cartItemCount.next(0);
+        })
         this.router.navigate(['/app/orders/checkout'], { queryParams: { txnToken: res['txnToken'], orderNumber: res['order']['orderNumber'] } })
         this.toastr.success('Order created successfully');
-          },error =>{
-        this.toastr.success(error['error']['message']);
+      }, error => {
+        this.toastr.error(error['error']['message']);
       })
     }
   }
 
-  createPayLaterOrder(){
+  createPayLaterOrder() {
     if (this.cookie.get('cart')) {
+      this.isPayLaterClicked = true;
       const cartObj = JSON.parse(this.cookie.get('cart'));
       const userObj = JSON.parse(this.localStorageService.get('user-detail'));
       const payload = {
         cartId: cartObj['id'],
         addressId: 5,
         userId: userObj['id'],
-        payLater : true
+        payLater: true,
+        coupon : this.isCouponApplied ? this.isCouponApplied : false
       }
       this.orderService.createOrder(payload).subscribe(res => {
         this.toastr.success('Order created successfully');
-      },error =>{
-        this.toastr.success(error['error']['message']);
+        let data = { status: 'closed' };
+        this.cartService.updateCart(cartObj['id'], data).subscribe((res: []) => {
+          console.log('res: ', res);
+          this.modalRef = this.modalService.open(this.payLaterOrderSummary, { windowClass : 'orderSummary' ,backdrop: 'static', keyboard: false, centered: true })
+          this.router.navigateByUrl('/home');
+          this.cookie.delete('cart', '/');
+          this.cartService.cartItemCount.next(0);
+        })
+      }, error => {
+        this.toastr.error(error['error']['message']);
       })
     }
   }
@@ -203,6 +233,24 @@ export class CreateOrderComponent implements OnInit {
       if (this.addressForm.value.state.replace(/\s/g, "") === '') {
         this.addressForm.controls.state.patchValue(null);
       }
+    }
+  }
+
+  applyCouponCode() {
+    if (this.couponCode != '') {
+      if (this.couponCode == this.coupon_code_check) {
+        this.totalAmount = Math.round(this.totalAmount / 2);
+        this.totalDiscount = Math.round(this.totalAmount + this.totalDiscount);
+        this.isCouponApplied = true;
+        if(this.totalAmount < 500){
+            this.deliveryCharges = 100;
+            this.totalAmount = this.totalAmount + this.deliveryCharges;
+        }
+      } else {
+        this.toastr.error('Invalid coupon code');
+      }
+    } else {
+      this.toastr.error('Invalid coupon code');
     }
   }
 }

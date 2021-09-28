@@ -115,18 +115,24 @@
                 </div>
                 <div class="row w-100 mx-0" *ngIf="products.length > 0">
                     <ng-container *ngFor="let product of products">
-                        <div class="col-lg-4 col-md-6 my-3"  (click)="showProductDetailView(product.id)">
+                        <div class="col-lg-4 col-md-6 my-3">
                             <div class="prdct_sec_list_crd_mn">
-                                <div class="prdct_sec_list_crd_mn_img" (click)="showProductDetailView(product.id)">
+                                <div class="prdct_sec_list_crd_mn_img">
                                     <span class="sale_badge">
                                         Sale
                                     </span>
-                                    <img class="img-fluid" [src]="product.thumbImages">
-                                    <span id="heart" class="wishlist_icon">
+                                    <img class="img-fluid" [src]="product.thumbImages" (click)="showProductDetailView(product.id)">
+                                    <span id="heart" class="wishlist_icon" (click)="addToWishList(product)"
+                                    *ngIf="!product['is_added_in_wishlist']">
                                         <span class="material-icons">favorite_border</span>
                                     </span>
+                                    <span id="heart" class="wishlist_icon" (click)="removeProductFromWishlist(product['wishlist_id'])"
+                                    *ngIf="product['is_added_in_wishlist']">
+                                        <span class="material-icons">favorite</span>
+                                    </span>
                                 </div>
-                                <div class="prdct_sec_list_crd_mn_content p-3 w-100 d-inline-block">
+                                <div class="prdct_sec_list_crd_mn_content p-3 w-100 d-inline-block" 
+                                (click)="showProductDetailView(product.id)">
                                     <h5 class="prdct_list_title mb-3 font-500 text-dark">
                                         {{product.name}}
                                     </h5>
@@ -163,7 +169,7 @@
                                         <ng-container *ngFor="let image of product?.images">
                                             <div class="col-lg-3 col-md-3 col-3 px-2 text-center mx-auto">
                                                 <div class="prdct_sec_list_crd_mn_btm_imgs_cntnr mx-auto">
-                                                    <img class="img-fluid" [src]="image">
+                                                    <img class="img-fluid" [src]="productImgs(image)">
                                                 </div>
                                             </div>
                                         </ng-container>

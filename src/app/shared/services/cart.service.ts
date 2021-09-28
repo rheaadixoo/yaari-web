@@ -48,7 +48,7 @@ export class CartService {
   getCart(cart_id) {
     const query = {
       where: {
-        and: [{ cartId: cart_id },]
+        and: [{ cartId: cart_id, status : 'open' },]
       },
       include: [{ "all": true }]
     };

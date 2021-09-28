@@ -37,7 +37,7 @@
         <div class="dropdown top_profile_main_drpdwn top_profile_main_drpdwn_on_login">
           <button class="dropdown-toggle text-left d-flex sign_in_btn" type="button" id="dropdownMenuButton" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false" (click)="userOptions = !userOptions" *ngIf="isUserLoggedIn">
-            <img class="d-block float-left img-fluid mr-2 my-auto" src="../../../assets/images/profile_default.svg"
+            <img class="d-block float-left img-fluid mr-2 my-auto" [src]="imgUrl"
               width="40" height="40">
             <span class="d-block float-left">
               <span class="font-400 font-14">Hello,</span>

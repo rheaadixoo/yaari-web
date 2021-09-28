@@ -19,6 +19,7 @@ export class CartComponent implements OnInit {
   public totalAmount: any = 0;
   public totalQuantity: any = 0;
   public cartObj: any = {};
+  public deliveryCharges : any = 0;
   constructor(private cartService: CartService, private cookie: CookieService, private router: Router,
     private toastr: ToastrService, private wishlistService: WishlistService,
     private localStorageService: LocalStorageService) { }
@@ -49,6 +50,12 @@ export class CartComponent implements OnInit {
       this.totalDiscount += Math.round((ele.product.price * ele.quantity) - (ele.product.sellingPrice * ele.quantity));
     }
     this.totalAmount = Math.round(this.totalPrice - this.totalDiscount);
+    if(this.totalAmount < 500){
+        this.deliveryCharges = 100;
+        this.totalAmount = this.totalAmount + this.deliveryCharges;
+    }else {
+      this.deliveryCharges = 0;
+    }
   }
 
   increaseQuantity(quantity, id , cartDetailId) {

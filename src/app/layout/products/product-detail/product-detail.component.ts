@@ -280,4 +280,12 @@ export class ProductDetailComponent implements OnInit {
   get productImage() {
     return this.productObj.thumbImages
   }
+
+  goToCart(){
+    this.router.navigateByUrl('/app/cart');
+  }
+
+  goToWishlist(){
+    this.router.navigateByUrl('/app/wishlist');
+  }
 }

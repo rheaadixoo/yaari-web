@@ -5,6 +5,7 @@ import "../../../assets/js/popper.min.js";
 import * as $ from "jquery"
 import { CookieService } from 'ngx-cookie-service';
 import { CartService } from 'src/app/shared/services/cart.service';
+import { UserProfileService } from 'src/app/shared/services/user-profile.service.js';
 @Component({
   selector: 'yaari-header',
   templateUrl: './header.component.html',
@@ -17,47 +18,49 @@ export class HeaderComponent implements OnInit {
   public userOptions: boolean = false;
   public searchValue: string = '';
   public productList: any = [];
-  public placeValue : any = 'Search Products...'
+  public placeValue: any = 'Search Products...'
   private docEle: any = {};
-  public productCount : any = 0;
+  public productCount: any = 0;
+  public imgUrl: any = '';
   constructor(private changeDetectorRef: ChangeDetectorRef, private router: Router,
-    private productService: ProductService,private cookie : CookieService,
-    private cartService : CartService) {
-        this.cartService.cartItemCount.subscribe(response =>{
-          this.productCount = response;
-        })
-     }
+    private productService: ProductService, private cookie: CookieService,
+    private cartService: CartService, private userService: UserProfileService) {
+    this.cartService.cartItemCount.subscribe(response => {
+      this.productCount = response;
+    })
+  }
 
   ngOnInit(): void {
-      this.getCartDetail();
+    this.getCartDetail();
+    this.getUserRecord()
   }
 
   get isUserLoggedIn() {
     if (localStorage.getItem('token')) {
       return true;
-    } 
+    }
     else {
       return false;
     }
   }
 
-    /**
-   * Close signin signup option popup
-   * @param event event object
-   */
-     closePopUp(event){
-      let _that = this;
-      if(event.target.id == 'sign_in_option'){
-          if(document.querySelector(".before_login")){
-            document.querySelector(".before_login").addEventListener('click', (e) => {
-              _that.docEle = e;
-            }); 
-          }
-      }else if(event.target != _that.docEle['target']){
-        this.isBtnClicked = false;
-        this.userOptions = false;
+  /**
+ * Close signin signup option popup
+ * @param event event object
+ */
+  closePopUp(event) {
+    let _that = this;
+    if (event.target.id == 'sign_in_option') {
+      if (document.querySelector(".before_login")) {
+        document.querySelector(".before_login").addEventListener('click', (e) => {
+          _that.docEle = e;
+        });
       }
+    } else if (event.target != _that.docEle['target']) {
+      this.isBtnClicked = false;
+      this.userOptions = false;
     }
+  }
 
   logout() {
     let _that = this;
@@ -75,7 +78,7 @@ export class HeaderComponent implements OnInit {
       return userObj.name;
     }
   }
-  
+
   searchProduct(event) {
     let text = event.term;
     this.productList = [];
@@ -103,18 +106,30 @@ export class HeaderComponent implements OnInit {
 
   getCartDetail() {
     let cartObj = {};
-    if(this.cookie.get('cart')){
+    if (this.cookie.get('cart')) {
       cartObj = JSON.parse(this.cookie.get('cart'));
-      if(cartObj){
-        this.cartService.getCart(cartObj['id']).subscribe((res : any[]) => {
+      if (cartObj) {
+        this.cartService.getCart(cartObj['id']).subscribe((res: any[]) => {
           this.productCount = res.length;
         })
       }
-    }else {
+    } else {
       this.productCount = 0;
     }
   }
 
+  getUserRecord() {
+    this.userService.getUserDetails().subscribe((response: any[]) => {
+      if (response) {
+        console.log('response: ', response);
+        this.imgUrl = response['profileImage'];
+      } else {
+        this.imgUrl = '../../../assets/images/profile_default.svg';
+      }
+    }, error => {
+      console.log("user details error", error);
+    })
+  }
   // get cartProductCount(){
   //   return this.productCount;
   // }

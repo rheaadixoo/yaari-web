@@ -15,7 +15,7 @@ export class ProductService {
   getProductsList(subCatId) {
     const query = {
       where: {
-        and: [{ sub_category_id: subCatId, productStatus: 'approved', status: 'active' }]
+        and: [{ subCategoryId: subCatId, productStatus: 'approved', status: 'active' }]
       }
     };
     const filter = JSON.stringify(query);
@@ -79,7 +79,7 @@ export class ProductService {
   getProductListById(id) {
     let  query = {
       where: {
-        and: [{ sub_category_id: id , productStatus: 'approved', status: 'active'}]
+        and: [{ subCategoryId : id , productStatus: 'approved', status: 'active'}]
       }
     };
     const filter = JSON.stringify(query);

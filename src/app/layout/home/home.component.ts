@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { SlidesOutputData, OwlOptions } from 'ngx-owl-carousel-o';
 import * as $ from "jquery";
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -8,7 +9,7 @@ import * as $ from "jquery";
   encapsulation: ViewEncapsulation.None
 })
 export class HomeComponent implements OnInit {
-  public isViewLoaded : boolean = false;
+  public isViewLoaded: boolean = false;
   customOptions: OwlOptions = {
     loop: true,
     autoplay: true,
@@ -16,7 +17,7 @@ export class HomeComponent implements OnInit {
     dots: true,
     autoHeight: true,
     autoWidth: true,
-    navText :['',''],
+    navText: ['', ''],
     responsive: {
       0: {
         items: 1,
@@ -51,65 +52,70 @@ export class HomeComponent implements OnInit {
 
   slidesStore = [
     {
-      id:1,
-      src:'../../../assets/images/col_img_1.png',
-      date : 'July 20, 21',
-      comments : '0',
-      alt:'Image_1',
-      user_name : 'Ram',
-      title:'Luxury Designer cloths for Kids',
+      id: 1,
+      src: '../../../assets/images/col_img_1.png',
+      date: 'July 20, 21',
+      comments: '0',
+      alt: 'Image_1',
+      user_name: 'Ram',
+      title: 'Luxury Designer cloths for Kids',
     },
     {
-      id:2,
-      src:'../../../assets/images/col_img_1.png',
-      date : 'July 20, 21',
-      comments : 0,
-      alt:'Image_2',
-      user_name : 'Ram',
-      title:'Luxury Designer cloths for Kids',
+      id: 2,
+      src: '../../../assets/images/col_img_1.png',
+      date: 'July 20, 21',
+      comments: 0,
+      alt: 'Image_2',
+      user_name: 'Ram',
+      title: 'Luxury Designer cloths for Kids',
     },
     {
-      id:3,
-      src:'../../../assets/images/col_img_1.png',
-      date : 'July 20, 21',
-      comments : 0,
-      alt:'Image_3',
-      user_name : 'Ram',
-      title:'Luxury Designer cloths for Kids',
+      id: 3,
+      src: '../../../assets/images/col_img_1.png',
+      date: 'July 20, 21',
+      comments: 0,
+      alt: 'Image_3',
+      user_name: 'Ram',
+      title: 'Luxury Designer cloths for Kids',
     },
     {
-      id:4,
-      src:'../../../assets/images/col_img_1.png',
-      date : 'July 20, 21',
-      comments : 0,
-      alt:'Image_4',
-      user_name : 'Ram',
-      title:'Luxury Designer cloths for Kids',
+      id: 4,
+      src: '../../../assets/images/col_img_1.png',
+      date: 'July 20, 21',
+      comments: 0,
+      alt: 'Image_4',
+      user_name: 'Ram',
+      title: 'Luxury Designer cloths for Kids',
     },
     {
-      id:5, 
-      src:'../../../assets/images/col_img_1.png',
-      date : 'July 20, 21',
-      comments : 0,
-      alt:'Image_5',
-      user_name : 'Ram',
-      title:'Luxury Designer cloths for Kids',
+      id: 5,
+      src: '../../../assets/images/col_img_1.png',
+      date: 'July 20, 21',
+      comments: 0,
+      alt: 'Image_5',
+      user_name: 'Ram',
+      title: 'Luxury Designer cloths for Kids',
     }
   ]
 
   activeSlides: SlidesOutputData;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   getPassedData(data: SlidesOutputData) {
     this.activeSlides = data;
     console.log(this.activeSlides);
   }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
     // setTimeout(()=>{
-      this.isViewLoaded = true;
-      console.log('this.isViewLoaded: ', this.isViewLoaded);
+    this.isViewLoaded = true;
+    console.log('this.isViewLoaded: ', this.isViewLoaded);
     // },5000)
+  }
+
+  onChange() {
+    console.log('item: ');
+    this.router.navigate([`app/products`], { queryParams: { 'sub_id': 8, item_name: "Tops & Tunics", category: "Indian & fusion wear" } });
   }
 }

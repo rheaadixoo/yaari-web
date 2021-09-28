@@ -36,7 +36,13 @@ export class OrderService {
       params: new HttpParams()
         .append("filter", filter)
     };
-    return this.http.get(this.apiUrl + 'orders', options).pipe(map(response =>{
+    return this.http.get(this.apiUrl + 'orders/details', options).pipe(map(response =>{
+        return response;
+    }))
+  }
+
+  cancelOrder(id){
+    return this.http.patch(this.apiUrl + 'deliveries/order-cancel/'+id,{}).pipe(map(response =>{
         return response;
     }))
   }
