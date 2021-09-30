@@ -20,6 +20,7 @@ const routes: Routes = [
       { path: 'privacy' , loadChildren : () => import('./privacy-policy/privacy-policy.module').then(m => m.PrivacyPolicyModule)},
       { path: 'refund-returns', loadChildren: () => import('./refund-returns/refund-returns.module').then(m => m.RefundReturnsModule)},
       { path: 'orders-returns', loadChildren: () => import('./orders-returns/orders-returns.module').then(m => m.OrdersReturnsModule)},
+      { path: 'terms-and-condition', loadChildren: () => import('./terms-and-condition/terms-and-condition.module').then(m => m.TermsAndConditionsModule)},
     ]
   }
 ];
