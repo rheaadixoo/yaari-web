@@ -47,7 +47,7 @@ export class UserProfileComponent implements OnInit {
   getUserRecord() {
     this.addressService.getAddressByUserId(this.userData.id).subscribe((response: any[]) => {
      if (response.length > 0) {
-        this.userObj = response[0];
+        this.userObj = response[1];
         this.imgUrl = this.userObj.user['profileImage'];
         this.UForm.first_name.patchValue(this.userObj.user.firstName);
         this.UForm.last_name.patchValue(this.userObj.user.lastName);
