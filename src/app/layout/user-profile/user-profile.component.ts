@@ -32,7 +32,7 @@ export class UserProfileComponent implements OnInit {
       first_name: ['', Validators.required],
       last_name: ['', Validators.required],
       email: ['', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
-      mobile: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
+      mobile: ['',  [Validators.required, Validators.maxLength(10), Validators.minLength(10),Validators.pattern("^[0-9]*$")]],
       address: ['', Validators.required],
       city: ['', Validators.required],
       state: ['', Validators.required],
@@ -117,14 +117,23 @@ export class UserProfileComponent implements OnInit {
   }
 
   validateFormField(type) {
+   
     if (type == 'name') {
-      if (this.userForm.value.first_name.replace(/\s/g, "") === '') {
+      if((this.userForm.value.address === '')){
+        this.toastr.error('First Name field cannot be empty');
+      }
+    /*  if (this.userForm.value.first_name.replace(/\s/g, "") === '') {
         this.userForm.controls.first_name.patchValue(null);
       }
+       */
     } else if (type == 'last_name') {
-      if (this.userForm.value.last_name.replace(/\s/g, "") === '') {
+      if((this.userForm.value.address === '')){
+        this.toastr.error('Last Name field cannot be empty');
+      }
+     /* if (this.userForm.value.last_name.replace(/\s/g, "") === '') {
         this.userForm.controls.last_name.patchValue(null);
       }
+       */
     } else if (type == 'email') {
       if (this.userForm.value.email.replace(/\s/g, "") === '') {
         this.userForm.controls.email.patchValue(null);
@@ -133,22 +142,41 @@ export class UserProfileComponent implements OnInit {
       if (this.userForm.value.mobile.replace(/\s/g, "") === '') {
         this.userForm.controls.mobile.patchValue(null);
       }
+      if(!(this.userForm.value.mobile.match("^([7-9]{1})([0-9]{9})$"))){
+        this.toastr.error('Invalid mobile number');
+      }
     } else if (type == 'state') {
-      if (this.userForm.value.state.replace(/\s/g, "") === '') {
+      if((this.userForm.value.address === '')){
+        this.toastr.error('State field cannot be empty');
+      }
+      /* if (this.userForm.value.state.replace(/\s/g, "") === '') {
         this.userForm.controls.state.patchValue(null);
       }
+      */
     } else if (type == 'city') {
-      if (this.userForm.value.city.replace(/\s/g, "") === '') {
+      if((this.userForm.value.address === '')){
+        this.toastr.error('City field cannot be empty');
+      }
+     /* if (this.userForm.value.city.replace(/\s/g, "") === '') {
         this.userForm.controls.city.patchValue(null);
       }
+      */
     } else if (type == 'pincode') {
       if (this.userForm.value.pincode.replace(/\s/g, "") === '') {
         this.userForm.controls.pincode.patchValue(null);
       }
+      if(!(this.userForm.value.pincode.match("^[1-9][0-9]{5}$"))){
+        this.toastr.error('Invalid pincode');
+    }
     } else if (type == 'address') {
+      if((this.userForm.value.address === '')){
+        this.toastr.error('Invalid Address');
+      }
+     /*
       if (this.userForm.value.address.replace(/\s/g, "") === '') {
         this.userForm.controls.address.patchValue(null);
       }
+ */
     }
   }
 

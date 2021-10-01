@@ -21,6 +21,7 @@ const routes: Routes = [
       { path: 'refund-returns', loadChildren: () => import('./refund-returns/refund-returns.module').then(m => m.RefundReturnsModule)},
       { path: 'orders-returns', loadChildren: () => import('./orders-returns/orders-returns.module').then(m => m.OrdersReturnsModule)},
       { path: 'terms-and-condition', loadChildren: () => import('./terms-and-condition/terms-and-condition.module').then(m => m.TermsAndConditionsModule)},
+      { path: 'shipping-details', loadChildren: () => import('./shipping-return-policy/shipping-return-policy.module').then(m => m.ShippingReturnPolicyModule)},
     ]
   }
 ];

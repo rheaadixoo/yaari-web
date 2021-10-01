@@ -982,12 +982,13 @@ footer.footer_main {
 .faq_sec .accordion .card h2 {
 	cursor: pointer;
 	padding: 20px;
-	background-color: #363636;
-	color: #fff;
+	background-color: #fff;
+	color: #363636;
 	font-size: 18px;
 	font-weight: 400;
 	padding-left: 50px;
 	position: relative;
+	border: 1px solid #363636;
 }
 .faq_sec .accordion .card h2.collapsed {
 	background-color: transparent;
