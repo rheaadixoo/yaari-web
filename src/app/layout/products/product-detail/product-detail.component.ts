@@ -117,6 +117,7 @@ export class ProductDetailComponent implements OnInit {
       const cartObj = JSON.parse(this.cookie.get('cart'));
       this.productObj['productId'] = JSON.parse(this.productId);
       this.productObj['cartId'] = cartObj['id'];
+
       // this.productObj['status'] = 'active';
       this.showBuyNowBtn = true;
       const payload = {
@@ -184,41 +185,47 @@ export class ProductDetailComponent implements OnInit {
   }
 
   addToWishList() {
+  
     let payload;
-    if (this.userDetail) {
+    if (!!this.localStorageService.get('user-detail')) {
       payload = { userId: this.userDetail.id };
-    } else {
-      payload = { userId: null };
-    }
-    if (!this.cookie.get('wishlist')) {
-      this.wishlistService.createWishList(payload).subscribe(res => {
-        if (res['id']) {
-          const data = {
-            wishlistId: res['id'],
-            productId: JSON.parse(this.productId),
-            quantity: this.quantity,
-            businessId: this.productObj['businessId']
+      
+          if (!this.cookie.get('wishlist')) {
+            this.wishlistService.createWishList(payload).subscribe(res => {
+              if (res['id']) {
+                const data = {
+                  wishlistId: res['id'],
+                  productId: JSON.parse(this.productId),
+                  quantity: this.quantity,
+                  businessId: this.productObj['businessId']
+                }
+                this.addToWishListDetails(data);
+                this.cookie.set('wishlist', JSON.stringify({ id: res['id'] }), { expires: 365, path: '/' });
+              }
+            })
+          } else if (this.cookie.get('wishlist')) {
+            const data = {
+              wishlistId: this.wishlistObj['id'],
+              productId: JSON.parse(this.productId),
+              quantity: this.quantity,
+              businessId: this.productObj['businessId']
+            }
+            this.wishlistService.isProductExistInWishlist(this.wishlistObj['id'], JSON.parse(this.productId)).subscribe((response: any[]) => {
+              if (!response.length) {
+                this.isProductExistInWishlist = false;
+                this.addToWishListDetails(data);
+              } else {
+                this.isProductExistInWishlist = true;
+              }
+            })
           }
-          this.addToWishListDetails(data);
-          this.cookie.set('wishlist', JSON.stringify({ id: res['id'] }), { expires: 365, path: '/' });
-        }
-      })
-    } else if (this.cookie.get('wishlist')) {
-      const data = {
-        wishlistId: this.wishlistObj['id'],
-        productId: JSON.parse(this.productId),
-        quantity: this.quantity,
-        businessId: this.productObj['businessId']
-      }
-      this.wishlistService.isProductExistInWishlist(this.wishlistObj['id'], JSON.parse(this.productId)).subscribe((response: any[]) => {
-        if (!response.length) {
-          this.isProductExistInWishlist = false;
-          this.addToWishListDetails(data);
-        } else {
-          this.isProductExistInWishlist = true;
-        }
-      })
+    } 
+    
+    else {
+      this.warningModal.open();
     }
+    
+    
   }
 
   get wishlistObj() {

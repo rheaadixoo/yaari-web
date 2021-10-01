@@ -74,7 +74,7 @@
               </a>
             </div>
             <div class="row mx-0 mt-5 ad_crt_wish_by_btn_prdct_det">
-              <div class="col-lg-6 col-md-6 px-2 mb-3" (click)="addToCart()" *ngIf="isProductExist == false">
+              <div class="col-lg-6 col-md-6 px-2 mb-3"  *ngIf="isProductExist == false">
                 <a href="javascript:void(0)" *ngIf="isProductExist == false"
                   class="font-18 font-600 w-100 d-flex text-center justify-content-center py-4" (click)="addToCart()">
                   <img src="../../../../assets/images/cart_icon.svg" class="img-fluid mr-2" (click)="addToCart()">
@@ -266,7 +266,7 @@
             Best Sellers
           </h4>
           <ng-container *ngFor="let product of productList.slice().reverse()">
-            <div class="best_sellers_prdct_on_det_pg_list">
+            <div class="best_sellers_prdct_on_det_pg_list" (click)="openInDetailView(product)">
               <div class="d-flex w-75 float-left pr-2">
                 <div class="prdct_sec_list_crd_mn_content p-0 w-100 d-inline-block">
                   <h5 class="prdct_list_title mb-3 font-500 text-dark">
