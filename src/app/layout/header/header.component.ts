@@ -95,6 +95,7 @@ export class HeaderComponent implements OnInit {
 
   onChange(product) {
     console.log(product)
+    // document.getElementsByClassName('ng-clear-wrapper').style.display = 'block';
     if (product) {
       this.router.navigateByUrl(`app/products/detail/${product.id}`);
       // if (this.router.url.includes('/products/detail')) {

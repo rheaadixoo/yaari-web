@@ -84,9 +84,9 @@
         <input type="text" placeholder="Find the best for you...">
         <img class="img-fluid" width="17" height="17" src="../../../../assets/images/search_icon.svg">
       </li> -->
-      <ng-select (search)="searchProduct($event)" [(ngModel)]="searchValue"
+      <ng-select (search)="searchProduct($event)" [(ngModel)]="searchValue" 
       bindLabel="name" [items]="productList" [placeholder]="placeValue"
-      (change)="onChange($event)" class="node_custom_search"></ng-select>
+      (change)="onChange($event)" class="node_custom_search" [clearable]="false"></ng-select>
       <button class="search_icon"><svg height="16" viewBox="0 0 16.001 16" width="16.001" xmlns="http://www.w3.org/2000/svg">
         <path
         d="M14.8 16a1.2 1.2 0 01-.821-.323l-2.4-2.4a1.226 1.226 0 01-.353-.914l-.881-.881a6.345 6.345 0 01-3.928 1.348 6.414 6.414 0 115.058-2.479l.01-.01.879.884h.059a1.213 1.213 0 01.855.354l2.4 2.4A1.2 1.2 0 0114.8 16zM6.415 1.6a4.81 4.81 0 104.807 4.81A4.814 4.814 0 006.415 1.6z"
