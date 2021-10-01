@@ -34,6 +34,7 @@ export class AllCollectionsComponent implements OnInit {
       this.allCollections = _.groupBy(res, (response) => {
         return response.collection.name;
       });
+      console.log(this.allCollections);
       for (let key in this.allCollections) {
         for (let item of this.allCollections[key]) {
           this.allCollections[key]['banner_img'] = item.collection.banners;
