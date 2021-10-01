@@ -32,7 +32,7 @@ export class RegisterComponent implements OnInit {
       email: ['', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       confirm_password: ['', [Validators.required, Validators.minLength(8)]],
-      mobile: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(10)]]
+      mobile: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(10),Validators.pattern("^[0-9]*$")]]
     })
   }
 
@@ -57,13 +57,20 @@ export class RegisterComponent implements OnInit {
   }
 
   validateFormField(type) {
+   
     if (type == 'name') {
       if (this.registerForm.value.first_name.replace(/\s/g, "") === '') {
         this.registerForm.controls.first_name.patchValue(null);
       }
+      if((this.registerForm.value.address === '')){
+        this.toastr.error('First Name field cannot be empty');
+      }
     } else if (type == 'last_name') {
       if (this.registerForm.value.last_name.replace(/\s/g, "") === '') {
         this.registerForm.controls.last_name.patchValue(null);
+      }
+      if((this.registerForm.value.address === '')){
+        this.toastr.error('Last Name field cannot be empty');
       }
     } else if (type == 'email') {
       if (this.registerForm.value.email.replace(/\s/g, "") === '') {
@@ -73,15 +80,18 @@ export class RegisterComponent implements OnInit {
       if (this.registerForm.value.password.replace(/\s/g, "") === '') {
         this.registerForm.controls.password.patchValue(null);
       }
+      if (this.registerForm.value.password.length < 8) {
+        this.toastr.error('Password must be of atleast 8 character');
+    } 
     } else if (type == 'confirm') {
       if (this.registerForm.value.confirm_password.replace(/\s/g, "") === '') {
         this.registerForm.controls.confirm_password.patchValue(null);
       }
     } else if (type == 'mobile') {
-      if (this.registerForm.value.mobile.replace(/\s/g, "") === '') {
-        this.registerForm.controls.mobile.patchValue(null);
-      }
+      if(!(this.registerForm.value.mobile.match("^([7-9]{1})([0-9]{9})$"))){
+        this.toastr.error('Invalid mobile number');
     }
+  }
   }
 
   createUser() {
