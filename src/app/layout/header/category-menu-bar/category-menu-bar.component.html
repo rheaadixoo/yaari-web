@@ -416,8 +416,8 @@
               All Collections
             </a>
           </li>
-          <li (mouseover)="showPagesDropdown('pages')" (mouseout)="hidePagesDropDown('pages')">
-            <a href="javascript:void(0)" class="nav-link--megamenu">
+          <li class="nav-link--megamenu" >
+            <a href="javascript:void(0)" *ngIf="showPagesDropdown">
               Pages
               <span class="material-icons nav_links_btm_arrow">expand_more</span>
             </a>
@@ -428,6 +428,7 @@
               <!-- <li><a href="javacript:void(0)" [routerLink]="['/app/blogs']" class="nav-link--megamenu border-0">Blogs</a></li> -->
             </ul>
           </li>
+         
           <!-- <li class="web_prod_srch_li">
             <input type="text" placeholder="Find the best for you...">
             <img class="img-fluid" width="17" height="17" src="../../../../assets/images/search_icon.svg">

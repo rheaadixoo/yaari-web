@@ -19,6 +19,7 @@ export class CategoryMenuBarComponent implements OnInit {
   public hoveredItemId: number = 0;
   public headerCollectionLength:number = environment.headerCollectionLength;
   public Object = Object;
+  public showPageDropdown=false;
   constructor(private productService : ProductService , private router : Router,private collectionService: CollectionsService, private categoryService: CategoryService) { }
 
   ngOnInit(): void {
@@ -149,27 +150,28 @@ export class CategoryMenuBarComponent implements OnInit {
   /**
    * 
   */
-  showPagesDropdown(type) {
-    if (type == 'others') {
-      document.getElementById('collec_ul').style.display = 'block';
-      document.getElementById('pages_ul').style.display = 'none';
-    } else {
-      document.getElementById('collec_ul').style.display = 'none';
-      document.getElementById('pages_ul').style.display = 'block';
-    }
+   showPagesDropdown(type) {
+    //  console.log("mouse over");
+    // if (type == 'others') {
+    //   document.getElementById('collec_ul').style.display = 'block';
+    //   document.getElementById('pages_ul').style.display = 'none';
+    // } else {
+      // document.getElementById('collec_ul').style.display = 'none';
+      this.showPageDropdown=true;
+    // }
   }
 
   /**
    * 
   */
-  hidePagesDropDown(type) {
-    if (type == 'others') {
-      document.getElementById('collec_ul').style.display = 'none';
-    } else {
-      document.getElementById('pages_ul').style.display = 'none';
-    }
-  }
-
+  // hidePagesDropDown(type) {
+  //   console.log("mouse out");
+  //   // if (type == 'others') {
+  //   //   document.getElementById('collec_ul').style.display = 'none';
+  //   // } else {
+  //     document.getElementById('pages_ul').style.display = 'none';
+  //   // }
+  // }
   /**
    * 
    * @returns 
