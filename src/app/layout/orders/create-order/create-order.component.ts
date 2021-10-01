@@ -239,8 +239,8 @@ export class CreateOrderComponent implements OnInit {
   applyCouponCode() {
     if (this.couponCode != '') {
       if (this.couponCode == this.coupon_code_check) {
-        this.totalAmount = Math.round(this.totalAmount / 2);
-        this.totalDiscount = Math.round(this.totalAmount + this.totalDiscount);
+        this.totalAmount = Math.round((this.totalAmount / 2)-100);
+        this.totalDiscount = Math.round(this.totalAmount + this.totalDiscount+this.deliveryCharges);
         this.isCouponApplied = true;
         if(this.totalAmount < 500){
             this.deliveryCharges = 100;

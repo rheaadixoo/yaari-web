@@ -150,25 +150,28 @@ export class CategoryMenuBarComponent implements OnInit {
   /**
    * 
   */
-  showPagesDropdown(type) {
-    if (type == 'others') {
-      document.getElementById('collec_ul').style.display = 'block';
-      document.getElementById('pages_ul').style.display = 'none';
-    } else {
-      document.getElementById('collec_ul').style.display = 'none';
-      document.getElementById('pages_ul').style.display = 'block';
-    }
+  showPagesDropdown() {
+    // if (type == 'others') {
+    //   document.getElementById('collec_ul').style.display = 'block';
+    //   document.getElementById('pages_ul').style.display = 'none';
+    // } else {
+    //   document.getElementById('collec_ul').style.display = 'none';
+    //   document.getElementById('pages_ul').style.display = 'block';
+    document.getElementById('pages_ul').style.display = 'block';
+    // }
   }
 
   /**
    * 
   */
-  hidePagesDropDown(type) {
-    if (type == 'others') {
-      document.getElementById('collec_ul').style.display = 'none';
-    } else {
-      document.getElementById('pages_ul').style.display = 'none';
-    }
+  hidePagesDropDown() {
+
+    // if (type == 'others') {
+    //   document.getElementById('collec_ul').style.display = 'none';
+    // } else {
+    //   document.getElementById('pages_ul').style.display = 'none';
+    // }
+    document.getElementById('pages_ul').style.display = 'none';
   }
 
   /**
