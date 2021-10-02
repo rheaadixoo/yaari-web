@@ -58,42 +58,112 @@ export class RegisterComponent implements OnInit {
   }
 
   validateFormField(type) {
-   
     if (type == 'name') {
-      if (this.registerForm.value.first_name.replace(/\s/g, "") === '') {
-        this.registerForm.controls.first_name.patchValue(null);
+      // console.log(this.registerForm.value.first_name.length)
+      if(this.registerForm.value.first_name === '' )
+      {
+        this.toastr.error("Name field is required")
+
       }
-      if((this.registerForm.value.address === '')){
-        this.toastr.error('First Name field cannot be empty');
+      else if(!(this.registerForm.value.first_name.match("^[A-Za-z\s]{0,}$")))
+      {
+       this.toastr.error("Invalid First Name")
       }
-    } else if (type == 'last_name') {
-      if (this.registerForm.value.last_name.replace(/\s/g, "") === '') {
-        this.registerForm.controls.last_name.patchValue(null);
+      // if (this.registerForm.value.first_name.replace(/\s/g, "") === '') {
+      //   this.registerForm.controls.first_name.patchValue(null)
+      //   this.toastr.error("input is required")
+      // }
+      // console.log(this.registerForm.value.first_name.length);
+      // if(this.registerForm.value.first_name.length== 0 )
+      // {
+      // }
+    }
+      
+     else if (type == 'last_name') {
+      // if (this.registerForm.value.last_name.replace(/\s/g, "") === '') {
+      //   this.registerForm.controls.last_name.patchValue(null);
+      // }
+      if(this.registerForm.value.last_name === '' )
+      {
+        this.toastr.error("Last Name field is required")
+
       }
-      if((this.registerForm.value.address === '')){
-        this.toastr.error('Last Name field cannot be empty');
+      else if( !(this.registerForm.value.last_name.match("^[A-Za-z\s]{0,}$")))
+      {
+       this.toastr.error("Invalid Last name")
       }
+      
     } else if (type == 'email') {
-      if (this.registerForm.value.email.replace(/\s/g, "") === '') {
-        this.registerForm.controls.email.patchValue(null);
+      // if (this.registerForm.value.email.replace(/\s/g, "") === '') {
+      //   this.registerForm.controls.email.patchValue(null);
+      // }
+      // let em=false;
+      // console.log(em)
+      console.log(this.registerForm.value.email)
+      if(this.registerForm.value.email === '' )
+      {
+        this.toastr.error("Email field is required")
+
       }
-    } else if (type == 'password') {
-      if (this.registerForm.value.password.replace(/\s/g, "") === '') {
-        this.registerForm.controls.password.patchValue(null);
+      else  if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.registerForm.value.email)))
+      {
+        this.toastr.error("You have entered an invalid email address!");
+        // return (true)
       }
-      if (this.registerForm.value.password.length < 8) {
-        this.toastr.error('Password must be of atleast 8 character');
-    } 
+    }
+      // else if(!(this.registerForm.value.email.match('/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/')))
+      // {
+      //   this.toastr.error("email is wrong")
+      //   em=true;
+      // }
+      // console.log(em)
+      // if(email=false)
+      // {
+      //   this.toastr.error("email is wrong")
+      // }
+    
+  
+     else if (type == 'password') {
+
+      // console.log(this.registerForm.value.password.length)
+      // if (this.registerForm.value.password.replace(/\s/g, "") === '') {
+      //   this.registerForm.controls.password.patchValue(null);
+
+      // }
+      if(this.registerForm.value.password === '' )
+      {
+        this.toastr.error("password field is required")
+
+      }
+     else if(this.registerForm.value.password.length < 8)
+      {
+        this.toastr.error(' password must be of 8 characters');
+        
+       }
+      
     } else if (type == 'confirm') {
-      if (this.registerForm.value.confirm_password.replace(/\s/g, "") === '') {
-        this.registerForm.controls.confirm_password.patchValue(null);
+      // if (this.registerForm.value.confirm_password.replace(/\s/g, "") === '') {
+      //   this.registerForm.controls.confirm_password.patchValue(null);
+      // }
+      if(this.registerForm.value.confirm_password === '' )
+      {
+        this.toastr.error("confirm-password field is required");
+
       }
     } else if (type == 'mobile') {
-      if(!(this.registerForm.value.mobile.match("^([7-9]{1})([0-9]{9})$"))){
-        this.toastr.error('Invalid mobile number');
-    }
+      if(this.registerForm.value.mobile === '' )
+      {
+        this.toastr.error("Mobile field is required");
+
+      }
+     
+       else if(!(this.registerForm.value.mobile.match("^([7-9]{1})([0-9]{9})$") ))
+      {
+       this.toastr.error("Please enter correct contact number")
+      }
+
   }
-  }
+}
 
   
   createUser() {

@@ -106,12 +106,29 @@ export class LoginComponent implements OnInit {
 
   validateFormField(type) {
     if (type == 'email') {
-      if (this.loginForm.value.email.replace(/\s/g, "") === '') {
-        this.loginForm.controls.email.patchValue(null);
+      // if (this.loginForm.value.email.replace(/\s/g, "") === '') {
+      //   this.loginForm.controls.email.patchValue(null);
+      // }
+
+      if(this.loginForm.value.email === '' )
+      {
+        this.toastr.error("Email field is required")
+
       }
+      else  if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.loginForm.value.email)))
+      {
+        this.toastr.error("You have entered an invalid email address!");
+        // return (true)
+      }
+    
     } else if (type == 'password') {
-      if (this.loginForm.value.password.replace(/\s/g, "") === '') {
-        this.loginForm.controls.password.patchValue(null);
+      // if (this.loginForm.value.password.replace(/\s/g, "") === '') {
+      //   this.loginForm.controls.password.patchValue(null);
+      // }
+      if(this.loginForm.value.password === '' )
+      {
+        this.toastr.error("password field is required")
+
       }
     }
   }
