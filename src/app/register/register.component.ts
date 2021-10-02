@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { RegisterService } from '../shared/services/register.service';
 import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -94,6 +95,7 @@ export class RegisterComponent implements OnInit {
   }
   }
 
+  
   createUser() {
     const payload = {
       firstName: this.registerForm.value.first_name,
