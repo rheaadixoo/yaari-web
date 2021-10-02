@@ -32,7 +32,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCartDetail();
-    this.getUserRecord()
+    this.getUserRecord();
   }
 
   get isUserLoggedIn() {
@@ -124,11 +124,15 @@ export class HeaderComponent implements OnInit {
         console.log('response: ', response);
         this.imgUrl = response['profileImage'];
       } else {
-        this.imgUrl = '../../../assets/images/profile_default.svg';
+        this.imgUrl = '';
       }
     }, error => {
       console.log("user details error", error);
     })
+  }
+
+  get imageUrl(){
+    return this.imgUrl;
   }
   // get cartProductCount(){
   //   return this.productCount;

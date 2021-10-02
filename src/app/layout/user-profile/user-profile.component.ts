@@ -48,6 +48,7 @@ export class UserProfileComponent implements OnInit {
     this.addressService.getAddressByUserId(this.userData.id).subscribe((response: any[]) => {
      if (response.length > 0) {
         this.userObj = response[1];
+        console.log(this.userObj);
         this.imgUrl = this.userObj.user['profileImage'];
         this.UForm.first_name.patchValue(this.userObj.user.firstName);
         this.UForm.last_name.patchValue(this.userObj.user.lastName);
@@ -63,10 +64,10 @@ export class UserProfileComponent implements OnInit {
           
           this.userObj = response;
           this.imgUrl = this.userObj['profileImage'];
-          this.UForm.first_name.patchValue(this.userObj.firstName);
-          this.UForm.last_name.patchValue(this.userObj.lastName);
-          this.UForm.email.patchValue(this.userObj.email);
-          this.UForm.mobile.patchValue(this.userObj.mobile);
+          this.UForm.first_name.patchValue(this.userObj.user.firstName);
+          this.UForm.last_name.patchValue(this.userObj.user.lastName);
+          this.UForm.email.patchValue(this.userObj.user.email);
+          this.UForm.mobile.patchValue(this.userObj.user.mobile);
         }, error => {
           console.log("user details error",error);  
         })
@@ -97,7 +98,7 @@ export class UserProfileComponent implements OnInit {
     }
 
     this.userService.updateUserRecord(payload, this.userData.id).subscribe(response => {
-      if(this.userObj.address){
+      if(this.userForm.value.address){
         this.addressService.updateUserAddress(addressPayload, this.userObj.user.id).subscribe(res => {
           this.toastr.success('Profile Updated Successfully');
         }, err => {

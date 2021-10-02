@@ -134,7 +134,7 @@ export class ProductDetailComponent implements OnInit {
               this.isProductExist = true;
               this.cartService.cartItemCount.next(res.length);
             })
-            this.toastr.success('Product added successfully',);
+            this.toastr.success('Product added successfully');
           })
         } else {
           this.isProductExist = true;
@@ -178,10 +178,11 @@ export class ProductDetailComponent implements OnInit {
         }
         if (this.cookie.get('cart')) {
           const cartObj = JSON.parse(this.cookie.get('cart'));
-          this.router.navigate(['/app/place-order'], { queryParams: { id: cartObj['id'] } })
+          this.router.navigate(['/app/orders/place-order'], { queryParams: { id: cartObj['id'] } })
         }
       })
     }
+    
   }
 
   addToWishList() {
