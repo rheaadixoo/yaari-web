@@ -122,9 +122,14 @@ export class HeaderComponent implements OnInit {
     this.userService.getUserDetails().subscribe((response: any[]) => {
       if (response) {
         console.log('response: ', response);
-        this.imgUrl = response['profileImage'];
+        if(response['profileImage']){
+          this.imgUrl = response['profileImage'];
+        }else{
+          this.imgUrl = '../../../assets/images/profile_default.svg';
+
+        }
       } else {
-        this.imgUrl = '';
+        this.imgUrl = '../../../assets/images/profile_default.svg';
       }
     }, error => {
       console.log("user details error", error);
