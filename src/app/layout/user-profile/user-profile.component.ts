@@ -59,7 +59,7 @@ export class UserProfileComponent implements OnInit {
         this.UForm.mobile.patchValue(this.userObj.mobile);
         this.addressService.getAddressByUserId(this.userData.id).subscribe((addressResponse: any[]) =>{
           if(addressResponse && addressResponse.length){
-        this.userAddress=addressResponse;
+        this.userAddress=addressResponse[0];
         this.UForm.city.patchValue(this.userAddress.city);
         this.UForm.state.patchValue(this.userAddress.state);
         this.UForm.pincode.patchValue(this.userAddress.pinCode);
@@ -108,7 +108,7 @@ export class UserProfileComponent implements OnInit {
 
     this.userService.updateUserRecord(payload, this.userData.id).subscribe(response => {
       if(this.userForm.value.address){
-        this.addressService.updateUserAddress(addressPayload, this.userObj.user.id).subscribe(res => {
+        this.addressService.updateUserAddress(addressPayload, this.userObj.id).subscribe(res => {
           this.toastr.success('Profile Updated Successfully');
         }, err => {
           this.toastr.error(err, "Address");
