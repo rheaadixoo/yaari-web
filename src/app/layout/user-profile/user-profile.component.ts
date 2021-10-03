@@ -15,6 +15,7 @@ export class UserProfileComponent implements OnInit {
   public userObj: any = {};
   public activeTab: string = 'profile';
   public imgUrl: string = '';
+  public userAddress: any={};
   constructor(private toastr: ToastrService, private builder: FormBuilder, private localStorageService: LocalStorageService,
     private userService: UserProfileService, private addressService: AddressService) { }
 
@@ -45,32 +46,40 @@ export class UserProfileComponent implements OnInit {
   }
 
   getUserRecord() {
-    this.addressService.getAddressByUserId(this.userData.id).subscribe((response: any[]) => {
-     if (response.length > 0) {
-        this.userObj = response[1];
+    
+    // this.addressService.getAddressByUserId(this.userData.id).subscribe((response: any[]) => {
+      this.userService.getUserDetailsById(this.userData.id).subscribe((response)=>{
+     if (response) {
+        this.userObj = response;
         console.log(this.userObj);
-        this.imgUrl = this.userObj.user['profileImage'];
-        this.UForm.first_name.patchValue(this.userObj.user.firstName);
-        this.UForm.last_name.patchValue(this.userObj.user.lastName);
-        this.UForm.email.patchValue(this.userObj.user.email);
-        this.UForm.mobile.patchValue(this.userObj.user.mobile);
-        this.UForm.city.patchValue(this.userObj.city);
-        this.UForm.state.patchValue(this.userObj.state);
-        this.UForm.pincode.patchValue(this.userObj.pinCode);
-        this.UForm.address.patchValue(this.userObj.address);
+        this.imgUrl = this.userObj['profileImage'];
+        this.UForm.first_name.patchValue(this.userObj.firstName);
+        this.UForm.last_name.patchValue(this.userObj.lastName);
+        this.UForm.email.patchValue(this.userObj.email);
+        this.UForm.mobile.patchValue(this.userObj.mobile);
+        this.addressService.getAddressByUserId(this.userData.id).subscribe((addressResponse: any[]) =>{
+          if(addressResponse && addressResponse.length){
+        this.userAddress=addressResponse;
+        this.UForm.city.patchValue(this.userAddress.city);
+        this.UForm.state.patchValue(this.userAddress.state);
+        this.UForm.pincode.patchValue(this.userAddress.pinCode);
+        this.UForm.address.patchValue(this.userAddress.address);
         console.log("0this-", this.UForm);
+        }
+        
+        } ) 
       } else {
-        this.userService.getUserDetails().subscribe((response: any[]) => {
+        // this.userService.getUserDetails().subscribe((response: any[]) => {
           
-          this.userObj = response;
-          this.imgUrl = this.userObj['profileImage'];
-          this.UForm.first_name.patchValue(this.userObj.user.firstName);
-          this.UForm.last_name.patchValue(this.userObj.user.lastName);
-          this.UForm.email.patchValue(this.userObj.user.email);
-          this.UForm.mobile.patchValue(this.userObj.user.mobile);
-        }, error => {
-          console.log("user details error",error);  
-        })
+        //   this.userObj = response;
+        //   this.imgUrl = this.userObj['profileImage'];
+        //   this.UForm.first_name.patchValue(this.userObj.user.firstName);
+        //   this.UForm.last_name.patchValue(this.userObj.user.lastName);
+        //   this.UForm.email.patchValue(this.userObj.user.email);
+        //   this.UForm.mobile.patchValue(this.userObj.user.mobile);
+        // }, error => {
+        //   console.log("user details error",error);  
+        // })
       }
 
     }, error => {
@@ -93,7 +102,7 @@ export class UserProfileComponent implements OnInit {
       city: this.userForm.value.city,
       state: this.userForm.value.state,
       pinCode: this.userForm.value.pincode,
-      userId : this.userObj.user.id,
+      userId : this.userObj.id,
       country: "India"
     }
 
