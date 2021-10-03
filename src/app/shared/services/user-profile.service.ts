@@ -16,7 +16,14 @@ export class UserProfileService {
   }
 
   getUserDetails() {
+    
     return this.http.get(this.apiUrl + 'users/' + this.userData.id).pipe(map(response => {
+      return response;
+    }))
+  }
+  getUserDetailsById(id) {
+    
+    return this.http.get(this.apiUrl + 'users/' + id).pipe(map(response => {
       return response;
     }))
   }
