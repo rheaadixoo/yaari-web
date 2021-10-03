@@ -59,10 +59,10 @@ export class RegisterComponent implements OnInit {
   validateFormField(type) {
    
     if (type == 'name') {
-      if (this.registerForm.value.first_name.replace(/\s/g, "") === '') {
-        this.registerForm.controls.first_name.patchValue(null);
-      }
-      if((this.registerForm.value.address === '')){
+      // if (this.registerForm.value.first_name.replace(/\s/g, "") === '') {
+      //   this.registerForm.controls.first_name.patchValue(null);
+      // }
+      if((this.registerForm.value.first_name === '')){
         this.toastr.error('First Name field cannot be empty');
       }
     } else if (type == 'last_name') {
