@@ -1,9 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import {ContactUsService} from 'src/app/shared/services/contact-us.service';
 import {Router} from '@angular/router';
-import { FormControl } from '@angular/forms';
+import { FormControl ,Validators} from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
+
+// else if(!(this.registerForm.value.first_name.match("^[a-zA-Z\\s]*$")))
+//       {
+//        this.toastr.error("Invalid First Name")   //fullname validation
+//       }
+
+// else if(!(this.registerForm.value.first_name.match("^([a-zA-Z0-9]+\s)*[a-zA-Z0-9]+$")))
+// {
+//  this.toastr.error("Invalid First Name")
+// }
 
 @Component({
   selector: 'app-contact-us',
