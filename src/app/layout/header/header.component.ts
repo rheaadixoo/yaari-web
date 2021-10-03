@@ -138,7 +138,7 @@ export class HeaderComponent implements OnInit {
   }
 
   get imageUrl(){
-    return this.imgUrl;
+    return this.imgUrl ? this.imageUrl : '../../../assets/images/profile_default.svg';
   }
   // get cartProductCount(){
   //   return this.productCount;
