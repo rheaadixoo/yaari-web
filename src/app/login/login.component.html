@@ -28,12 +28,12 @@
               <div class="form-group col-md-12 mb-4">
                 <input type="email" class="form-control" id="inputEmail4" placeholder="Email"
                 name="inputEmail4" formControlName="email" value=""
-                (keyup)="validateFormField('email')">
+                (blur)="validateFormField('email')">
               </div>
               <div class="form-group col-md-12 mb-4">
                 <input type="password" class="form-control" id="inputPassword4" placeholder="Password"
                 name="inputPassword4" formControlName="password" 
-                (keyup)="validateFormField('password')">
+                (blur)="validateFormField('password')">
                 <span class="text_danger" *ngIf="lForm.controls.password.touched && lForm.controls.password.invalid">Password should be upto 8 characters</span>
               </div>
               <div class="form-group col-md-12 mb-4 text-center py-1">
