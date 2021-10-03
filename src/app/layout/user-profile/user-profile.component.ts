@@ -129,31 +129,57 @@ export class UserProfileComponent implements OnInit {
   validateFormField(type) {
    
     if (type == 'name') {
-      if((this.userForm.value.address === '')){
+      if((this.userForm.value.first_name === '')){
         this.toastr.error('First Name field cannot be empty');
+      }
+      else if(!(this.userForm.value.first_name.match("^[A-Za-z\s]{0,}$")))
+      {
+       this.toastr.error("Invalid First Name")
       }
     /*  if (this.userForm.value.first_name.replace(/\s/g, "") === '') {
         this.userForm.controls.first_name.patchValue(null);
       }
        */
     } else if (type == 'last_name') {
-      if((this.userForm.value.address === '')){
+      if((this.userForm.value.last_name === '')){
         this.toastr.error('Last Name field cannot be empty');
+      }
+      else if( !(this.userForm.value.last_name.match("^[A-Za-z\s]{0,}$")))
+      {
+       this.toastr.error("Invalid Last name")
       }
      /* if (this.userForm.value.last_name.replace(/\s/g, "") === '') {
         this.userForm.controls.last_name.patchValue(null);
       }
        */
     } else if (type == 'email') {
-      if (this.userForm.value.email.replace(/\s/g, "") === '') {
-        this.userForm.controls.email.patchValue(null);
+      // if (this.userForm.value.email.replace(/\s/g, "") === '') {
+      //   this.userForm.controls.email.patchValue(null);
+      // }
+      if(this.userForm.value.email === '' )
+      {
+        this.toastr.error("Email field is required")
+
       }
+      else  if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.userForm.value.email)))
+      {
+        this.toastr.error("You have entered an invalid email address!");
+        // return (true)
+      }
+
     } else if (type == 'mobile') {
-      if (this.userForm.value.mobile.replace(/\s/g, "") === '') {
-        this.userForm.controls.mobile.patchValue(null);
+      // if (this.userForm.value.mobile.replace(/\s/g, "") === '') {
+      //   this.userForm.controls.mobile.patchValue(null);
+      // }
+      if(this.userForm.value.mobile === '' )
+      {
+        this.toastr.error("Mobile field is required");
+
       }
-      if(!(this.userForm.value.mobile.match("^([7-9]{1})([0-9]{9})$"))){
-        this.toastr.error('Invalid mobile number');
+     
+       else if(!(this.userForm.value.mobile.match("^([7-9]{1})([0-9]{9})$") ))
+      {
+       this.toastr.error("Invalid mobile number")
       }
     } else if (type == 'state') {
       if((this.userForm.value.address === '')){
@@ -172,15 +198,20 @@ export class UserProfileComponent implements OnInit {
       }
       */
     } else if (type == 'pincode') {
-      if (this.userForm.value.pincode.replace(/\s/g, "") === '') {
-        this.userForm.controls.pincode.patchValue(null);
+      // if (this.userForm.value.pincode.replace(/\s/g, "") === '') {
+      //   this.userForm.controls.pincode.patchValue(null);
+      // }
+      if(this.userForm.value.pincode === '' )
+      {
+        this.toastr.error("pincode field is required");
+
       }
-      if(!(this.userForm.value.pincode.match("^[1-9][0-9]{5}$"))){
+      else if(!(this.userForm.value.pincode.match("^[1-9][0-9]{5}$"))){
         this.toastr.error('Invalid pincode');
     }
     } else if (type == 'address') {
       if((this.userForm.value.address === '')){
-        this.toastr.error('Invalid Address');
+        this.toastr.error('Address field cannot be empty');
       }
      /*
       if (this.userForm.value.address.replace(/\s/g, "") === '') {
