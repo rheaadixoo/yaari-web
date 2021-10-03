@@ -16,4 +16,10 @@ export class AppComponent {
        return false;
     }
   }
+
+  onActivate(e, scrollContainer) {
+    document.body.scrollTop = 0;
+    scrollContainer.scrollTop = 0;
+    window.scrollTo(0, 0);
+  }
 }

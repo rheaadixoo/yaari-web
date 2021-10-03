@@ -37,6 +37,7 @@ export class HeaderComponent implements OnInit {
 
   get isUserLoggedIn() {
     if (localStorage.getItem('token')) {
+      this.getUserRecord();
       return true;
     }
     else {
