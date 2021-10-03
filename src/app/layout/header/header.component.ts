@@ -37,7 +37,7 @@ export class HeaderComponent implements OnInit {
 
   get isUserLoggedIn() {
     if (localStorage.getItem('token')) {
-      this.getUserRecord();
+      // this.getUserRecord();
       return true;
     }
     else {
@@ -138,7 +138,7 @@ export class HeaderComponent implements OnInit {
   }
 
   get imageUrl(){
-    return this.imgUrl ? this.imageUrl : '../../../assets/images/profile_default.svg';
+    return this.imgUrl ? this.imgUrl : '../../../assets/images/profile_default.svg';
   }
   // get cartProductCount(){
   //   return this.productCount;
