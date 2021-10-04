@@ -12,7 +12,12 @@
             [routerLink]="['/home']">Home</a>
           </li>
           <li class="breadcrumb-item active text-gray font-400 text-font-18" aria-current="page">
-            All Collections
+            <a href="javascript:void(0)" class="text-gray font-400 text-font-18"
+            [routerLink]="['/app/all-collections']">All Collections</a>
+          </li>
+
+          <li class="breadcrumb-item active text-gray font-400 text-font-18" aria-current="page">
+            {{catName}}
           </li>
         </ol>
       </nav>

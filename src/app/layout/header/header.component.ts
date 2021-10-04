@@ -82,26 +82,25 @@ export class HeaderComponent implements OnInit {
 
   searchProduct(event) {
     let text = event.term;
+    this.searchValue=event.term;
     this.productList = [];
-    if (text === '' || text.length < 1) {
+    if (this.searchValue === '' || this.searchValue.length < 1) {
       this.placeValue = "Search Products...";
       return
     }
     this.placeValue = "";
-    this.productService.searchProducts(text).subscribe(res => {
+    this.productService.searchProducts(this.searchValue).subscribe(res => {
       // console.log("Re-s---", res);
       this.productList = res;
     })
   }
 
   onChange(product) {
-    console.log(product)
+    
     if (product) {
       this.router.navigateByUrl(`app/products/detail/${product.id}`);
-      // if (this.router.url.includes('/products/detail')) {
-      //   this.productService.stage.next(product);
-      // } else {
-      // }
+      this.searchValue="";
+      this.placeValue="search products...";
     }
   }
 
@@ -143,4 +142,9 @@ export class HeaderComponent implements OnInit {
   // get cartProductCount(){
   //   return this.productCount;
   // }
+
+  onClose(){
+    this.searchValue="";
+    this.placeValue="search products..."
+  }
 }
