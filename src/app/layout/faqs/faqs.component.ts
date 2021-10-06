@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {FaqService} from '../../shared/services/faq.service';
+
 
 @Component({
   selector: 'yaari-faqs',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FaqsComponent implements OnInit {
 
-  constructor() { }
 
-  ngOnInit(): void {
+  
+    public faqs = [];
+  public errorMsg;
+  
+  constructor(private faq:FaqService) { }
+
+  ngOnInit() {
+    this.faq.getFaq()
+      .subscribe(data => this.faqs = data,
+                 error => this.errorMsg = error);
+        
+                 console.log(this.faqs.values);
+  }
+  
   }
 
-}
+

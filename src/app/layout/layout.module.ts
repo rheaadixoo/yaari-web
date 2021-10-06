@@ -11,6 +11,7 @@ import { ShippingReturnPolicyComponent } from './shipping-return-policy/shipping
 import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 import { ContactUsModule } from './contact-us/contact-us.module';
 
+
 @NgModule({
   declarations: [LayoutComponent, BrandsComponent, FrequentlyAskedQuestionsComponent, PrivacyPolicyComponent, TermsAndConditionsComponent, ShippingReturnPolicyComponent],
   imports: [
