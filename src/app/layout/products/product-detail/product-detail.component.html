@@ -218,43 +218,51 @@
               <div class="col-lg-8 pl-0 ">
                 
                 <!-- <div class="container"> -->
-                  <div class="radio-tile-group w-50 ">
-                    <div class="input-container m-auto  px-1">
-                      <input id="walk" class="radio-button" type="radio" name="radio" />
-                      <div class="radio-tile">
-                        <label for="walk" class="radio-tile-label">S</label>
+                  <ul>
+                    <div class="radio-tile-group w-50 ">
+                    <li>
+                      <div class="input-container ">
+                        <input id="walk" class="radio-button" type="radio" name="radio" />
+                        <div class="radio-tile">
+                          <label for="walk" class="radio-tile-label">S</label>
+                        </div>
                       </div>
-                    </div>
-                
-                    <div class="input-container m-auto px-1">
-                      <input id="fly" class="radio-button" type="radio" name="radio" />
-                      <div class="radio-tile">
-                        <label for="fly" class="radio-tile-label">M</label>
-                      </div>
-                    </div>
+                    </li>
+                    <li>
 
-                    <div class="input-container m-auto px-1">
-                      <input id="walk" class="radio-button" type="radio" name="radio" />
-                      <div class="radio-tile">
-                        <label for="walk" class="radio-tile-label">L</label>
+                      <div class="input-container ">
+                        <input id="walk" class="radio-button" type="radio" name="radio" />
+                        <div class="radio-tile">
+                          <label for="walk" class="radio-tile-label">M</label>
+                        </div>
                       </div>
-                    </div>
-
-                    <div class="input-container m-auto px-1">
-                      <input id="walk" class="radio-button" type="radio" name="radio" />
-                      <div class="radio-tile">
-                        <label for="walk" class="radio-tile-label">XL</label>
+                    </li>
+                    <li>
+                      <div class="input-container  ">
+                        <input id="walk" class="radio-button" type="radio" name="radio" />
+                        <div class="radio-tile">
+                          <label for="walk" class="radio-tile-label">L</label>
+                        </div>
                       </div>
-                    </div>
-
-                    <div class="input-container m-auto px-1">
-                      <input id="walk" class="radio-button" type="radio" name="radio" />
-                      <div class="radio-tile">
-                       <label for="walk" class="radio-tile-label">XXL</label>
+                    </li>
+                    <li>
+                      <div class="input-container ">
+                        <input id="walk" class="radio-button" type="radio" name="radio" />
+                        <div class="radio-tile">
+                          <label for="walk" class="radio-tile-label">XL</label>
+                        </div>
                       </div>
+                    </li>
+                    <li>
+                      <div class="input-container ">
+                        <input id="walk" class="radio-button" type="radio" name="radio" />
+                        <div class="radio-tile">
+                         <label for="walk" class="radio-tile-label">XXL</label>
+                        </div>
+                      </div>
+                    </li>
                     </div>
-                  </div>
-                <!-- </div> -->
+                  </ul>
                 
               </div>
             </div>
@@ -593,14 +601,15 @@
                 <!-- Reviews -->
                 <div class="col-lg-8 rating_review_progres_crd_col_8">
                   <div class="total_revw_sec_btm_serv_det">
-                    <div class="sngl_review_sec_custmr">
+                    <div class="sngl_review_sec_custmr" *ngFor="let item of productReview">
                       <div class="w-100 d-inline-block">
                         <div class="rating_user_img_sec">
                           <img src="../../../../assets/images/user_img.png" class="img-fluid">
                         </div>
                         <h5 class="d-inline-block ml-3">
                           <span class="mb-2 d-block font-18 font-500">
-                            Sakshi Kapoor
+                            <!-- Sakshi Kapoor -->
+                            {{item.username}} 
                           </span>
                           <span class="mb-2 d-block font-14 font-400">
                             <img width="20" height="20" src="../../../../assets/images/verified_purchase_icon.svg"
@@ -609,170 +618,16 @@
                           </span>
                         </h5>
                         <span class="font-16 py-1 font-500 ml-1 float-right rating_by_custmr_sngl">
-                          4.0
+                           4.0 
+                          <!-- {{item.rating}}  -->
                           <span class="material-icons font-20 rating_star_oncrd position-relative"
                             style="line-height: 0; top:4px;">star</span>
                         </span>
                       </div>
                       <p class="review_by_sutm_des_txt">
-                        Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                      </p>
-                    </div>
-                    <div class="sngl_review_sec_custmr">
-                      <div class="w-100 d-inline-block">
-                        <div class="rating_user_img_sec">
-                          <img src="../../../../assets/images/user_img.png" class="img-fluid">
-                        </div>
-                        <h5 class="d-inline-block ml-3">
-                          <span class="mb-2 d-block font-18 font-500">
-                            Sakshi Kapoor
-                          </span>
-                          <span class="mb-2 d-block font-14 font-400">
-                            <img width="20" height="20" src="../../../../assets/images/verified_purchase_icon.svg"
-                              class="img-fluid">
-                            Varified Purchase
-                          </span>
-                        </h5>
-                        <span class="font-16 py-1 font-500 ml-1 float-right rating_by_custmr_sngl">
-                          4.0
-                          <span class="material-icons font-20 rating_star_oncrd position-relative"
-                            style="line-height: 0; top:4px;">star</span>
-                        </span>
-                      </div>
-                      <p class="review_by_sutm_des_txt">
-                        Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                      </p>
-                    </div>
-                    <div class="sngl_review_sec_custmr">
-                      <div class="w-100 d-inline-block">
-                        <div class="rating_user_img_sec">
-                          <img src="../../../../assets/images/user_img.png" class="img-fluid">
-                        </div>
-                        <h5 class="d-inline-block ml-3">
-                          <span class="mb-2 d-block font-18 font-500">
-                            Sakshi Kapoor
-                          </span>
-                          <span class="mb-2 d-block font-14 font-400">
-                            <img width="20" height="20" src="../../../../assets/images/verified_purchase_icon.svg"
-                              class="img-fluid">
-                            Varified Purchase
-                          </span>
-                        </h5>
-                        <span class="font-16 py-1 font-500 ml-1 float-right rating_by_custmr_sngl">
-                          4.0
-                          <span class="material-icons font-20 rating_star_oncrd position-relative"
-                            style="line-height: 0; top:4px;">star</span>
-                        </span>
-                      </div>
-                      <p class="review_by_sutm_des_txt">
-                        Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                      </p>
-                    </div>
-                    <div class="sngl_review_sec_custmr">
-                      <div class="w-100 d-inline-block">
-                        <div class="rating_user_img_sec">
-                          <img src="../../../../assets/images/user_img.png" class="img-fluid">
-                        </div>
-                        <h5 class="d-inline-block ml-3">
-                          <span class="mb-2 d-block font-18 font-500">
-                            Sakshi Kapoor
-                          </span>
-                          <span class="mb-2 d-block font-14 font-400">
-                            <img width="20" height="20" src="../../../../assets/images/verified_purchase_icon.svg"
-                              class="img-fluid">
-                            Varified Purchase
-                          </span>
-                        </h5>
-                        <span class="font-16 py-1 font-500 ml-1 float-right rating_by_custmr_sngl">
-                          4.0
-                          <span class="material-icons font-20 rating_star_oncrd position-relative"
-                            style="line-height: 0; top:4px;">star</span>
-                        </span>
-                      </div>
-                      <p class="review_by_sutm_des_txt">
-                        Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                      </p>
-                    </div>
-                    <div class="sngl_review_sec_custmr">
-                      <div class="w-100 d-inline-block">
-                        <div class="rating_user_img_sec">
-                          <img src="../../../../assets/images/user_img.png" class="img-fluid">
-                        </div>
-                        <h5 class="d-inline-block ml-3">
-                          <span class="mb-2 d-block font-18 font-500">
-                            Sakshi Kapoor
-                          </span>
-                          <span class="mb-2 d-block font-14 font-400">
-                            <img width="20" height="20" src="../../../../assets/images/verified_purchase_icon.svg"
-                              class="img-fluid">
-                            Varified Purchase
-                          </span>
-                        </h5>
-                        <span class="font-16 py-1 font-500 ml-1 float-right rating_by_custmr_sngl">
-                          4.0
-                          <span class="material-icons font-20 rating_star_oncrd position-relative"
-                            style="line-height: 0; top:4px;">star</span>
-                        </span>
-                      </div>
-                      <p class="review_by_sutm_des_txt">
-                        Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                      </p>
-                    </div>
-                    <div class="sngl_review_sec_custmr">
-                      <div class="w-100 d-inline-block">
-                        <div class="rating_user_img_sec">
-                          <img src="../../../../assets/images/user_img.png" class="img-fluid">
-                        </div>
-                        <h5 class="d-inline-block ml-3">
-                          <span class="mb-2 d-block font-18 font-500">
-                            Sakshi Kapoor
-                          </span>
-                          <span class="mb-2 d-block font-14 font-400">
-                            <img width="20" height="20" src="../../../../assets/images/verified_purchase_icon.svg"
-                              class="img-fluid">
-                            Varified Purchase
-                          </span>
-                        </h5>
-                        <span class="font-16 py-1 font-500 ml-1 float-right rating_by_custmr_sngl">
-                          4.0
-                          <span class="material-icons font-20 rating_star_oncrd position-relative"
-                            style="line-height: 0; top:4px;">star</span>
-                        </span>
-                      </div>
-                      <p class="review_by_sutm_des_txt">
-                        Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                      </p>
-                    </div>
-                    <div class="sngl_review_sec_custmr">
-                      <div class="w-100 d-inline-block">
-                        <div class="rating_user_img_sec">
-                          <img src="../../../../assets/images/user_img.png" class="img-fluid">
-                        </div>
-                        <h5 class="d-inline-block ml-3">
-                          <span class="mb-2 d-block font-18 font-500">
-                            Sakshi Kapoor
-                          </span>
-                          <span class="mb-2 d-block font-14 font-400">
-                            <img width="20" height="20" src="../../../../assets/images/verified_purchase_icon.svg"
-                              class="img-fluid">
-                            Varified Purchase
-                          </span>
-                        </h5>
-                        <span class="font-16 py-1 font-500 ml-1 float-right rating_by_custmr_sngl">
-                          4.0
-                          <span class="material-icons font-20 rating_star_oncrd position-relative"
-                            style="line-height: 0; top:4px;">star</span>
-                        </span>
-                      </div>
-                      <p class="review_by_sutm_des_txt">
-                        Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                        <!-- Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo -->
+                         {{item.comment}}
                       </p>
                     </div>
                   </div>

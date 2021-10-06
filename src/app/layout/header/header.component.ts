@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit {
   public userOptions: boolean = false;
   public searchValue: string = '';
   public productList: any = [];
-  public placeValue: any = 'Search Products...'
+  public placeValue: any = 'search products...'
   private docEle: any = {};
   public productCount: any = 0;
   public imgUrl: any = '';
@@ -81,11 +81,13 @@ export class HeaderComponent implements OnInit {
   }
 
   searchProduct(event) {
+    console.log("search product");
     let text = event.term;
     this.searchValue=event.term;
     this.productList = [];
     if (this.searchValue === '' || this.searchValue.length < 1) {
-      this.placeValue = "Search Products...";
+      this.placeValue = "search Products...";
+      this.searchValue=""
       return
     }
     this.placeValue = "";
@@ -96,11 +98,8 @@ export class HeaderComponent implements OnInit {
   }
 
   onChange(product) {
-    
     if (product) {
       this.router.navigateByUrl(`app/products/detail/${product.id}`);
-      this.searchValue="";
-      this.placeValue="search products...";
     }
   }
 
@@ -144,7 +143,11 @@ export class HeaderComponent implements OnInit {
   // }
 
   onClose(){
+    console.log("onClose");
     this.searchValue="";
     this.placeValue="search products..."
+    this.productList=[];
   }
+
+
 }

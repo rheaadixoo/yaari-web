@@ -40,11 +40,14 @@ export class ProductDetailComponent implements OnInit {
   public quantity: number = 1;
   public productId: any = 0;
   public productObj: any = {};
+  public productReview:any=[]
   public showBuyNowBtn: boolean = true;
   public subTotal: any = 0;
   public productList: any = [];
   public isProductExist: boolean = false;
   public isProductExistInWishlist: boolean = false;
+  public collectUsers:any
+
   ngOnInit(): void {
     if (this.route.snapshot.params.id) {
       this.productId = this.route.snapshot.params.id;
@@ -70,12 +73,14 @@ export class ProductDetailComponent implements OnInit {
       })
     }
     this.getProductDetailById();
+    this.getReviewsOfProduct();
   }
 
   getProductDetailById() {
     if (this.productId) {
       this.productService.getProductById(this.productId).subscribe(res => {
         this.productObj = res;
+        console.log(res);
         this.subTotal = this.productObj.sellingPrice;
         this.getProductListById(this.productObj['subCategoryId']);
       })
@@ -296,4 +301,29 @@ export class ProductDetailComponent implements OnInit {
   goToWishlist(){
     this.router.navigateByUrl('/app/wishlist');
   }
+
+  //Rating and reviews
+  getReviewsOfProduct(){
+    if(this.productId){
+      this.productService.getPoductReviewById(this.productId).subscribe(response => {
+        
+        this.productReview=response;
+
+        for (let index = 0; index < this.productReview.length; index++) {
+          const element = this.productReview[index];
+          // this.collectUsers.push(element.userId);
+          this.productService.getUserDetailsById(element.userId).subscribe( res => {
+           
+            this.collectUsers=res;
+            this.productReview[index].username=this.collectUsers.name
+          })
+        }
+
+      },error => {
+        console.log(error);
+      })
+    }
+  }
+  
+
 }
