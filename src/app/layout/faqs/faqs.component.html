@@ -32,16 +32,16 @@
                 <div class="accordion" id="accordionExample">
                     <ng-container  *ngFor="let questions of faq.categoryQuestions">
                         <div class="card">
-                            <div class="card-head" id="headingOne">
-                                <h2 class="mb-0" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false"
-                                    aria-controls="collapseOne">
+                            <div class="card-head" [id]="questions.id">
+                                <h2 class="mb-0" data-toggle="collapse" [attr.data-target]="'#collapse'+questions.id" aria-expanded="true"
+                                    [attr.aria-controls]="'collapse'+questions.id">
                                     <span class="material-icons">expand_more</span>
-                                       {{questions.question}}
+                                    {{questions.question}}
                                        
                             </h2>
                             </div>
     
-                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
+                            <div [id]="'collapse'+questions.id" class="collapse" [attr.aria-labelledby]="questions.id"
                                 data-parent="#accordionExample">
                                 <div class="card-body">
                                     {{questions.answer}}

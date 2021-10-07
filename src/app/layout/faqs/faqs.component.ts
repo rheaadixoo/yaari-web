@@ -9,8 +9,6 @@ import {FaqService} from '../../shared/services/faq.service';
 })
 export class FaqsComponent implements OnInit {
 
-
-  
     public faqs = [];
   public errorMsg;
   
@@ -23,6 +21,7 @@ export class FaqsComponent implements OnInit {
         
                  console.log(this.faqs.values);
   }
+  
   
   }
 
