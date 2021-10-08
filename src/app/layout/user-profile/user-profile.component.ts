@@ -4,6 +4,7 @@ import { AddressService } from 'src/app/shared/services/address.service';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { ShareDataService } from 'src/app/shared/services/share-data.service'
 
 @Component({
   selector: 'yaari-user-profile',
@@ -17,7 +18,8 @@ export class UserProfileComponent implements OnInit {
   public imgUrl: string = '';
   public userAddress: any={};
   constructor(private toastr: ToastrService, private builder: FormBuilder, private localStorageService: LocalStorageService,
-    private userService: UserProfileService, private addressService: AddressService) { }
+    private userService: UserProfileService, private addressService: AddressService,
+    private share:ShareDataService) { }
 
   ngOnInit(): void {
     this.getUserRecord();
@@ -48,11 +50,12 @@ export class UserProfileComponent implements OnInit {
   getUserRecord() {
     
     // this.addressService.getAddressByUserId(this.userData.id).subscribe((response: any[]) => {
-      this.userService.getUserDetailsById(this.userData.id).subscribe((response)=>{
+     this.userService.getUserDetailsById(this.userData.id).subscribe((response)=>{
      if (response) {
         this.userObj = response;
         console.log(this.userObj);
         this.imgUrl = this.userObj['profileImage'];
+        this.share.setimageAddress(this.imgUrl)
         this.UForm.first_name.patchValue(this.userObj.firstName);
         this.UForm.last_name.patchValue(this.userObj.lastName);
         this.UForm.email.patchValue(this.userObj.email);
@@ -107,6 +110,7 @@ export class UserProfileComponent implements OnInit {
     }
 
     this.userService.updateUserRecord(payload, this.userData.id).subscribe(response => {
+
       if(this.userForm.value.address){
         this.addressService.updateUserAddress(addressPayload, this.userObj.id).subscribe(res => {
           this.toastr.success('Profile Updated Successfully');
@@ -198,7 +202,7 @@ export class UserProfileComponent implements OnInit {
     console.log("formData", formData);
     this.userService.uploadProfilePhoto(formData).subscribe(res => {
       if (res['files'][0]['path']) {
-        this.imgUrl = res['files'][0]['path'];
+        this.imgUrl = res['files'][0]['path']
       }
     })
   }

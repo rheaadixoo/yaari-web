@@ -22,6 +22,7 @@ export class MyOrdersComponent implements OnInit {
   getUserOrders() {
     this.orderService.getOrders(this.userData.id).subscribe((res: any[]) => {
       this.myOrders = res;
+      console.log(this.myOrders);
       //GET —-> /delhiveries/track-order/{orderId}
       // POST ——> /delhiveries/cancel-order/{orderId}
     })

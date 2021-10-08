@@ -1,3 +1,4 @@
+
 <div class="top_profile_crt_lg_sec p-4" (click)="closePopUp($event)">
   <div class="container-fluid">
     <a class="navbar-brand" href="javascript:void(0)" [routerLink]="['/home']">
@@ -66,7 +67,7 @@
         </div>
       </div>
       <div class="top_crt_main float-left px-3">
-        <span class="cart_item_count"> {{productCount}} </span>
+        <span class="cart_item_count"> {{cartCount}} </span>
         <span class="font-600 font-16" style="cursor: pointer;">
           <a [routerLink]="['/app/cart']" class="cart_text">
             <img class="img-fluid mr-1" width="23" height="23" src="../../../assets/images/cart_icon.svg">
