@@ -7,6 +7,7 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { MyOrdersComponent } from './my-orders/my-orders.component';
 import { MyWishlistComponent } from './my-wishlist/my-wishlist.component';
 import { WishlistModule } from '../wishlist/wishlist.module';
+import { LayoutRoutingModule } from '../layout-routing.module';
 
 @NgModule({
   declarations: [UserProfileComponent, ChangePasswordComponent, MyOrdersComponent, MyWishlistComponent],
@@ -15,7 +16,9 @@ import { WishlistModule } from '../wishlist/wishlist.module';
     UserProfileRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    WishlistModule
+    WishlistModule,
+    LayoutRoutingModule,
+    
   ]
 })
 export class UserProfileModule { }

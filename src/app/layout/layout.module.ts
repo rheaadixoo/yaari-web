@@ -10,7 +10,7 @@ import { TermsAndConditionsComponent } from './terms-and-condition/terms-and-con
 import { ShippingReturnPolicyComponent } from './shipping-return-policy/shipping-return-policy.component';
 import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 import { ContactUsModule } from './contact-us/contact-us.module';
-
+import { CancelOrderModule } from './cancel-order/cancel-order.module';
 
 @NgModule({
   declarations: [LayoutComponent, BrandsComponent, FrequentlyAskedQuestionsComponent, PrivacyPolicyComponent, TermsAndConditionsComponent, ShippingReturnPolicyComponent],
@@ -19,7 +19,8 @@ import { ContactUsModule } from './contact-us/contact-us.module';
     LayoutRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    ContactUsModule
+    ContactUsModule,
+    CancelOrderModule
   ]
 })
 export class LayoutModule { }

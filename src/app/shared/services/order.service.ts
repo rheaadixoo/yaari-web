@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -43,6 +44,7 @@ export class OrderService {
 
   cancelOrder(id){
     return this.http.patch(this.apiUrl + 'deliveries/order-cancel/'+id,{}).pipe(map(response =>{
+      
         return response;
     }))
   }

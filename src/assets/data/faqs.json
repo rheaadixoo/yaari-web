@@ -16,7 +16,7 @@
     {
       "id":3,
       "question":"What can I do if my order dispatch is delayed?",
-      "answer":"We will try our best to get your products to you within the estimated delivery times. If the package has not reached you by the expected delivery date, please write to us at support@halfpricebazar.com and we will try our best to resolve your issues."
+      "answer":"We will try our best to get your products to you within the estimated delivery times. If the package has not reached you by the expected delivery date, please write to us at help.HPB@ydiconsumer.com and we will try our best to resolve your issues."
     },
     {
         "id":4,
@@ -36,7 +36,7 @@
     {
         "id":7,
         "question":"Can I cancel my order?",
-        "answer":"You can cancel your order within 24 hours/before it gets dispatched through My Order section or by writing to us at support@halfpricebazar.com.**Half Price Bazaar reserves the right to cancel any order without pre-confirming the customer at any time and may verify any order before shipping the same to the customer that may include having a verbal or written confirmation from the customer."
+        "answer":"You can cancel your order within 24 hours/before it gets dispatched through My Order section or by writing to us at help.HPB@ydiconsumer.com.**Half Price Bazaar reserves the right to cancel any order without pre-confirming the customer at any time and may verify any order before shipping the same to the customer that may include having a verbal or written confirmation from the customer."
     },
     {
         "id":8,
@@ -76,7 +76,7 @@
     {
         "id":14,
         "question":"I'm unsure that the order was successfully placed.",
-        "answer":"You can review the status of your order and other tracking related queries under the My Orders section. In case your money has been debited and you can't see your order under My Orders section, please recheck after 15-30 minutes or write us at support@halfpricebazar.com"
+        "answer":"You can review the status of your order and other tracking related queries under the My Orders section. In case your money has been debited and you can't see your order under My Orders section, please recheck after 15-30 minutes or write us at help.HPB@ydiconsumer.com"
     },
     {
         "id":15,
@@ -91,27 +91,27 @@
     {
         "id":17,
         "question":"The order I received is damaged",
-        "answer":"Our shipments go through rigorous quality check processes before they leave our warehouse. However, in the rare case that your product is damaged during shipment or transit, you can request for a replacement or refund within 5 days of receiving the order and write to us at support@halfpricebazar.com with pictures of the damaged good.Once your request is received, we will be responsible to pick the item from you. We will initiate the refund  or replacement process only if the products are received by us in their original packaging with their seals, labels and bar-codes intact.NOTE: If it is a case of replacement, it is subject to the availability of stock. In cases when a replacement may not be available, we will refund you the full amount"
+        "answer":"Our shipments go through rigorous quality check processes before they leave our warehouse. However, in the rare case that your product is damaged during shipment or transit, you can request for a replacement or refund within 5 days of receiving the order and write to us at help.HPB@ydiconsumer.com with pictures of the damaged good.Once your request is received, we will be responsible to pick the item from you. We will initiate the refund  or replacement process only if the products are received by us in their original packaging with their seals, labels and bar-codes intact.NOTE: If it is a case of replacement, it is subject to the availability of stock. In cases when a replacement may not be available, we will refund you the full amount"
     },
     {
         "id":18,
         "question":"I was not available to collect my order",
-        "answer":"If you were not available to collect your order, please reach out to us at support@halfpricebazar.com to reschedule delivery."
+        "answer":"If you were not available to collect your order, please reach out to us at help.HPB@ydiconsumer.com to reschedule delivery."
     },
     {
         "id":19,
         "question":"I want to change the size/colour of an item I ordered",
-        "answer":"If your order has not been dispatched yet, you can cancel the existing order and place a new one for the desired size/colour. In case of a prepaid order, the refund upon cancellation will get initiated within 3-5 days.If you have already received your order and want to change the size/colour, please refer to the product page of the item purchased for our exchange and return policy. If the product is eligible for exchange or return, you can request from an exchange or return from the 'My Orders' section. You can also reach out to us at support@halfpricebazar.com within 5 days of delivery to request exchange or return."
+        "answer":"If your order has not been dispatched yet, you can cancel the existing order and place a new one for the desired size/colour. In case of a prepaid order, the refund upon cancellation will get initiated within 3-5 days.If you have already received your order and want to change the size/colour, please refer to the product page of the item purchased for our exchange and return policy. If the product is eligible for exchange or return, you can request from an exchange or return from the 'My Orders' section. You can also reach out to us at help.HPB@ydiconsumer.com within 5 days of delivery to request exchange or return."
     },
     {
         "id":20,
         "question":" Can I delay the delivery date?",
-        "answer":"please reach out to us at support@halfpricebazar.com."
+        "answer":"please reach out to us at help.HPB@ydiconsumer.com."
     },
     {
         "id":21,
         "question":"What can I do if my order dispatch is delayed?",
-        "answer":"We try our best to dispatch your order to fulfill the estimated delivery timeline however, there could be scenarios of delays from our brand partner.If your order dispatch is delayed, please reach out to us at support@halfpricebazar.com."
+        "answer":"We try our best to dispatch your order to fulfill the estimated delivery timeline however, there could be scenarios of delays from our brand partner.If your order dispatch is delayed, please reach out to us at help.HPB@ydiconsumer.com."
     },
     {
         "id":22,
@@ -121,12 +121,12 @@
     {
         "id":23,
         "question":" I did not receive an invoice for my order",
-        "answer":"If you haven't received an invoice for your order, please reach out to us at support@halfpricebazar.com"
+        "answer":"If you haven't received an invoice for your order, please reach out to us at help.HPB@ydiconsumer.com"
     },
     {
         "id":24,
         "question":"My order is not yet delivered ",
-        "answer":"We try our best to deliver your order within the estimated delivery timeline however, there could be scenarios of delays from our brand partner.If you haven't received your package by the expected delivery date, please reach out to us at support@halfpricebazar.com."
+        "answer":"We try our best to deliver your order within the estimated delivery timeline however, there could be scenarios of delays from our brand partner.If you haven't received your package by the expected delivery date, please reach out to us at help.HPB@ydiconsumer.com."
     },
     {
         "id":25,
@@ -177,7 +177,7 @@
     {
         "id":33,
         "question":"My request for cancellation has not been processed.",
-        "answer":"If your cancellation request has not been processed, please email us at support@halfpricebazar.com."
+        "answer":"If your cancellation request has not been processed, please email us at help.HPB@ydiconsumer.com."
     },
     {
         "id":34,
@@ -197,7 +197,7 @@
     {
         "id":36,
         "question":"What is Half Price Bazar's return policy?",
-        "answer":"Most of our products are eligible for return and refund for domestic orders. The return and exchange policy for every product is clearly mentioned on the product page. If the product is eligible for return, we request you to initiate return request within 5 days of delivery through one of the following steps:1) Via 'My Orders' section on the Half Price Bazar Website - easiest and fastest way to create return.2) Or write to us at support@halfpricebazar.com Only products that are unused, unworn, undamaged, have their original tags and labels intact, in original packaging are eligible for return."
+        "answer":"Most of our products are eligible for return and refund for domestic orders. The return and exchange policy for every product is clearly mentioned on the product page. If the product is eligible for return, we request you to initiate return request within 5 days of delivery through one of the following steps:1) Via 'My Orders' section on the Half Price Bazar Website - easiest and fastest way to create return.2) Or write to us at help.HPB@ydiconsumer.com Only products that are unused, unworn, undamaged, have their original tags and labels intact, in original packaging are eligible for return."
     },
     {
         "id":37,
@@ -227,7 +227,7 @@
     {
         "id":42,
         "question":"The product was returned, but I haven't received my refund.",
-        "answer":"We initiate the refund once the product is successfully picked up by our courier partner, however it takes 5-7 days to reflect in your bank account according to the bank timelines. In case of delay, please reach out to us at support@halfpricebazar.com."
+        "answer":"We initiate the refund once the product is successfully picked up by our courier partner, however it takes 5-7 days to reflect in your bank account according to the bank timelines. In case of delay, please reach out to us at help.HPB@ydiconsumer.com."
     },
     {
         "id":43,
@@ -237,7 +237,7 @@
     {
         "id":44,
         "question":"My return request got declined",
-        "answer":"Please reach out to us at support@halfpricebazar.com."
+        "answer":"Please reach out to us at help.HPB@ydiconsumer.com."
     },
     {
         "id":45,
@@ -247,7 +247,7 @@
     {
         "id":46,
         "question":"The refund amount processed is incorrect.",
-        "answer":"If you have received an incorrect refund amount, please reach out to us at support@halfpricebazar.com. "
+        "answer":"If you have received an incorrect refund amount, please reach out to us at help.HPB@ydiconsumer.com. "
     },
     {
         "id":47,
@@ -257,7 +257,7 @@
     {
         "id":48,
         "question":"How will I receive my refund for a COD order?",
-        "answer":"For all COD orders, the money will be refunded to your bank account.Please share your accurate bank account details during placing the return request in 'My orders' section of website or mail us at support@halfpricebazar.com to receive the refund amount.We will initiate a bank transfer against the refund amount in the bank details shared by you. Once we receive your bank details and product is picked up by courier partner refund is initiated in 3-5 business days It will take an additional 2-3 business days for the amount to reflect in your account as per bank timelines.  "
+        "answer":"For all COD orders, the money will be refunded to your bank account.Please share your accurate bank account details during placing the return request in 'My orders' section of website or mail us at help.HPB@ydiconsumer.com to receive the refund amount.We will initiate a bank transfer against the refund amount in the bank details shared by you. Once we receive your bank details and product is picked up by courier partner refund is initiated in 3-5 business days It will take an additional 2-3 business days for the amount to reflect in your account as per bank timelines.  "
     }
 ]
 },
@@ -292,12 +292,12 @@
     {
         "id":54,
         "question":"Payment got debited but my order is not yet confirmed.",
-        "answer":"If your most recent order does not show up after successful payment, please refresh the page after some time.If you are still facing the same issue, please reach out to us at support@halfpricebazar.com."
+        "answer":"If your most recent order does not show up after successful payment, please refresh the page after some time.If you are still facing the same issue, please reach out to us at help.HPB@ydiconsumer.com."
     },
     {
         "id":55,
         "question":"I'm facing payment issues.",
-        "answer":"If your most recent order does not show up after successful payment, please refresh the page after some time. If you are still facing the same issue, please reach out to us at support@halfpricebazar.com."
+        "answer":"If your most recent order does not show up after successful payment, please refresh the page after some time. If you are still facing the same issue, please reach out to us at help.HPB@ydiconsumer.com."
     }
 ]
 },
@@ -327,7 +327,7 @@
     {
         "id":60,
         "question":"I want to deactivate my account",
-        "answer":"To deactivate your account, please reach out to us at support@halfpricebazar.com. "
+        "answer":"To deactivate your account, please reach out to us at help.HPB@ydiconsumer.com. "
     },
     {
         "id":61,
@@ -352,7 +352,7 @@
     {
         "id":65,
         "question":"I am unable to add products to the wishlist.",
-        "answer":"To add an item to your wishlist, click on the heart icon on the top right corner of the product image.If you are still not able to add product to wishlist, please reach out to us at support@halfpricebazar.com."
+        "answer":"To add an item to your wishlist, click on the heart icon on the top right corner of the product image.If you are still not able to add product to wishlist, please reach out to us at help.HPB@ydiconsumer.com."
     }
 ]
   },
@@ -362,22 +362,22 @@
     {
         "id":66,
         "question":"I am not able to avail the displayed offer.",
-        "answer":"We request you to clear cache and cookies from your phone or desktop.If you are still facing the same issue, please mail us a snapshot of the error message at support@halfpricebazar.com Write to us"
+        "answer":"We request you to clear cache and cookies from your phone or desktop.If you are still facing the same issue, please mail us a snapshot of the error message at help.HPB@ydiconsumer.com Write to us"
     },
     {
         "id":67,
         "question":"I am facing technical issues on the website.",
-        "answer":"We request you to clear cache and cookies from your phone or desktop.If you are still facing the same issue, please mail us a snapshot of the error message at support@halfpricebazar.comwrite to us"
+        "answer":"We request you to clear cache and cookies from your phone or desktop.If you are still facing the same issue, please mail us a snapshot of the error message at help.HPB@ydiconsumer.comwrite to us"
     },
     {
         "id":68,
         "question":"I am unable to add the promo code",
-        "answer":"We request you to mail us a snapshot of the error message at support@halfpricebazar.com."
+        "answer":"We request you to mail us a snapshot of the error message at help.HPB@ydiconsumer.com."
     },
     {
         "id":69,
         "question":"An item's description/image/price is wrong",
-        "answer":"We request you to mail us a snapshot of the error message at support@halfpricebazar.com."
+        "answer":"We request you to mail us a snapshot of the error message at help.HPB@ydiconsumer.com."
     }
 ]
   },

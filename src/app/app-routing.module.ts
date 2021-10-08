@@ -7,6 +7,7 @@ const routes: Routes = [
   { path: 'app', loadChildren: () => import('../app/layout/layout.module').then(m => m.LayoutModule) },
   { path: 'login', loadChildren: () => import('./login/login.module').then(m => m.LoginModule) },
   { path: 'register', loadChildren: () => import('./register/register.module').then(m => m.RegisterModule) },
+  { path : '', loadChildren : () => import('src/app/layout/cancel-order/cancel-order.module').then(m => m.CancelOrderModule)},
   { path: 'redirectTo', loadChildren: () => import('./redirect-to/redirect-to.module').then(m => m.RedirectToModule) },
 ];
 

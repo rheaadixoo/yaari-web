@@ -45,6 +45,9 @@ export class ProductDetailComponent implements OnInit {
   public productList: any = [];
   public isProductExist: boolean = false;
   public isProductExistInWishlist: boolean = false;
+  public start=0;
+  public end=5;
+
   ngOnInit(): void {
     if (this.route.snapshot.params.id) {
       this.productId = this.route.snapshot.params.id;
@@ -296,4 +299,5 @@ export class ProductDetailComponent implements OnInit {
   goToWishlist(){
     this.router.navigateByUrl('/app/wishlist');
   }
+
 }

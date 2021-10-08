@@ -184,7 +184,7 @@
                   </ng-container>
                   <div class="prdct_list_price_det w-100 mb-4" *ngIf="order.status !='cancelled'"
                       style="max-width: 200px;">
-                    <a href="javascript:void(0)" 
+                    <a 
                     class="btn-theme-border w-100 text-center px-0 font-500 d-inline-block py-3"
                     (click)="cancelProductOrder(order)">
                     Cancel Order
@@ -194,6 +194,41 @@
                 </ng-container>
                 <!-- </ng-container> -->
               </div>
+
+
+               <!-- Cancel order form Modal -->
+
+        <ng-template #modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+          <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="cars">Select reason for cancellation &nbsp;&nbsp;</label>
+  <select name="cars" id="cars">
+    <option value="volvo">Volvo</option>
+    <option value="saab">Saab</option>
+    <option value="opel">Opel</option>
+    <option value="audi">Audi</option>
+  </select>
+              
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark" (click)="closeModal()">Save</button>
+        </div>
+      </ng-template> 
+       
+      <!-- <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button> -->
+      
+      
+        
+       
 
               <!-- Ordered Tab -->
               <div class="tab-pane fade" id="pills-ordered" role="tabpanel" aria-labelledby="pills-ordered-tab">

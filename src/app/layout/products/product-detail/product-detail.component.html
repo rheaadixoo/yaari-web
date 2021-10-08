@@ -265,7 +265,9 @@
           <h4 class="border-bottom pb-2 mb-3 font-500">
             Best Sellers
           </h4>
-          <ng-container *ngFor="let product of productList.slice().reverse()">
+         
+          <ng-container *ngFor="let product of productList| slice:start:end let i=index" >
+            
             <div class="best_sellers_prdct_on_det_pg_list" (click)="openInDetailView(product)">
               <div class="d-flex w-75 float-left pr-2">
                 <div class="prdct_sec_list_crd_mn_content p-0 w-100 d-inline-block">
@@ -296,6 +298,7 @@
                 </div>
               </div>
             </div>
+           
           </ng-container>
           <!-- <div class="best_sellers_prdct_on_det_pg_list">
             <div class="d-flex w-75 float-left pr-2">
@@ -399,6 +402,7 @@
         </div>
       </div>
 
+     
       <!-- Rating Product Detail Tabs -->
       <div class="col-lg-8">
         <ul class="nav nav-pills custom_tabs_on_prdct_des_pg border-bottom pb-0 justify-content-center mb-3"
