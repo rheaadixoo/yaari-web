@@ -42,7 +42,7 @@ export class HeaderComponent implements OnInit,AfterViewInit
 
     console.log("getUserRecord");
      this.getUserRecord();
-
+    this.share.setimageAddress();
      this.share.setCartCount();
   }
 
@@ -52,13 +52,15 @@ export class HeaderComponent implements OnInit,AfterViewInit
   }
 
   get imageUrl(){
-    if(this.imgUrl==''){
-      this.imgUrl=this.share.getimageAddress();
-      return this.imgUrl
-    }
-    else{
-      return this.imgUrl
-    }
+    // if(this.imgUrl==''){
+    //   this.imgUrl=this.share.getimageAddress();
+    //   return this.imgUrl
+    // }
+    // else{
+    //   return this.imgUrl
+    // }
+    this.imgUrl=this.share.getimageAddress()
+    return this.imgUrl
   }
 
   get isUserLoggedIn() {

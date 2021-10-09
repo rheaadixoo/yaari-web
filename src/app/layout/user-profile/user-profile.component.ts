@@ -109,6 +109,7 @@ export class UserProfileComponent implements OnInit {
     this.userService.updateUserRecord(payload,this.userData.id).subscribe( res => {
         this.toastr.success("Profile have been removed")
         this.removeProfilebtn=true
+        this.share.setimageAddress();
     })
   }
 
@@ -137,6 +138,8 @@ export class UserProfileComponent implements OnInit {
         this.addressService.updateUserAddress(addressPayload, this.userObj.id).subscribe(res => {
           this.toastr.success('Profile Updated Successfully');
           this.removeProfilebtn=false
+          this.share.setimageAddress(this.userObj.id,payload.profileImage)
+
         }, err => {
           this.toastr.error(err, "Address");
         })
@@ -144,6 +147,7 @@ export class UserProfileComponent implements OnInit {
         this.addressService.createNewAddress(addressPayload).subscribe(res => {
           this.toastr.success('Profile Updated Successfully');
           this.removeProfilebtn=false
+          this.share.setimageAddress(this.userObj.id,payload.profileImage)
         }, err => {
           this.toastr.error(err, "Address");
         })
