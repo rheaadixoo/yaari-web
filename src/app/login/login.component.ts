@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { CartService } from '../shared/services/cart.service';
 import { CookieService } from 'ngx-cookie-service';
 import { PreviousRouteService } from '../shared/services/previous-route.service';
+import { ShareDataService } from '../shared/services/share-data.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -19,7 +20,8 @@ export class LoginComponent implements OnInit {
   constructor(private builder: FormBuilder, private loginService: LoginService,
     private router: Router, private localStorageService: LocalStorageService,
     private toastr: ToastrService, private cartService: CartService,
-    private cookie: CookieService, private previousRouteService: PreviousRouteService) { }
+    private cookie: CookieService, private previousRouteService: PreviousRouteService,
+    private share:ShareDataService,) { }
 
   ngOnInit(): void {
     this.previousUrl = this.previousRouteService.getPreviousUrl();
@@ -47,6 +49,8 @@ export class LoginComponent implements OnInit {
           this.localStorageService.set('token', token);
           this.localStorageService.set('user-detail', atob(res['token'].split('.')[1]));
           let user = JSON.parse(this.localStorageService.get('user-detail'));
+           this.share.setimageAddress(user.id)
+           
           this.cartService.getCartWithUserId(user.id).subscribe((res: any[]) => {
             if (res.length > 0) {
               if (this.cookie.get('cart')) {
@@ -61,6 +65,9 @@ export class LoginComponent implements OnInit {
                  console.log("rs",res[0]);
                  this.cookie.set('cart', JSON.stringify({ id: res[0]['id'] }), { expires: 365, path: '/' });  
               }
+
+              this.share.setCartCount();
+              
             } else if (!res.length) {
               if (this.cookie.get('cart')) {
                 let cartObj = JSON.parse(this.cookie.get('cart'));
@@ -80,12 +87,14 @@ export class LoginComponent implements OnInit {
           //   this.cartService.updateCart(cartObj['id'], { userId: user.id }).subscribe(res => {
           //     console.log("cart updated");
           //   })
-          // }
-          console.log("this.previousUrl >>>>>>>>>>",this.previousUrl);
+          // }y
           
           if (this.previousUrl.includes('/login')) {
             this.router.navigate(['/home']);
 
+          }
+          else if(this.previousUrl.includes('/forget_password')){
+            this.router.navigate(['/home'])
           } else {
             if(!this.previousUrl.includes('register')){
               this.router.navigate([this.previousUrl]);

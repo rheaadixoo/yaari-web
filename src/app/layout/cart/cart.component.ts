@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { WishlistService } from 'src/app/shared/services/wishlist.service.js';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 import { ToastrService } from 'ngx-toastr';
+import { ShareDataService } from 'src/app/shared/services/share-data.service';
 
 @Component({
   selector: 'app-cart',
@@ -22,7 +23,7 @@ export class CartComponent implements OnInit {
   public deliveryCharges : any = 0;
   constructor(private cartService: CartService, private cookie: CookieService, private router: Router,
     private toastr: ToastrService, private wishlistService: WishlistService,
-    private localStorageService: LocalStorageService) { }
+    private localStorageService: LocalStorageService,private share:ShareDataService) { }
 
   ngOnInit(): void {
     this.getCartDetail();
@@ -116,6 +117,7 @@ export class CartComponent implements OnInit {
     this.cartService.deleteCartDetail(id).subscribe(res => {
       console.log("-success-- remove product");
       this.getCartDetail();
+      this.share.setCartCount();
     }, error => {
       console.log("error remove product", error);
     })

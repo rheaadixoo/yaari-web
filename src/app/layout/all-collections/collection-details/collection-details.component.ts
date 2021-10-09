@@ -9,6 +9,7 @@ import { CategoryService } from 'src/app/shared/services/category.service';
 })
 export class CollectionDetailsComponent implements OnInit {
 
+  public categoryName:String
   public collectionId : any = 0;
   public collectionCategories : any = [];
   constructor(private router : Router, private route : ActivatedRoute,private categoryService : CategoryService) { 
@@ -21,10 +22,16 @@ export class CollectionDetailsComponent implements OnInit {
     this.getCategoryById();
   }
 
+  get catName(){
+    return this.categoryName
+  }
+
   getCategoryById(){
     this.categoryService.getCategoryByCollectionId(this.collectionId).subscribe(res =>{
           try {
               this.collectionCategories = res;
+              this.categoryName=this.collectionCategories[0].collection.name;
+              
           } catch (error) {
               console.log("--error----",error);
           }

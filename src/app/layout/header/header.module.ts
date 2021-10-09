@@ -6,6 +6,7 @@ import { HeaderComponent } from './header.component';
 import { CategoryMenuBarComponent } from './category-menu-bar/category-menu-bar.component';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
+
 @NgModule({
   declarations: [HeaderComponent, CategoryMenuBarComponent],
   imports: [

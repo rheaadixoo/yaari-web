@@ -86,12 +86,15 @@
                             </p>
                             <div class="prdct_list_price_det w-100 mb-4">
                               <span class="badge_on_order float-left px-2 py-1 mr-2">
-                                Ordered
+                                Order Number
                               </span>
-                              <a href="javascript:void(0)" class="font-16 text-dark p-1 ml-2 d-flex text-decoration-none">
+                              <span class="badge_on_order float-left px-2 py-1 mr-2 mb-2 ">
+                                {{order.orderNumber}}
+                              </span>
+                              <!-- <a href="javascript:void(0)" class="font-16 text-dark p-1 ml-2 d-flex text-decoration-none">
                                 View Order Details
                                 <span class="material-icons ml-0">chevron_right</span>
-                              </a>
+                              </a> -->
                             </div>
                             <div class="w-100 mb-3 d-inline-block">
                               <span class="badge_on_order text-gray float-left px-2 py-1 mr-2">
@@ -182,7 +185,7 @@
                       </div>
                     </div>
                   </ng-container>
-                  <div class="prdct_list_price_det w-100 mb-4" *ngIf="order.status !='cancelled'"
+                  <div class="prdct_list_price_det w-100 mb-4" *ngIf="order.status !='cancelled' && !order.payLater"
                       style="max-width: 200px;">
                     <a href="javascript:void(0)" 
                     class="btn-theme-border w-100 text-center px-0 font-500 d-inline-block py-3"
@@ -521,7 +524,7 @@
                               </p>
                             </div>
                             <div class="order-tracking completed">
-                              <span class="is-complete"></span>
+                              <span class="is-complete"></span>status
                               <p>
                                 <span class="font-500 text-dark mb-2">Order Shipped</span>
                                 <br>
