@@ -63,7 +63,7 @@
               Returns, Refunds, Cancellations and Exchanges
             </h3>
   
-            <div class="accordion" id="accordionExample">
+            <div class="accordion" id="accordionExample1">
               <ng-container *ngFor="let item of returnpolicies;let idx = index">
                   <div class="card">
                       <div class="card-head" [id]="'heading'+idx">
@@ -74,7 +74,7 @@
                           </h2>
                       </div>
   
-                      <div [id]="'collapse'+idx" class="collapse show" [attr.aria-labelledby]="'heading'+idx"
+                      <div [id]="'collapse'+idx" class="collapse " [attr.aria-labelledby]="'heading'+idx"
                           data-parent="#accordionExample">
                           <div class="card-body">
                               {{item.returnpolicy}}

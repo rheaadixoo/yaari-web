@@ -157,7 +157,7 @@ export class RegisterComponent implements OnInit {
 
       }
      
-       else if(!(this.registerForm.value.mobile.match("^([7-9]{1})([0-9]{9})$") ))
+       else if(!(this.registerForm.value.mobile.match("^([6-9]{1})([0-9]{9})$") ))
       {
        this.toastr.error("Please enter correct contact number")
       }
