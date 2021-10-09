@@ -92,8 +92,17 @@ export class ProductService {
     }))
   }
 
-  getPoductReviewById(id) {
-    return this.http.get(this.apiUrl + 'comments').pipe(map(response => {
+  getPoductReviewById(productId) {
+    const query = {
+      where : {
+        productId
+      }
+    }
+
+    const options = {
+      params : new HttpParams().append('filter', JSON.stringify(query))
+    }
+    return this.http.get(this.apiUrl + 'comments', options).pipe(map(response => {
       return response;
     }))
   }

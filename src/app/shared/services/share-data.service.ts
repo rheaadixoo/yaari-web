@@ -22,6 +22,7 @@ export class ShareDataService {
 
     this.userService.getUserDetailsById(val).subscribe((response)=>{
         this.userdetails=response
+
         imgUrl=this.userdetails.profileImage;
      }, 
      error => {

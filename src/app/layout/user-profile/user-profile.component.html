@@ -78,12 +78,20 @@
                                                     <span class="material-icons text-light">edit</span>
                                                 </label>
                                             </div>
+
+                                            <div class="avatar-delete" *ngIf="!removeProfilebtn">
+                                                <label>
+                                                    <span (click)="removeProfile()" class="material-icons text-light">close</span>
+                                                </label>
+                                            </div>
+
                                             <div class="avatar-preview">
                                                 <div id="imagePreview" [ngStyle]="{
                                                     'background-image': (imgUrl) ? 'url(' + imgUrl + ')' : ''         
                                                 }">
                                                 </div>
                                             </div>
+                                            
                                         </div>
                                     </div>
                                     <div class="form-group col-md-6 px-3 mb-4">

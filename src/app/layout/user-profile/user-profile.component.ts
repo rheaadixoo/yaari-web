@@ -17,11 +17,13 @@ export class UserProfileComponent implements OnInit {
   public activeTab: string = 'profile';
   public imgUrl: string = '';
   public userAddress: any={};
+  public removeProfilebtn:boolean=false
   constructor(private toastr: ToastrService, private builder: FormBuilder, private localStorageService: LocalStorageService,
     private userService: UserProfileService, private addressService: AddressService,
     private share:ShareDataService) { }
 
   ngOnInit(): void {
+
     this.getUserRecord();
     this.buildUserForm();
   }
@@ -68,7 +70,13 @@ export class UserProfileComponent implements OnInit {
         this.UForm.pincode.patchValue(this.userAddress.pinCode);
         this.UForm.address.patchValue(this.userAddress.address);
         console.log("0this-", this.UForm);
+        if(this.imgUrl==="https://res.cloudinary.com/adixoo-com/image/upload/v1633762946/amnnnc0bdyr2j6kisx6a.jpg"){
+          this.removeProfilebtn=true
         }
+        else{
+          this.removeProfilebtn=false
+        }
+    }
         
         } ) 
       } else {
@@ -87,6 +95,17 @@ export class UserProfileComponent implements OnInit {
 
     }, error => {
       console.log("uuuuser========", error);
+    })
+  }
+
+  removeProfile(){
+    console.log("remove profile");
+    this.imgUrl="https://res.cloudinary.com/adixoo-com/image/upload/v1633762946/amnnnc0bdyr2j6kisx6a.jpg"
+    let payload={
+      profileImage:"https://res.cloudinary.com/adixoo-com/image/upload/v1633762946/amnnnc0bdyr2j6kisx6a.jpg"
+    }
+    this.userService.updateUserRecord(payload,this.userData.id).subscribe( res => {
+        this.toastr.success("Profile have been removed")
     })
   }
 
@@ -114,12 +133,14 @@ export class UserProfileComponent implements OnInit {
       if(this.userForm.value.address){
         this.addressService.updateUserAddress(addressPayload, this.userObj.id).subscribe(res => {
           this.toastr.success('Profile Updated Successfully');
+          this.removeProfilebtn=false
         }, err => {
           this.toastr.error(err, "Address");
         })
       }else{
         this.addressService.createNewAddress(addressPayload).subscribe(res => {
           this.toastr.success('Profile Updated Successfully');
+          this.removeProfilebtn=false
         }, err => {
           this.toastr.error(err, "Address");
         })

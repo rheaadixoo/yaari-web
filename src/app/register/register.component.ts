@@ -191,7 +191,8 @@ export class RegisterComponent implements OnInit {
       lastName: this.registerForm.value.last_name,
       email: this.registerForm.value.email,
       password: this.registerForm.value.password,
-      mobile: this.registerForm.value.mobile
+      mobile: this.registerForm.value.mobile,
+      profileImage:"https://res.cloudinary.com/adixoo-com/image/upload/v1633762946/amnnnc0bdyr2j6kisx6a.jpg"
     }
     if (this.registerForm.value.password != this.registerForm.value.confirm_password) {
       this.toastr.error('Confirm password is incorrect');

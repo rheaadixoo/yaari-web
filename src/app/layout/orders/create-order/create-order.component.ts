@@ -171,11 +171,11 @@ export class CreateOrderComponent implements OnInit {
       }
       this.orderService.createOrder(payload).subscribe(res => {
         let data = { status: 'closed' };
-        this.cartService.updateCart(cartObj['id'], data).subscribe((res: []) => {
-          console.log('res: ', res);
-          this.cookie.delete('cart', '/');
-          this.cartService.cartItemCount.next(0);
-        })
+        // this.cartService.updateCart(cartObj['id'], data).subscribe((res: []) => {
+        //   console.log('res: ', res);
+        //   this.cookie.delete('cart', '/');
+        //   this.cartService.cartItemCount.next(0);
+        // })
         this.router.navigate(['/app/orders/checkout'], { queryParams: { txnToken: res['txnToken'], orderNumber: res['order']['orderNumber'] } })
         this.toastr.success('Order created successfully');
       }, error => {
