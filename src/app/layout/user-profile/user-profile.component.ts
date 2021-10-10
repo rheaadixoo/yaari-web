@@ -97,6 +97,7 @@ export class UserProfileComponent implements OnInit {
 
     }, error => {
       console.log("uuuuser========", error);
+      
     })
   }
 
@@ -116,6 +117,7 @@ export class UserProfileComponent implements OnInit {
   updateUser() {
     const payload = {
       firstName: this.userForm.value.first_name,
+      
       lastName: this.userForm.value.last_name,
       email: this.userForm.value.email,
       mobile: this.userForm.value.mobile,

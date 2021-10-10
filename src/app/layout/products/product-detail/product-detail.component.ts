@@ -116,7 +116,6 @@ export class ProductDetailComponent implements OnInit {
         }
         this.cartService.getCart(res['id']).subscribe((resp: any[]) => {
           this.share.setCartCount(resp.length)
-          this.cartService.cartItemCount.next(resp.length);
         })
         this.cookie.set('cart', JSON.stringify({ id: res['id'] }), { expires: 365, path: '/' });
       })
