@@ -69,7 +69,7 @@
                 <!-- <ng-container *ngFor="let key of Object.keys(myOrders)"> -->
                 <ng-container *ngFor="let order of myOrders">
                   <ng-container *ngFor="let item of order.cartDetails">
-                    <div class="my_order_crd_main" *ngIf="order.status !='cancelled'">
+                    <div class="my_order_crd_main">
                       <div class="best_sellers_prdct_on_det_pg_list">
                         <div class="d-flex float-left pl-0">
                           <div class="best_sellers_prdct_on_det_pg_list_img">
@@ -119,15 +119,17 @@
                           <div class="row">
                             <div class="hh-grayBox">
                               <div class="row justify-content-between">
+                                <ng-container *ngFor="let status of order.activities">
                                 <div class="order-tracking completed">
                                   <span class="is-complete"></span>
                                   <p>
-                                    <span class="font-500 text-dark mb-2">Order Recieved</span>
+                                    <span class="font-500 text-dark mb-2">{{status['activity']}}</span>
                                     <br>
-                                    <span class="mt-2 d-block font-14 text-gray">10:30 PM 20th October, 2020</span>
+                                    <span class="mt-2 d-block font-14 text-gray">{{status['date'] | date : 'long'}}</span>
                                   </p>
                                 </div>
-                                <div class="order-tracking completed">
+                              </ng-container>
+                                <!-- <div class="order-tracking completed">
                                   <span class="is-complete"></span>
                                   <p>
                                     <span class="font-500 text-dark mb-2">Order Packed</span>
@@ -157,9 +159,9 @@
                                   <p>
                                     <span class="font-500 text-dark mb-2">Shipment Has Arrived At Mumbai Facility</span>
                                     <br>
-                                    <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
+                                    <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span>
                                   </p>
-                                </div>
+                                </div> -->
                                 <div class="order-tracking">
                                   <span class="is-complete"></span>
                                   <p>
@@ -183,8 +185,7 @@
                       </div>
                     </div>
                   </ng-container>
-                  <div class="prdct_list_price_det w-100 mb-4" *ngIf="order.status !='cancelled'"
-                      style="max-width: 200px;">
+                  <div class="prdct_list_price_det w-100 mb-4" style="max-width: 200px;">
                     <a href="javascript:void(0)" 
                     class="btn-theme-border w-100 text-center px-0 font-500 d-inline-block py-3"
                     (click)="cancelProductOrder(order)">

@@ -28,11 +28,15 @@ export class HeaderComponent implements OnInit {
     this.cartService.cartItemCount.subscribe(response => {
       this.productCount = response;
     })
+    console.log("init");
+    console.log('localStorage.getItem ', localStorage.getItem('user-detail'));
+    if (localStorage.getItem('user-detail')) {
+      this.getUserRecord();
+    }
   }
 
   ngOnInit(): void {
     this.getCartDetail();
-    this.getUserRecord()
   }
 
   get isUserLoggedIn() {
@@ -121,7 +125,6 @@ export class HeaderComponent implements OnInit {
   getUserRecord() {
     this.userService.getUserDetails().subscribe((response: any[]) => {
       if (response) {
-        console.log('response: ', response);
         this.imgUrl = response['profileImage'];
       } else {
         this.imgUrl = '../../../assets/images/profile_default.svg';

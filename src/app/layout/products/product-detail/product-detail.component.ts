@@ -100,6 +100,10 @@ export class ProductDetailComponent implements OnInit {
           }
           this.cartService.createCartDetail(payload).subscribe(response => {
             try {
+              this.cartService.getCart(res['id']).subscribe((res: any[]) => {
+                this.isProductExist = true;
+                this.cartService.cartItemCount.next(res.length);
+              })
               this.toastr.success('Product added successfully');
             } catch (error) {
               this.toastr.error('Error,', error);
@@ -146,8 +150,8 @@ export class ProductDetailComponent implements OnInit {
     if (!this.localStorageService.get('user-detail')) {
       // alert('User sign in or sign up is required!')
       this.warningModal.open();
-    }
-    if (this.cookie.get('cart')) {
+    }else{
+       if (this.cookie.get('cart')) {
       const cartObj = JSON.parse(this.cookie.get('cart'));
       this.router.navigate(['/app/orders/place-order'], { queryParams: { id: cartObj['id'] } })
     } else if (!this.cookie.get('cart')) {
@@ -181,6 +185,8 @@ export class ProductDetailComponent implements OnInit {
         }
       })
     }
+    }
+   
   }
 
   addToWishList() {

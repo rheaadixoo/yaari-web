@@ -17,6 +17,7 @@ import { ToastrService } from 'ngx-toastr';
 export class CreateOrderComponent implements OnInit {
   @ViewChild('addAddress') addAddress;
   @ViewChild('payLaterOrderSummary') payLaterOrderSummary;
+  @ViewChild('paylaterConfirmationModal') paylaterConfirmationModal;
   public cartId: any = 0;
   public cartDetails: any = [];
   public totalPrice: any = 0;
@@ -86,6 +87,7 @@ export class CreateOrderComponent implements OnInit {
     this.addressForm.reset();
     this.modalRef.close();
   }
+
   buildAddAddressForm() {
     this.addressForm = this.formBuilder.group({
       name: new FormControl('', [Validators.required]),
@@ -183,6 +185,11 @@ export class CreateOrderComponent implements OnInit {
       })
     }
   }
+
+  payLaterConfirmationModal(){
+      this.modalRef = this.modalService.open(this.paylaterConfirmationModal ,{ backdrop: 'static', keyboard: false, centered: true });
+  }
+
 
   createPayLaterOrder() {
     if (this.cookie.get('cart')) {
