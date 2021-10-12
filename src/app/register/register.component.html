@@ -108,12 +108,17 @@
 
                   <div class="form-group col-md-12 mb-4" *ngIf="!otpBtn" >
                     <input type="text" class="form-control p-3"  
-                    (keyup)="validateFormField('otp')" formControlName="otp" placeholder="Enter OTP">     
+                    (keyup)="validateFormField('otp')" formControlName="otp" placeholder="Enter OTP">  
+                    <strong class="timer" *ngIf="showTimer">{{timeLeft}}</strong> 
+                    <div class="resend mt-2" *ngIf="showResendOtp">
+                      <a href="javascript:void(0)" (click)="resendOtp()">Resend Otp</a><br> 
+                      <span>{{chanceRemaining}} chance remaining</span>
+                    </div>   
                   </div>
 
                 </div>
                 <button type="button" class="btn btn-theme font-18 w-100 py-4" *ngIf="otpBtn"  
-                [disabled]="!(generateOtpForm.value.mobile.length >= '10')" (click)="generateOtp()" >Generate Otp</button>
+                [disabled]="!(generateOtpForm.value.mobile.length >= '10')" (click)="timer(5)" (click)="generateOtp()" >Generate Otp</button>
 
                 <button type="button" class="btn btn-theme font-18 w-100 py-4" *ngIf="!otpBtn"  
                 [disabled]="!(generateOtpForm.value.otp.length == '4')" (click)="verifyOtp()">Verify Otp</button>

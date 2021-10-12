@@ -35,6 +35,7 @@ export class CartComponent implements OnInit {
       this.cartService.getCart(this.cartObj.id).subscribe((res: any[]) => {
         this.cartService.cartItemCount.next(res.length ? res.length : 0);
         this.cartDetails = res;
+        console.log(this.cartDetails)
         this.totalAmount = 0;
         this.totalDiscount = 0;
         this.totalQuantity = 0;

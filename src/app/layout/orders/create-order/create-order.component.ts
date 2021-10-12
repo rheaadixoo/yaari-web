@@ -171,7 +171,8 @@ export class CreateOrderComponent implements OnInit {
         coupon : this.isCouponApplied ? this.isCouponApplied : false
       }
       this.orderService.createOrder(payload).subscribe(res => {
-        let data = { status: 'closed' };
+        console.log(res);
+        // let data = { status: 'closed' };
         // this.cartService.updateCart(cartObj['id'], data).subscribe((res: []) => {
         //   console.log('res: ', res);
         //   this.cookie.delete('cart', '/');

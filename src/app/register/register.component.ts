@@ -25,6 +25,11 @@ export class RegisterComponent implements OnInit {
 
   public otpForm: boolean = true;
   public otpBtn: boolean = true;
+  public showResendOtp=false;
+  public timerOn = true;
+  public timeLeft:any
+  public chanceRemaining=2
+  public showTimer:boolean=true
 
   constructor(
     private builder: FormBuilder,
@@ -267,7 +272,57 @@ export class RegisterComponent implements OnInit {
       })
 
     }
+  }
 
+  resendOtp(){
+    
+    if(this.chanceRemaining==1){
+      this.showResendOtp=false;
+    }
 
+    const payload={
+      mobile: this.generateOtpForm.value.mobile
+    }
+    this.registerService.generatingOtp(payload).subscribe(response => {
+        console.log(response)
+        this.toastr.success('Otp have been sended');
+        this.otpBtn = false;
+        this.chanceRemaining-=1;
+    },error => {
+        if(error['error'].statusCode == 403){
+          this.toastr.error('Invalid phone number');
+        }else{
+          this.toastr.error(error.error.message);
+        }
+    })
+  }
+
+  timer(remaining) {
+    var m:any = Math.floor(remaining / 60);
+    var s:any = remaining % 60;
+    
+    m = m < 10 ? '0' + m : m;
+    s = s < 10 ? '0' + s : s;
+    // document.getElementById('timer').innerHTML = m + ':' + s;
+    this.timeLeft=m+ ':' +s
+
+    remaining -= 1;
+    
+    if(remaining >= 0 && this.timerOn) {
+      setTimeout(() => {
+           this.timer(remaining);
+      }, 1000);
+      return;
+    }
+  
+    if(!this.timerOn) {
+      // Do validate stuff here
+      return;
+    }
+    
+    // Do timeout stuff here
+    // alert('Timeout for otp');
+    this.showResendOtp=true;
+    this.showTimer=false
   }
 }
