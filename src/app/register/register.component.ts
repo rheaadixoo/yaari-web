@@ -44,9 +44,9 @@ export class RegisterComponent implements OnInit {
       first_name: ['', Validators.required],
       last_name: ['', Validators.required],
       email: ['', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
+      password: ['', [Validators.required, Validators.minLength(8),Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")]],
       confirm_password: ['', [Validators.required, Validators.minLength(8)]],
-      mobile: [this.contactNo, [Validators.required, Validators.maxLength(10), Validators.minLength(10),Validators.pattern("^[0-9]*$")]]
+      mobile: [this.contactNo, [Validators.required, Validators.maxLength(10), Validators.minLength(10),Validators.pattern("^([6-9]{1})([0-9]{9})$")]]
     })
   }
   buildGenerateOtpForm() {

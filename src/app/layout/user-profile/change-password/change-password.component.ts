@@ -29,7 +29,7 @@ export class ChangePasswordComponent implements OnInit {
   buildPasswordForm() {
     this.userForm = this.builder.group({
       old_password: ['', [Validators.required, Validators.minLength(8)]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
+      password: ['', [Validators.required, Validators.minLength(8),Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")]],
       confirm_password: ['', [Validators.required, Validators.minLength(8)]]
     })
   }
@@ -77,9 +77,22 @@ export class ChangePasswordComponent implements OnInit {
       if (this.userForm.value.password.replace(/\s/g, "") === '') {
         this.userForm.controls.password.patchValue(null);
       }
+      else if(this.userForm.value.password === '' )
+      {
+        this.toastr.error("password field is required")
+      }
+     else if(this.userForm.value.password.length < 8)
+      {
+        this.toastr.error(' password must be of 8 characters');
+      } 
+       
     } else if (type == 'confirm') {
       if (this.userForm.value.confirm_password.replace(/\s/g, "") === '') {
         this.userForm.controls.confirm_password.patchValue(null);
+      }
+      else if(this.userForm.value.confirm_password === '' )
+      {
+        this.toastr.error("confirm password field is required")
       }
     }
   }
