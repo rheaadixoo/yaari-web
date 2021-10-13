@@ -4,6 +4,7 @@ import { AddressService } from 'src/app/shared/services/address.service';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { ShareDataService } from 'src/app/shared/services/share-data.service'
 
 @Component({
   selector: 'yaari-user-profile',
@@ -15,11 +16,15 @@ export class UserProfileComponent implements OnInit {
   public userObj: any = {};
   public activeTab: string = 'profile';
   public imgUrl: string = '';
+  public isUserAddress = false;
   public userAddress: any={};
+  public removeProfilebtn:boolean=false
   constructor(private toastr: ToastrService, private builder: FormBuilder, private localStorageService: LocalStorageService,
-    private userService: UserProfileService, private addressService: AddressService) { }
+    private userService: UserProfileService, private addressService: AddressService,
+    private share:ShareDataService) { }
 
   ngOnInit(): void {
+
     this.getUserRecord();
     this.buildUserForm();
   }
@@ -48,24 +53,32 @@ export class UserProfileComponent implements OnInit {
   getUserRecord() {
     
     // this.addressService.getAddressByUserId(this.userData.id).subscribe((response: any[]) => {
-      this.userService.getUserDetailsById(this.userData.id).subscribe((response)=>{
+     this.userService.getUserDetailsById(this.userData.id).subscribe((response)=>{
      if (response) {
         this.userObj = response;
         console.log(this.userObj);
         this.imgUrl = this.userObj['profileImage'];
+        this.share.setimageAddress(this.imgUrl)
         this.UForm.first_name.patchValue(this.userObj.firstName);
         this.UForm.last_name.patchValue(this.userObj.lastName);
         this.UForm.email.patchValue(this.userObj.email);
         this.UForm.mobile.patchValue(this.userObj.mobile);
         this.addressService.getAddressByUserId(this.userData.id).subscribe((addressResponse: any[]) =>{
           if(addressResponse && addressResponse.length){
+            this.isUserAddress = true;
         this.userAddress=addressResponse[0];
         this.UForm.city.patchValue(this.userAddress.city);
         this.UForm.state.patchValue(this.userAddress.state);
         this.UForm.pincode.patchValue(this.userAddress.pinCode);
         this.UForm.address.patchValue(this.userAddress.address);
         console.log("0this-", this.UForm);
+        if(this.imgUrl==="https://res.cloudinary.com/adixoo-com/image/upload/v1633762946/amnnnc0bdyr2j6kisx6a.jpg"){
+          this.removeProfilebtn=true
         }
+        else{
+          this.removeProfilebtn=false
+        }
+    }
         
         } ) 
       } else {
@@ -84,12 +97,27 @@ export class UserProfileComponent implements OnInit {
 
     }, error => {
       console.log("uuuuser========", error);
+      
+    })
+  }
+
+  removeProfile(){
+    console.log("remove profile");
+    this.imgUrl="https://res.cloudinary.com/adixoo-com/image/upload/v1633762946/amnnnc0bdyr2j6kisx6a.jpg"
+    let payload={
+      profileImage:"https://res.cloudinary.com/adixoo-com/image/upload/v1633762946/amnnnc0bdyr2j6kisx6a.jpg"
+    }
+    this.userService.updateUserRecord(payload,this.userData.id).subscribe( res => {
+        this.toastr.success("Profile have been removed")
+        this.removeProfilebtn=true
+        this.share.setimageAddress();
     })
   }
 
   updateUser() {
     const payload = {
       firstName: this.userForm.value.first_name,
+      
       lastName: this.userForm.value.last_name,
       email: this.userForm.value.email,
       mobile: this.userForm.value.mobile,
@@ -107,15 +135,21 @@ export class UserProfileComponent implements OnInit {
     }
 
     this.userService.updateUserRecord(payload, this.userData.id).subscribe(response => {
-      if(this.userForm.value.address){
+
+      if(this.isUserAddress){
         this.addressService.updateUserAddress(addressPayload, this.userObj.id).subscribe(res => {
           this.toastr.success('Profile Updated Successfully');
+          this.removeProfilebtn=false
+          this.share.setimageAddress(this.userObj.id,payload.profileImage)
+
         }, err => {
           this.toastr.error(err, "Address");
         })
       }else{
         this.addressService.createNewAddress(addressPayload).subscribe(res => {
           this.toastr.success('Profile Updated Successfully');
+          this.removeProfilebtn=false
+          this.share.setimageAddress(this.userObj.id,payload.profileImage)
         }, err => {
           this.toastr.error(err, "Address");
         })
@@ -198,7 +232,7 @@ export class UserProfileComponent implements OnInit {
     console.log("formData", formData);
     this.userService.uploadProfilePhoto(formData).subscribe(res => {
       if (res['files'][0]['path']) {
-        this.imgUrl = res['files'][0]['path'];
+        this.imgUrl = res['files'][0]['path']
       }
     })
   }

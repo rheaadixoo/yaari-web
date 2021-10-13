@@ -8,6 +8,7 @@ import { AddressService } from 'src/app/shared/services/address.service';
 import { OrderService } from 'src/app/shared/services/order.service';
 import { CookieService } from 'ngx-cookie-service';
 import { ToastrService } from 'ngx-toastr';
+import { ShareDataService } from 'src/app/shared/services/share-data.service';
 @Component({
   selector: 'app-create-order',
   templateUrl: './create-order.component.html',
@@ -37,7 +38,7 @@ export class CreateOrderComponent implements OnInit {
     private formBuilder: FormBuilder, private localStorageService: LocalStorageService,
     private addressService: AddressService, private orderService: OrderService,
     private cookie: CookieService, private router: Router,
-    private toastr: ToastrService) {
+    private toastr: ToastrService,private share:ShareDataService) {
     if (this.route.snapshot.queryParams.id) {
       this.cartId = this.route.snapshot.queryParams.id;
     }
@@ -170,12 +171,13 @@ export class CreateOrderComponent implements OnInit {
         coupon : this.isCouponApplied ? this.isCouponApplied : false
       }
       this.orderService.createOrder(payload).subscribe(res => {
-        let data = { status: 'closed' };
-        this.cartService.updateCart(cartObj['id'], data).subscribe((res: []) => {
-          console.log('res: ', res);
-          this.cookie.delete('cart', '/');
-          this.cartService.cartItemCount.next(0);
-        })
+        console.log(res);
+        // let data = { status: 'closed' };
+        // this.cartService.updateCart(cartObj['id'], data).subscribe((res: []) => {
+        //   console.log('res: ', res);
+        //   this.cookie.delete('cart', '/');
+        //   this.cartService.cartItemCount.next(0);
+        // })
         this.router.navigate(['/app/orders/checkout'], { queryParams: { txnToken: res['txnToken'], orderNumber: res['order']['orderNumber'] } })
         this.toastr.success('Order created successfully');
       }, error => {
@@ -204,7 +206,7 @@ export class CreateOrderComponent implements OnInit {
           this.modalRef = this.modalService.open(this.payLaterOrderSummary, { windowClass : 'orderSummary' ,backdrop: 'static', keyboard: false, centered: true })
           this.router.navigateByUrl('/home');
           this.cookie.delete('cart', '/');
-          this.cartService.cartItemCount.next(0);
+          this.share.setCartCount(0);
         })
       }, error => {
         this.toastr.error(error['error']['message']);

@@ -3,6 +3,8 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { RegisterService } from '../shared/services/register.service';
 import { ToastrService } from 'ngx-toastr';
+import { ForgotPasswordService } from '../shared/services/forgot-password.service';
+import { UserProfileService } from '../shared/services/user-profile.service';
 
 @Component({
   selector: 'app-register',
@@ -12,18 +14,34 @@ import { ToastrService } from 'ngx-toastr';
 export class RegisterComponent implements OnInit {
 
   public registerForm: FormGroup = new FormGroup({});
+  public generateOtpForm: FormGroup = new FormGroup({});
   public isVisible: boolean = true;
   public pass_type: string = 'password';
   public pass_field: string = 'password';
   public showPassword: boolean = true;
+  public userInfo:any
+  public checkOtp:any
+  public contactNo:any
+
+  public otpForm: boolean = true;
+  public otpBtn: boolean = true;
+  public showResendOtp=false;
+  public timerOn = true;
+  public timeLeft:any
+  public chanceRemaining=2
+  public showTimer:boolean=true
 
   constructor(
     private builder: FormBuilder,
     private registerService: RegisterService,
-    private router: Router, private toastr: ToastrService) { }
+    private router: Router, private toastr: ToastrService,
+    private forgetpassword: ForgotPasswordService,
+    private userProfileUpdate:UserProfileService
+    ) { }
 
   ngOnInit(): void {
-    this.buildRegistrationForm();
+    // this.buildRegistrationForm();
+    this.buildGenerateOtpForm();
   }
 
   buildRegistrationForm() {
@@ -31,9 +49,15 @@ export class RegisterComponent implements OnInit {
       first_name: ['', Validators.required],
       last_name: ['', Validators.required],
       email: ['', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
+      password: ['', [Validators.required, Validators.minLength(8),Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$")]],
       confirm_password: ['', [Validators.required, Validators.minLength(8)]],
-      mobile: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(10),Validators.pattern("^[0-9]*$")]]
+      mobile: [this.contactNo, [Validators.required, Validators.maxLength(10), Validators.minLength(10),Validators.pattern("^([6-9]{1})([0-9]{9})$")]]
+    })
+  }
+  buildGenerateOtpForm() {
+    this.generateOtpForm = this.builder.group({
+      mobile: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(10), Validators.pattern("^[0-9]*$")]],
+      otp: ['', [Validators.required, Validators.maxLength(4), Validators.minLength(4)]]
     })
   }
 
@@ -172,7 +196,8 @@ export class RegisterComponent implements OnInit {
       lastName: this.registerForm.value.last_name,
       email: this.registerForm.value.email,
       password: this.registerForm.value.password,
-      mobile: this.registerForm.value.mobile
+      mobile: this.registerForm.value.mobile,
+      profileImage:"https://res.cloudinary.com/adixoo-com/image/upload/v1633762946/amnnnc0bdyr2j6kisx6a.jpg"
     }
     if (this.registerForm.value.password != this.registerForm.value.confirm_password) {
       this.toastr.error('Confirm password is incorrect');
@@ -189,5 +214,115 @@ export class RegisterComponent implements OnInit {
         }
       })
     }
+  }
+
+  generateOtp() {
+    console.log(this.generateOtpForm.value.mobile);
+    const payload={
+      mobile: this.generateOtpForm.value.mobile
+    }
+
+    this.registerService.generatingOtp(payload).subscribe(response => {
+        console.log(response)
+        this.toastr.success('Otp have been sended');
+        this.otpBtn = false;
+    },error => {
+        if(error['error'].statusCode == 403){
+          this.toastr.error('Invalid phone number');
+        }else{
+          this.toastr.error(error.error.message);
+        }
+    })
+
+  }
+
+  verifyOtp() {
+    console.log(this.generateOtpForm.value.otp);
+    const payload={
+      mobile: this.generateOtpForm.value.mobile,
+      otp: this.generateOtpForm.value.otp
+    }
+
+    if(this.generateOtpForm.valid){
+
+      this.registerService.verifyingOtp(payload).subscribe(response => {
+        // if(response['token']){
+        //   let token=response['type']+" "+response['token']
+        //   localStorage.setItem("user-details",atob(token.split('.')[1]));
+        //   this.userInfo=JSON.parse(localStorage.getItem('user-details'))
+        //   this.otpForm = false
+        // }
+        this.checkOtp=response;
+        if(this.checkOtp.isValid){
+          this.otpForm = false
+          this.contactNo=this.generateOtpForm.value.mobile;
+          this.buildRegistrationForm();
+          console.log(this.contactNo)
+        }
+        else{
+          this.toastr.error('Incorrect Otp');
+        }
+        
+      },error => {
+        if(error['error'].statusCode == 403){
+          this.toastr.error('No user exist with this number');
+        }else{
+          this.toastr.error(error.error.message);
+        }
+      })
+
+    }
+  }
+
+  resendOtp(){
+    
+    if(this.chanceRemaining==1){
+      this.showResendOtp=false;
+    }
+
+    const payload={
+      mobile: this.generateOtpForm.value.mobile
+    }
+    this.registerService.generatingOtp(payload).subscribe(response => {
+        console.log(response)
+        this.toastr.success('Otp have been sended');
+        this.otpBtn = false;
+        this.chanceRemaining-=1;
+    },error => {
+        if(error['error'].statusCode == 403){
+          this.toastr.error('Invalid phone number');
+        }else{
+          this.toastr.error(error.error.message);
+        }
+    })
+  }
+
+  timer(remaining) {
+    var m:any = Math.floor(remaining / 60);
+    var s:any = remaining % 60;
+    
+    m = m < 10 ? '0' + m : m;
+    s = s < 10 ? '0' + s : s;
+    // document.getElementById('timer').innerHTML = m + ':' + s;
+    this.timeLeft=m+ ':' +s
+
+    remaining -= 1;
+    
+    if(remaining >= 0 && this.timerOn) {
+      setTimeout(() => {
+           this.timer(remaining);
+      }, 1000);
+      return;
+    }
+  
+    if(!this.timerOn) {
+      // Do validate stuff here
+      return;
+    }
+    
+    // Do timeout stuff here
+    // alert('Timeout for otp');
+    this.showResendOtp=true;
+    this.showTimer=false
   }
 }

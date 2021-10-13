@@ -21,9 +21,9 @@
   
   <!-- Breadcrumb End -->
   
-  <!-- Sign In section -->
+  <!-- Sign Up section -->
   
-  <section class="sing_in_sec">
+  <section *ngIf="!otpForm" class="sing_in_sec">
     <div class="container-fluid">
       <div class="row mx-0 px-5">
         <div class="col-lg-6 col-md-10 col-sm-12 mx-auto">
@@ -46,7 +46,7 @@
               </div>
               <div class="form-group col-md-12 mb-4">
                 <input type="text" class="form-control" id="inputNumber" placeholder="mobile"
-                name="mobile" id="email_id" formControlName="mobile"
+                name="mobile" id="mobile" readonly formControlName="mobile"
                 autocomplete="off" (blur)="validateFormField('mobile')" required>
               </div>
               <div class="form-group col-md-12 mb-4">
@@ -81,7 +81,7 @@
             </a>
           </div>
           <div class="d-inline-block w-100 text-center my-3">
-            <a [routerLink]="['/home']"  class="text-dark font-500 font-18">
+            <a [routerLink]="['/home']" class="text-dark font-500 font-18">
               Return to store
             </a>
           </div>
@@ -90,4 +90,55 @@
     </div>
   </section>
   
-  <!-- Sign In section End -->
+  <!-- Sign Up section End -->
+
+  <!-- Verify by OTP -->
+
+  <section *ngIf="otpForm" class="sing_in_sec">
+    <div class="container-fluid">
+      <div class="row mx-0 px-5">
+        <div class="col-lg-6 col-md-10 col-sm-12 mx-auto">
+              <form  class="custom_form" [formGroup]="generateOtpForm" (submit)="resetPassword()">
+                <div class="form-row">
+
+                  <div class="form-group col-md-12 mb-4" >
+                    <input type="text" class="form-control" id="inputEmail4" placeholder="Mobile No."
+                    (blur)="validateFormField('mobile')" formControlName="mobile" name="inputEmail4" value="" [readonly]="!otpBtn">
+                  </div>
+
+                  <div class="form-group col-md-12 mb-4" *ngIf="!otpBtn" >
+                    <input type="text" class="form-control p-3"  
+                    (keyup)="validateFormField('otp')" formControlName="otp" placeholder="Enter OTP">  
+                    <strong class="timer" *ngIf="showTimer">{{timeLeft}}</strong> 
+                    <div class="resend mt-2" *ngIf="showResendOtp">
+                      <a href="javascript:void(0)" (click)="resendOtp()">Resend Otp</a><br> 
+                      <span>{{chanceRemaining}} chance remaining</span>
+                    </div>   
+                  </div>
+
+                </div>
+                <button type="button" class="btn btn-theme font-18 w-100 py-4" *ngIf="otpBtn"  
+                [disabled]="!(generateOtpForm.value.mobile.length >= '10')" (click)="timer(5)" (click)="generateOtp()" >Generate Otp</button>
+
+                <button type="button" class="btn btn-theme font-18 w-100 py-4" *ngIf="!otpBtn"  
+                [disabled]="!(generateOtpForm.value.otp.length == '4')" (click)="verifyOtp()">Verify Otp</button>
+            ` </form>
+          <div class="d-inline-block w-100 text-center mt-4 mb-2">
+            <span class="text-dark font-400 font-18 mr-1">
+              Already have account?
+            </span>
+            <a [routerLink]="['/login']" class="text-dark font-400 font-18" style="text-decoration: underline;">
+              Try signing in
+            </a>
+          </div>
+          <div class="d-inline-block w-100 text-center my-3">
+            <a [routerLink]="['/home']" class="text-dark font-500 font-18">
+              Return to store
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Verify by OTP end -->

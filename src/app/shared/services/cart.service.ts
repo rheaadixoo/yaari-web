@@ -68,11 +68,14 @@ export class CartService {
         and: [{ userId: user_id },]
       },
     };
+    console.log("query:"+query)
     const filter = JSON.stringify(query);
+    console.log("filter:"+filter)
     const options = {
       params: new HttpParams()
         .append("filter", filter)
     };
+    console.log("options:"+options)
     return this.http.get(this.apiUrl + "carts", options).pipe(map(response => {
       return response;
     }))

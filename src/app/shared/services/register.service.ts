@@ -16,4 +16,17 @@ export class RegisterService {
           return response;
     }))
   }
+
+  generatingOtp(payload){
+    return this.http.post(this.apiUrl + "otps/generate" , payload).pipe(map(response => {
+          return response;
+    }))
+  }
+
+  verifyingOtp(payload){
+    return this.http.post(this.apiUrl+"otps/validate",payload).pipe(map(response => {
+      return response;
+    }))
+  }
+
 }

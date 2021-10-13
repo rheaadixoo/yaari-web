@@ -92,7 +92,6 @@ export class CategoryMenuBarComponent implements OnInit {
   getAllCollection() {
     this.collectionService.getAllCollections().subscribe(res => {
       this.collections = res;
-      console.log(this.collections);
       let collectionArr = _.orderBy(this.collections,['id'],['asc']);
       for (let index = 0; index < collectionArr.length; index++) {
         const element = res[index];

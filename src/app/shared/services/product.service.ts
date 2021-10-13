@@ -58,12 +58,12 @@ export class ProductService {
           and: [{ sub_category_id: payload['subCategoryId'], productStatus: 'approved', status: 'active', featured: payload['isFeatured'] }]
         }
       };
-    }else if(payload['sort']){
+    } else if (payload['sort']) {
       query = {
         where: {
-          and: [{ sub_category_id: payload['subCategoryId'], productStatus: 'approved', status: 'active'}]  
+          and: [{ sub_category_id: payload['subCategoryId'], productStatus: 'approved', status: 'active' }]
         },
-        order : [[payload['sort']['by'],payload['sort']['type']]]
+        order: [[payload['sort']['by'], payload['sort']['type']]]
       };
     }
     const filter = JSON.stringify(query);
@@ -77,9 +77,9 @@ export class ProductService {
   }
 
   getProductListById(id) {
-    let  query = {
+    let query = {
       where: {
-        and: [{ subCategoryId : id , productStatus: 'approved', status: 'active'}]
+        and: [{ subCategoryId: id, productStatus: 'approved', status: 'active' }]
       }
     };
     const filter = JSON.stringify(query);
@@ -87,7 +87,28 @@ export class ProductService {
       params: new HttpParams()
         .append("filter", filter)
     };
-    return this.http.get(this.apiUrl + 'products' , options).pipe(map(response => {
+    return this.http.get(this.apiUrl + 'products', options).pipe(map(response => {
+      return response;
+    }))
+  }
+
+  getPoductReviewById(productId) {
+    const query = {
+      where : {
+        productId
+      }
+    }
+
+    const options = {
+      params : new HttpParams().append('filter', JSON.stringify(query))
+    }
+    return this.http.get(this.apiUrl + 'comments', options).pipe(map(response => {
+      return response;
+    }))
+  }
+
+  getUserDetailsById(id){
+    return this.http.get(this.apiUrl + 'users/' + id).pipe(map(response => {
       return response;
     }))
   }
