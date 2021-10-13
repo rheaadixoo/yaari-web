@@ -10,6 +10,9 @@ import { ToastrService } from 'ngx-toastr';
 import { NgbModalConfig, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { WishlistService } from 'src/app/shared/services/wishlist.service.js';
 import "../../../../assets/js/product_zoom.js";
+import { FormControl,FormGroup,FormBuilder,Validators } from '@angular/forms';
+import { DeliveryPincodeService } from 'src/app/shared/services/delivery-pincode.service.js';
+
 @Component({
   selector: 'yaari-product-detail',
   templateUrl: './product-detail.component.html',
@@ -22,7 +25,7 @@ export class ProductDetailComponent implements OnInit {
     private productService: ProductService, private cartService: CartService,
     private orderService: OrderService, private router: Router,
     private toastr: ToastrService, private modalService: NgbModal,
-    private wishlistService: WishlistService) {
+    private wishlistService: WishlistService,private builder: FormBuilder,private deliverypincodeService:DeliveryPincodeService) {
 
     this.productService.currentProductStage.subscribe(res => {
       if (res && res.id) {
@@ -47,6 +50,8 @@ export class ProductDetailComponent implements OnInit {
   public isProductExistInWishlist: boolean = false;
   public start=0;
   public end=5;
+  public deliveryPincode:FormGroup=new FormGroup({});
+  
 
   ngOnInit(): void {
     if (this.route.snapshot.params.id) {
@@ -73,6 +78,13 @@ export class ProductDetailComponent implements OnInit {
       })
     }
     this.getProductDetailById();
+    this.buildDeliveryPincode();
+  }
+
+  buildDeliveryPincode(){
+    this.deliveryPincode=this.builder.group({
+      delivery_pincode:['',[Validators.required,Validators.pattern('^[1-9][0-9]{5}$')]]
+    })
   }
 
   getProductDetailById() {
@@ -298,6 +310,15 @@ export class ProductDetailComponent implements OnInit {
 
   goToWishlist(){
     this.router.navigateByUrl('/app/wishlist');
+  }
+
+  postDeliveryPincode(){
+    console.log(this.deliveryPincode.value.delivery_pincode);
+    let data=this.deliveryPincode.value.delivery_pincode;
+    this.deliverypincodeService.getDeliveryPincode(data).subscribe(res => {
+      
+      this.toastr.success('Successfully called Service');
+    });
   }
 
 }

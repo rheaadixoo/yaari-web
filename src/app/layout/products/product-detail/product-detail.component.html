@@ -255,16 +255,42 @@
               </div>
             </div>
 
+            <div class="custom_color_on_prdct_det mb-5 row mx-0 my-3 w-100">
+              <div class="col-lg-4 pl-0 my-auto">
+                <h5 class="font-500 text-gray">
+                  Delivery:
+                </h5>
+              </div>
+              <div class="col-lg-8 pl-0">
+                <form [formGroup]="deliveryPincode">
+                  <span class="inputTag">
+                    <span>
+                      <input type="text" id="delivery-pincode" name="delivery-pincode" placeholder="Add delivery pincode" formControlName="delivery_pincode">
+                    </span>
+                    <span class="checkOption" (click)="postDeliveryPincode()">Check</span>
+                  
+                  </span>
+                </form>
+              </div>
+            </div>
+
+              
+        
+
           </div>
         </div>
       </div>
+
+
+     
+
 
       <!-- Best Sellers List -->
       <div class="col-lg-4">
         <div class="best_sellers_prdct_on_det_pg mt-3">
           <h4 class="border-bottom pb-2 mb-3 font-500">
             Best Sellers
-          </h4>
+          </h4>v
          
           <ng-container *ngFor="let product of productList| slice:start:end let i=index" >
             

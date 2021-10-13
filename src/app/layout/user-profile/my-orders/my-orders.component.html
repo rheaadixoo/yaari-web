@@ -67,9 +67,9 @@
                   All Order
                 </h5>
                 <!-- <ng-container *ngFor="let key of Object.keys(myOrders)"> -->
-                <ng-container *ngFor="let order of myOrders">
-                  <ng-container *ngFor="let item of order.cartDetails">
-                    <div class="my_order_crd_main" *ngIf="order.status !='cancelled'">
+                <ng-container *ngFor="let order of myOrders |paginate: { itemsPerPage: 2, currentPage: p }">
+                  <ng-container *ngFor="let item of order.cartDetails ">
+                    <div class="my_order_crd_main">
                       <div class="best_sellers_prdct_on_det_pg_list">
                         <div class="d-flex float-left pl-0">
                           <div class="best_sellers_prdct_on_det_pg_list_img">
@@ -88,7 +88,8 @@
                               <span class="badge_on_order float-left px-2 py-1 mr-2">
                                 Ordered
                               </span>
-                              <a href="javascript:void(0)" class="font-16 text-dark p-1 ml-2 d-flex text-decoration-none">
+                              <a href="javascript:void(0)"
+                                class="font-16 text-dark p-1 ml-2 d-flex text-decoration-none">
                                 View Order Details
                                 <span class="material-icons ml-0">chevron_right</span>
                               </a>
@@ -183,52 +184,92 @@
                     </div>
                   </ng-container>
                   <div class="prdct_list_price_det w-100 mb-4" *ngIf="order.status !='cancelled'"
-                      style="max-width: 200px;">
-                    <a 
-                    class="btn-theme-border w-100 text-center px-0 font-500 d-inline-block py-3"
-                    (click)="cancelProductOrder(order)">
-                    Cancel Order
-                  </a>
-                  </div>
-                  
-                </ng-container>
+                  style="max-width: 200px;">
+                  <a href="javascript:void(0)"
+                  class="btn-theme-border w-100 text-center px-0 font-500 d-inline-block py-3"
+                  (click)="cancelProductOrder(order)">
+                  Cancel Order
+                </a>
+              </div>
+              
+              
+            </ng-container>
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            
+
                 <!-- </ng-container> -->
               </div>
+              <div>
+                <!-- <h1> cancel-order</h1> -->
 
 
-               <!-- Cancel order form Modal -->
+                <ng-template #modal>
+                  <div class="modal-header">
+                    <h4 class="modal-title">Order Cancellation</h4>
+                    <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
 
-        <ng-template #modal>
-        <div class="modal-header">
-          <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
-          <button type="button" class="close" aria-label="Close" (click)="closeModal()">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <div class="form-group">
-              <label for="cars">Select reason for cancellation &nbsp;&nbsp;</label>
-  <select name="cars" id="cars">
-    <option value="volvo">Volvo</option>
-    <option value="saab">Saab</option>
-    <option value="opel">Opel</option>
-    <option value="audi">Audi</option>
-  </select>
-              
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-outline-dark" (click)="closeModal()">Save</button>
-        </div>
-      </ng-template> 
-       
-      <!-- <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button> -->
-      
-      
-        
-       
+
+                    <div class="container-fluid">
+                      <div class="row mx-0 px-3">
+                        <div class="col-lg-12">
+                          <div class="row mx-0">
+                            <div class="col-lg-12 px-0">
+                             
+                              
+
+                                <div class="col-lg-12 mt-3 container-fluid">
+                                  <form [formGroup]="cancelOrderForm" (change)="Exchange()">
+                                    <!-- <div class="col-lg-12-px-0"> -->
+                                    <div class="form-group  text-light font-400 w-100 d-inline-block p-0 ">
+                                      <select formControlName="reason">
+                                        <option  [defaultSelected]=true>Choose reason</option>
+                                        <option >Expected delievery time is long</option>
+                                        <option >Price for the product has decreased</option>
+                                        <option >Need different size or color</option>
+                                        <option >I want to cancel due to product quality issue</option>
+                                        <option >I will not be available at home on delievery day</option>
+                                        <option>I want to change my phone number</option>
+                                        <option >I have purchased the product elsewhere</option>
+                                        <option >I want to change address for order</option>
+                                        <option >I have changed my mind</option>
+                                        <option >Other</option>
+                                      </select>
+                                    </div>
+                                    <!-- </div> -->
+                                    <div class="form-group" *ngIf="show==true">
+                                      <p> write the reason to cancel: </p>
+                                      <textarea id="w3review" name="w3review" rows="4" cols="25"  formControlName="text">
+
+                                  </textarea>
+                                    </div>
+
+                                    <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-light" (click)="closeModal()">Close</button>
+                                      <button type="button" class="btn btn-light" (click)="save()">Save</button>
+                                    </div>
+                                  </form>
+                                </div>
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+
+                      </div>
+                    </div>
+
+                  
+
+                </ng-template>
+                <!-- <button class="btn btn-outline-primary mb-2 mr-2" (click)="openScrollableContent(longContent)">Modal scrollable content</button> -->
+              </div>
+              <!-- <button class="btn btn-outline-primary mb-2 mr-2" (click)="openScrollableContent(longContent)">Modal scrollable content</button> -->
 
               <!-- Ordered Tab -->
               <div class="tab-pane fade" id="pills-ordered" role="tabpanel" aria-labelledby="pills-ordered-tab">

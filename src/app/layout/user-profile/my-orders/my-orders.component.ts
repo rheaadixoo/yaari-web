@@ -1,12 +1,17 @@
+
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { OrderService } from 'src/app/shared/services/order.service';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
-import { Router } from '@angular/router';
-
-
 import * as _ from "lodash";
-import { NgbModal,NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-
+import { Router } from '@angular/router';
+// import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+// import {MatRadioModule} from '@angular/material/radio';
+// import { NgbdPaginationBasic } from './pagination-basic';
+// import { NgbModal ,NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import { FormGroup, FormControl } from '@angular/forms';
+import { data } from 'jquery';
+import { JSDocComment } from '@angular/compiler';
 
 
 @Component({
@@ -15,50 +20,92 @@ import { NgbModal,NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./my-orders.component.scss']
 })
 export class MyOrdersComponent implements OnInit {
- 
-@ViewChild('modal') modal;
-  public myOrders: any = [];
-  public modalRef: NgbModalRef;
+  @ViewChild('modal') modal;
+  public a: number = 0;
+  public count: number = 0;
 
-  constructor(private orderService: OrderService, private localStorageService: LocalStorageService,private router:Router,private modalService:NgbModal) { }
+  public myOrders: any = [];
+  public data: any = [];
+
+  public show = false;
+  public modalRef: NgbModalRef;
+  public reason = "0";
+  //  page = 4;
+  TotalLength: any;
+  p: number = 1;
+
+  cancelOrderForm = new FormGroup({
+    reason: new FormControl('Select the reason for cancel order'),
+    text: new FormControl('')
+  })
+
+
+  //  public cancelOrderForm: FormGroup = new FormGroup({});
+  constructor(private orderService: OrderService, private localStorageService: LocalStorageService
+    , private router: Router, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.getUserOrders();
+    // this.showtext();
+  }
+  // document.getElementById("try").onclick="showtext()"
+
+  //  save()
+  //  {
+  //   {
+  //     console.log(this.cancelOrderForm.value);
+  //   }
+
+  //  }
+  selectReason(reason) {
+    //  let sel=document.getElementById("try");
+    this.reason = reason;
+    console.log(this.reason);
+    // console.log(this.cancelOrderForm.value.reason);
+    if (reason == "Other") {
+      this.show = true;
+    }
+    else {
+      this.show = false;
+    }
+
+
   }
 
-  openModal=false;
-  
-  
-  closeModal(){
+
+
+  closeModal() {
+
     this.modalRef.close();
   }
-
-  
-
   get userData() {
     return JSON.parse(this.localStorageService.get('user-detail'));
   }
 
   getUserOrders() {
-    
     this.orderService.getOrders(this.userData.id).subscribe((res: any[]) => {
       this.myOrders = res;
-      //GET —-> /delhiveries/track-order/{orderId}
+
+
+      console.log(this.myOrders);
+     
+      // //GET —-> /delhiveries/track-order/{orderId}
       // POST ——> /delhiveries/cancel-order/{orderId}
+      // console.log(this.data);
     })
   }
 
-  cancelProductOrder(item){
-    this.orderService.cancelOrder(item.id).subscribe(resp =>{
-        console.log("resp",resp);
-
-        this.modalRef = this.modalService.open(this.modal, { windowClass : 'orderSummary' ,backdrop: 'static', keyboard: false, centered: true })
-        
-
-        this.getUserOrders();
-       
-        // this.router.navigate(['app/cancel-order']);
-        // this.router.navigateByUrl('/cancel-order');
+  cancelProductOrder(item) {
+    this.orderService.cancelOrder(item.id).subscribe(resp => {
+      console.log("resp", resp);
+      console.log(item);
+      // this.show=true;
+      this.getUserOrders();
+      this.modalRef = this.modalService.open(this.modal, { windowClass: 'orderSummary', centered: true, keyboard: false });
+      console.log(this.show);
+      // this.showtext();
+      // this.router.navigate(['app/cancelOrder']);
     })
   }
+
 }

@@ -29,7 +29,7 @@ export class OrderService {
   getOrders(id){
     const query = {
       where: {
-        and: [{ userId : id},]
+        and: [{ userId : id},{status :'placed'}]
       }
     };
     const filter = JSON.stringify(query);

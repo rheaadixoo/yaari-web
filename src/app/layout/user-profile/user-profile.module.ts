@@ -8,6 +8,8 @@ import { MyOrdersComponent } from './my-orders/my-orders.component';
 import { MyWishlistComponent } from './my-wishlist/my-wishlist.component';
 import { WishlistModule } from '../wishlist/wishlist.module';
 import { LayoutRoutingModule } from '../layout-routing.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {NgxPaginationModule} from 'ngx-pagination'; 
 
 @NgModule({
   declarations: [UserProfileComponent, ChangePasswordComponent, MyOrdersComponent, MyWishlistComponent],
@@ -18,6 +20,8 @@ import { LayoutRoutingModule } from '../layout-routing.module';
     ReactiveFormsModule,
     WishlistModule,
     LayoutRoutingModule,
+    NgbModule,
+    NgxPaginationModule
     
   ]
 })
