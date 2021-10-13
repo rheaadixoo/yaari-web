@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { ProductsRoutingModule } from './products-routing.module';
 import { ProductsComponent } from './products.component';
 import { ProductsListComponent } from './products-list/products-list.component';
@@ -20,7 +20,8 @@ import "../../../assets/js/product_zoom.js";
     ProductsRoutingModule,
     HttpClientModule,
     FormsModule,
-    ModalsModule
+    ModalsModule,
+    ReactiveFormsModule
   ]
 })
 export class ProductsModule { }

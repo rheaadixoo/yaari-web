@@ -22,29 +22,34 @@
 
 <!-- Faq's section -->
 
-<section class="faq_sec">
+<section class="faq_sec" >
     <div class="container-fluid">
         <div class="row mx-0 px-5">
-            <div class="col-lg-12">
+            <div class="col-lg-12" *ngFor="let faq of faqs">
+                <div>
+                    <div id="categoryHeading">{{faq.category}}</div>
+                </div>
                 <div class="accordion" id="accordionExample">
-                    <ng-container *ngFor="let item of faqs ;let idx = index">
+                    <ng-container  *ngFor="let questions of faq.categoryQuestions">
                         <div class="card">
-                            <div class="card-head" [id]="'heading'+idx">
-                                <h2 class="mb-0" data-toggle="collapse" [attr.data-target]="'#collapse'+idx"
-                                    aria-expanded="true" [attr.aria-controls]="'collapse'+idx">
+                            <div class="card-head" [id]="questions.id">
+                                <h2 class="mb-0" data-toggle="collapse" [attr.data-target]="'#collapse'+questions.id" aria-expanded="true"
+                                    [attr.aria-controls]="'collapse'+questions.id">
                                     <span class="material-icons">expand_more</span>
-                                    {{item.faqs_name}}
-                                </h2>
+                                    {{questions.question}}
+                                       
+                            </h2>
                             </div>
-
-                            <div [id]="'collapse'+idx" class="collapse " [attr.aria-labelledby]="'heading'+idx"
+    
+                            <div [id]="'collapse'+questions.id" class="collapse" [attr.aria-labelledby]="questions.id"
                                 data-parent="#accordionExample">
                                 <div class="card-body">
-                                    {{item.faqs}}
+                                    {{questions.answer}}
                                 </div>
                             </div>
                         </div>
                     </ng-container>
+                   
                 </div>
             </div>
         </div>

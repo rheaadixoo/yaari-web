@@ -29,7 +29,7 @@ export class ShippingReturnPolicyComponent implements OnInit {
       {
         id: 'heading',
         'shippingpolicy_name': 'What if my order dispatch is delayed?',
-        'shippingpolicy': "We will try our best to get your products to you within the estimated delivery times. If the package has not reached you by the expected delivery date, please write to us at support@halfpricebazaar.com and we will try our best to resolve your issues."
+        'shippingpolicy': "We will try our best to get your products to you within the estimated delivery times. If the package has not reached you by the expected delivery date, please write to us at help.HPB@ydiconsumer.com and we will try our best to resolve your issues."
       },
       {
         id: 'heading',
@@ -53,7 +53,7 @@ export class ShippingReturnPolicyComponent implements OnInit {
       {
         id: 'heading',
         'returnpolicy_name': 'Can I cancel my order?',
-        'returnpolicy': "You can cancel your order within 24 hours of order through My Order section or by writing to us at support@halfpricebazaar.com**Half Price Bazaar reserves the right to cancel any order without pre-confirming the customer at any time and may verify any order before shipping the same to the customer that may include having a verbal or written confirmation from the customer."
+        'returnpolicy': "You can cancel your order within 24 hours of order through My Order section or by writing to us at help.HPB@ydiconsumer.com**Half Price Bazaar reserves the right to cancel any order without pre-confirming the customer at any time and may verify any order before shipping the same to the customer that may include having a verbal or written confirmation from the customer."
       },
       {
         id: 'heading',

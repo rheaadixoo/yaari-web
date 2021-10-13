@@ -10,7 +10,10 @@ import { ToastrService } from 'ngx-toastr';
 import { NgbModalConfig, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { WishlistService } from 'src/app/shared/services/wishlist.service.js';
 import "../../../../assets/js/product_zoom.js";
+import { FormControl,FormGroup,FormBuilder,Validators } from '@angular/forms';
+import { DeliveryPincodeService } from 'src/app/shared/services/delivery-pincode.service.js';
 import { ShareDataService } from 'src/app/shared/services/share-data.service.js';
+
 @Component({
   selector: 'yaari-product-detail',
   templateUrl: './product-detail.component.html',
@@ -23,7 +26,10 @@ export class ProductDetailComponent implements OnInit {
     private productService: ProductService, private cartService: CartService,
     private orderService: OrderService, private router: Router,
     private toastr: ToastrService, private modalService: NgbModal,
-    private wishlistService: WishlistService,private share:ShareDataService) {
+    private wishlistService: WishlistService,
+    private builder: FormBuilder,
+    private deliverypincodeService:DeliveryPincodeService,
+    private share: ShareDataService) {
 
     this.productService.currentProductStage.subscribe(res => {
       if (res && res.id) {
@@ -47,7 +53,10 @@ export class ProductDetailComponent implements OnInit {
   public productList: any = [];
   public isProductExist: boolean = false;
   public isProductExistInWishlist: boolean = false;
-  public collectUsers:any
+  public start=0;
+  public end=5;
+  public deliveryPincode:FormGroup=new FormGroup({});
+  
 
   ngOnInit(): void {
     if (this.route.snapshot.params.id) {
@@ -74,7 +83,13 @@ export class ProductDetailComponent implements OnInit {
       })
     }
     this.getProductDetailById();
-    this.getReviewsOfProduct();
+    this.buildDeliveryPincode();
+  }
+
+  buildDeliveryPincode(){
+    this.deliveryPincode=this.builder.group({
+      delivery_pincode:['',[Validators.required,Validators.pattern('^[1-9][0-9]{5}$')]]
+    })
   }
 
   getProductDetailById() {
@@ -304,28 +319,13 @@ export class ProductDetailComponent implements OnInit {
     this.router.navigateByUrl('/app/wishlist');
   }
 
-  //Rating and reviews
-  getReviewsOfProduct(){
-    if(this.productId){
-      this.productService.getPoductReviewById(this.productId).subscribe(response => {
-        
-        this.productReview=response;
-
-        for (let index = 0; index < this.productReview.length; index++) {
-          const element = this.productReview[index];
-          // this.collectUsers.push(element.userId);
-          this.productService.getUserDetailsById(element.userId).subscribe( res => {
-           
-            this.collectUsers=res;
-            this.productReview[index].username=this.collectUsers.name
-          })
-        }
-
-      },error => {
-        console.log(error);
-      })
-    }
+  postDeliveryPincode(){
+    console.log(this.deliveryPincode.value.delivery_pincode);
+    let data=this.deliveryPincode.value.delivery_pincode;
+    this.deliverypincodeService.getDeliveryPincode(data).subscribe(res => {
+      
+      this.toastr.success('Successfully called Service');
+    });
   }
-  
 
 }
