@@ -131,7 +131,7 @@ export class TermsAndConditionsComponent implements OnInit {
       {
         'id': 'heading',
         'termsandconditions_name': 'CONTACT INFORMATION',
-        'termsandconditions': 'Questions about the Terms should be sent to us at support@halfpricebazar.com or support@ halfpricebazar.in.'
+        'termsandconditions': 'Questions about the Terms should be sent to us at Help.HPB@ydiconsumer.com.'
       },
       {
         'id': 'heading',
@@ -141,12 +141,12 @@ export class TermsAndConditionsComponent implements OnInit {
       {
         'id': 'heading',
         'termsandconditions_name': 'NOTICES',
-        'termsandconditions': 'All notices or demands to or upon the Company shall in writing and shall be deemed to be duly made when sent to support@ halfpricebazar.com.All notices or demands to or upon a User shall be effective if either delivered personally, sent by courier, certified mail, by facsimile or email to the last-known correspondence, fax or email address provided by the User on the Website, or by posting such notice or demand on an area of the Website that is publicly accessible.Notice to a User shall be deemed to be received by such User if and when the Website is able to demonstrate that communication, whether in physical or electronic form, has been sent to such User, or immediately upon Website’s posting such notice on an area of the Website that is publicly accessible.'
+        'termsandconditions': 'All notices or demands to or upon the Company shall in writing and shall be deemed to be duly made when sent to help.HPB@ydiconsumer.com.All notices or demands to or upon a User shall be effective if either delivered personally, sent by courier, certified mail, by facsimile or email to the last-known correspondence, fax or email address provided by the User on the Website, or by posting such notice or demand on an area of the Website that is publicly accessible.Notice to a User shall be deemed to be received by such User if and when the Website is able to demonstrate that communication, whether in physical or electronic form, has been sent to such User, or immediately upon Website’s posting such notice on an area of the Website that is publicly accessible.'
       },
       {
         'id': 'heading',
         'termsandconditions_name': 'MISCELLANEOUS',
-        'termsandconditions': 'Headings for any section of these Terms are for reference purposes only and in no way define, limit, construe or describe the scope or extent of such section.The Company shall have the right to assign its obligations and duties in these Terms to any person or entity.All calls to the Company are completely confidential. However, the User’ calls may be recorded to ensure quality of service. Further, for training purpose and to ensure excellent customer service, calls from the Company may be monitored and recorded.Mr. Abhishek Mohanty is the designated Grievance Officer in respect of these terms. Any complaints or concerns with regard to the Website or any breach of these Terms or Privacy Policy can be directed to the designated Grievance Officer in writing at 9152990990 or through an email signed with electronic signature sent to support@halfpricebazar.com.'
+        'termsandconditions': 'Headings for any section of these Terms are for reference purposes only and in no way define, limit, construe or describe the scope or extent of such section.The Company shall have the right to assign its obligations and duties in these Terms to any person or entity.All calls to the Company are completely confidential. However, the User’ calls may be recorded to ensure quality of service. Further, for training purpose and to ensure excellent customer service, calls from the Company may be monitored and recorded.Mr. Abhishek Mohanty is the designated Grievance Officer in respect of these terms. Any complaints or concerns with regard to the Website or any breach of these Terms or Privacy Policy can be directed to the designated Grievance Officer in writing at 9152990990 or through an email signed with electronic signature sent to help.HPB@ydiconsumer.com.'
       },
     ]
   }

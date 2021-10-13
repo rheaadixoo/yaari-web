@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -28,7 +29,7 @@ export class OrderService {
   getOrders(id){
     const query = {
       where: {
-        and: [{ userId : id},]
+        and: [{ userId : id},{status :'placed'}]
       }
     };
     const filter = JSON.stringify(query);
@@ -43,6 +44,7 @@ export class OrderService {
 
   cancelOrder(id){
     return this.http.patch(this.apiUrl + 'deliveries/order-cancel/'+id,{}).pipe(map(response =>{
+      
         return response;
     }))
   }

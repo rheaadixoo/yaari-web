@@ -88,7 +88,7 @@ export class PrivacyPolicyComponent implements OnInit {
       {
         id: 'heading',
         'policy_name': 'CONTACT',
-        'policy': "If you have questions or concerns about our Privacy Policy or any other policies please write to the grievance officer, 9152555525 or through an email signed with electronic signature sent to support@halfpricebazar.com"
+        'policy': "If you have questions or concerns about our Privacy Policy or any other policies please write to the grievance officer, 9152555525 or through an email signed with electronic signature sent to help.HPB@ydiconsumer.com"
       },
     ]
   }
