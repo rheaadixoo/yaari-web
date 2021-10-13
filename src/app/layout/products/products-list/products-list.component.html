@@ -122,11 +122,11 @@
                                         Sale
                                     </span>
                                     <img class="img-fluid" [src]="product.thumbImages" (click)="showProductDetailView(product.id)">
-                                    <span id="heart" class="wishlist_icon" (click)="addToWishList(product)"
+                                    <span id="heart" class="wishlist_icon" (click)="addToWishList(product)" style="color: black;"
                                     *ngIf="!product['is_added_in_wishlist']">
                                         <span class="material-icons">favorite_border</span>
                                     </span>
-                                    <span id="heart" class="wishlist_icon" (click)="removeProductFromWishlist(product['wishlist_id'])"
+                                    <span id="heart" class="wishlist_icon" (click)="removeProductFromWishlist(product['wishlist_id'])" style="color: red;"
                                     *ngIf="product['is_added_in_wishlist']">
                                         <span class="material-icons">favorite</span>
                                     </span>
