@@ -13,6 +13,7 @@ import "../../../../assets/js/product_zoom.js";
 import { FormControl,FormGroup,FormBuilder,Validators } from '@angular/forms';
 import { DeliveryPincodeService } from 'src/app/shared/services/delivery-pincode.service.js';
 import { ShareDataService } from 'src/app/shared/services/share-data.service.js';
+// import { ConsoleReporter } from 'jasmine';
 
 @Component({
   selector: 'yaari-product-detail',
@@ -56,7 +57,8 @@ export class ProductDetailComponent implements OnInit {
   public start=0;
   public end=5;
   public deliveryPincode:FormGroup=new FormGroup({});
-  
+  public deliveryDate:string="";
+  public checkClicked:boolean=false;
 
   ngOnInit(): void {
     if (this.route.snapshot.params.id) {
@@ -323,8 +325,42 @@ export class ProductDetailComponent implements OnInit {
     console.log(this.deliveryPincode.value.delivery_pincode);
     let data=this.deliveryPincode.value.delivery_pincode;
     this.deliverypincodeService.getDeliveryPincode(data).subscribe(res => {
+      let response=res;
+      console.log(response);
+
+      this.checkClicked=true;
+      let edd=0;
+      for(let i=0;i<response["data"].available_courier_companies.length;i++){
+            // console.log(response["data"].available_courier_companies[i].estimated_delivery_days);
+            // console.log(response["data"].available_courier_companies[i].etd);
+            let temp=Number(response["data"].available_courier_companies[i].estimated_delivery_days);
+
+            if(i==0){
+              edd=temp;
+            }
+            else{
+              if(temp>=edd){
+                edd=temp;
+              }
+            }
+      }
       
-      this.toastr.success('Successfully called Service');
+      
+      var numOfDaysToAdd=edd+2;
+      var estimatedDate=new Date();
+      estimatedDate.setDate(estimatedDate.getDate()+numOfDaysToAdd);
+      console.log(estimatedDate);
+
+      let dd=estimatedDate.getDate();
+      
+      const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+       let month=months[estimatedDate.getMonth()];
+      
+       const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+       let day=days[estimatedDate.getDay()];
+      
+      this.deliveryDate=dd+' '+month+','+day;
+      console.log(this.deliveryDate);
     });
   }
 

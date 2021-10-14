@@ -315,6 +315,9 @@
                     <span class="checkOption" (click)="postDeliveryPincode()">Check</span>
                   
                   </span>
+                  <span class="inputTag">
+                    <div *ngIf="checkClicked">{{deliveryDate}}</div>
+                  </span>
                 </form>
               </div>
             </div>
