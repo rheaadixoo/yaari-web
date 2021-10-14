@@ -56,7 +56,7 @@ export class ProductDetailComponent implements OnInit {
   public start=0;
   public end=5;
   public deliveryPincode:FormGroup=new FormGroup({});
-  
+  public collectUsers:any
 
   ngOnInit(): void {
     if (this.route.snapshot.params.id) {
@@ -327,5 +327,28 @@ export class ProductDetailComponent implements OnInit {
       this.toastr.success('Successfully called Service');
     });
   }
+
+  getReviewsOfProduct(){
+    if(this.productId){
+      this.productService.getPoductReviewById(this.productId).subscribe(response => {
+        
+        this.productReview=response;
+
+        for (let index = 0; index < this.productReview.length; index++) {
+          const element = this.productReview[index];
+          // this.collectUsers.push(element.userId);
+          this.productService.getUserDetailsById(element.userId).subscribe( res => {
+           
+            this.collectUsers=res;
+            this.productReview[index].username=this.collectUsers.name
+          })
+        }
+
+      },error => {
+        console.log(error);
+      })
+    }
+  }
+  
 
 }
