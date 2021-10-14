@@ -50,11 +50,10 @@ export class MyOrdersComponent implements OnInit {
   }
   // document.getElementById("try").onclick="showtext()"
 
-  //  save()
-  //  {
-  //   {
-  //     console.log(this.cancelOrderForm.value);
-  //   }
+
+  save(){
+    console.log(this.cancelOrderForm.value);
+  }
 
   //  }
   selectReason(reason) {
