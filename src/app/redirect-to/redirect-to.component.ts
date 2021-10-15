@@ -28,8 +28,9 @@ export class RedirectToComponent implements OnInit {
       this.userObj = JSON.parse(localStorage.getItem('user-detail'));
       console.log("User Details: "+this.userObj.id)
     }
-
+    
     if (this.route.snapshot.queryParams) {
+      console.log(this.route.snapshot.queryParams)
       if (this.route.snapshot.queryParams['status'] == 'success') {
         this.isPaymentSuccessfull = true;
 
@@ -49,12 +50,11 @@ export class RedirectToComponent implements OnInit {
             this.share.setCartCount();
           })
         }
-
-        
         setTimeout(()=>{
           this.router.navigateByUrl('/app/cart');
         },5000)
-      } else if (this.route.snapshot.queryParams['status'] == 'failed') {
+      } 
+      else if (this.route.snapshot.queryParams['status'] == 'failed') {
         this.isPaymentFailed = true;
         this.isPaymentSuccessfull = false;
         setTimeout(()=>{
