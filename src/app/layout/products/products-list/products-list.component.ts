@@ -21,6 +21,7 @@ export class ProductsListComponent implements OnInit {
   public subCatName: string = '';
   public catName: string = '';
   public brandIds=[];
+  public sizeIds=[];
   public colorIds=[];
   public isProductListLoaded: boolean = false;
   constructor(private productService: ProductService, private router: Router, private route: ActivatedRoute
@@ -60,6 +61,13 @@ export class ProductsListComponent implements OnInit {
     this.getProductsList()
   }
 
+  getSizeIds(id){
+    console.log("@output:"+id)
+    this.sizeIds=id;
+    this.getProductsList()
+  }
+
+
   getColorIds(id){
     console.log("@output:"+id)
     this.colorIds=id;
@@ -68,7 +76,7 @@ export class ProductsListComponent implements OnInit {
 
   getProductsList() {
     if (this.subCatId) {
-      this.productService.getProductsList(this.subCatId,this.colorIds,this.brandIds).subscribe(response => {
+      this.productService.getProductsList(this.subCatId,this.colorIds,this.brandIds,this.sizeIds).subscribe(response => {
         this.products = response;
         this.getWishlistDetail();
         this.productImgs(this.products[0]['images'][0]);

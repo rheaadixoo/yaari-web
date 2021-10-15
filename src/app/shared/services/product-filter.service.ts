@@ -12,10 +12,17 @@ export class ProductFilterService {
 
   constructor(private http: HttpClient) { }
 
-  getBranch(){
+  getBrand(){
     return this.http.get(this.apiUrl+"brands").pipe(map(response => {
       return response;
     }));
   }
+  
 
+  getSize(){
+    return this.http.get(this.apiUrl+"size").pipe(map(response => {
+      return response;
+    }));
+  }
+  
 }

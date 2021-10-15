@@ -12,7 +12,7 @@ export class ProductService {
   public stage: BehaviorSubject<any> = new BehaviorSubject([]);
   currentProductStage = this.stage.asObservable();
 
-  getProductsList(subCatId,colorId?:any[],brandId?:any[]) {
+  getProductsList(subCatId,colorId?:any[],brandId?:any[],sizeId?:any[]) {
     const query:any = {
       where: {
         and: [{ subCategoryId: subCatId, productStatus: 'approved', status: 'active' }]
@@ -26,6 +26,11 @@ export class ProductService {
     if(brandId && brandId.length){
       console.log("brand:"+brandId);
       query.where.and.push({brandId})
+    }
+
+    if(sizeId && sizeId.length){
+      console.log("size:"+sizeId);
+      query.where.and.push({sizeId})
     }
 
     const filter = JSON.stringify(query);

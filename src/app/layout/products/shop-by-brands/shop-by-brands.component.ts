@@ -24,7 +24,7 @@ export class ShopByBrandsComponent implements OnInit {
 
   getProductBrands(){
     
-    this.productfilter.getBranch().subscribe((response:[]) => {
+    this.productfilter.getBrand().subscribe((response:[]) => {
       console.log(response)
       this.shopByBrand=response
     },error => {
