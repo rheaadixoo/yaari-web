@@ -1,40 +1,57 @@
 <div class="prdct_sec_filter_sec_all_pnl prdct_sec_filter_sec_by_rdio_pnl mb-5 d-inline-block w-100">
     <h4 class="font-500 pb-2 mb-4">
         <span class="material-icons prdct_sec_filter_sec_all_pnl_arw_icon">arrow_drop_down</span>
-        Shop By Brands
+        Shop By Discount
     </h4>
-    <ul class="p-0 m-0" style="list-style-type:none"  *ngFor="let item of shopByBrand">
+    <ul class="p-0 m-0" style="list-style-type:none" >
         <div class="form-check py-2">
-            <input class="form-check-input" type="checkbox" name="exampleRadios" 
-            id="exampleRadios1" value="{{item.name}}" (click)="onBrand(item.id)">
+            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1">
             <label class="form-check-label font-500 font-18 text-dark ml-2 my-auto" for="exampleRadios1">
-                {{item.name}}
+                10% Off or more
             </label>
         </div>
-        <!-- <div class="form-check py-2">
+        <div class="form-check py-2">
             <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
             <label class="form-check-label font-500 font-18 text-dark ml-2 my-auto" for="exampleRadios2">
-                Shining Fashion
+                20% Off or more
             </label>
         </div>
         <div class="form-check py-2">
             <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3"
                 checked>
             <label class="form-check-label font-500 font-18 text-dark ml-2 my-auto" for="exampleRadios3">
-                Prince
+                30% Off or more
             </label>
         </div>
         <div class="form-check py-2">
             <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios4" value="option4">
             <label class="form-check-label font-500 font-18 text-dark ml-2 my-auto" for="exampleRadios4">
-                Shining Fashion
+                40% Off or more
             </label>
         </div>
         <div class="form-check py-2">
             <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios5" value="option5">
             <label class="form-check-label font-500 font-18 text-dark ml-2 my-auto" for="exampleRadios5">
-                Prince
+                50% Off or more
             </label>
-        </div> -->
+        </div> 
+        <div class="form-check py-2">
+            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios5" value="option5">
+            <label class="form-check-label font-500 font-18 text-dark ml-2 my-auto" for="exampleRadios5">
+                60% Off or more
+            </label>
+        </div> 
+        <div class="form-check py-2">
+            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios5" value="option5">
+            <label class="form-check-label font-500 font-18 text-dark ml-2 my-auto" for="exampleRadios5">
+                70% Off or more
+            </label>
+        </div> 
+        <div class="form-check py-2">
+            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios5" value="option5">
+            <label class="form-check-label font-500 font-18 text-dark ml-2 my-auto" for="exampleRadios5">
+                80% Off or more
+            </label>
+        </div> 
     </ul>
 </div>

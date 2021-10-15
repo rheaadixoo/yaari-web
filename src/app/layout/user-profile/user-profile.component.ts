@@ -135,9 +135,9 @@ export class UserProfileComponent implements OnInit {
 
   removeProfile(){
     console.log("remove profile");
-    this.imgUrl="https://res.cloudinary.com/adixoo-com/image/upload/v1633762946/amnnnc0bdyr2j6kisx6a.jpg"
+    this.imgUrl="https://res.cloudinary.com/adixoo-com/image/upload/v1634230303/fwyhme0rbiqvtnr3tmt7.jpg"
     let payload={
-      profileImage:"https://res.cloudinary.com/adixoo-com/image/upload/v1633762946/amnnnc0bdyr2j6kisx6a.jpg"
+      profileImage:"https://res.cloudinary.com/adixoo-com/image/upload/v1634230303/fwyhme0rbiqvtnr3tmt7.jpg"
     }
     this.userService.updateUserRecord(payload,this.userData.id).subscribe( res => {
         this.toastr.success("Profile have been removed")

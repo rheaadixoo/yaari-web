@@ -37,11 +37,13 @@
                     <app-categories></app-categories>
 
                     <!-- Color -->
-                    <!-- <yaari-shop-by-color></yaari-shop-by-color> -->
+                    <yaari-shop-by-color></yaari-shop-by-color>
 
                     <!-- Size -->
-                    <!-- <yaari-shop-by-size></yaari-shop-by-size> -->
+                    <yaari-shop-by-size (sizeId)="getSizeIds($event)"></yaari-shop-by-size>
+
                     <!-- Price -->
+                    <yaari-shop-by-price></yaari-shop-by-price>
                     <!-- <div
                         class="prdct_sec_filter_sec_all_pnl prdct_sec_filter_sec_by_rdio_pnl mb-5 d-inline-block w-100">
                         <h4 class="font-500 pb-2 mb-4">
@@ -96,7 +98,10 @@
                     <!-- <yaari-shop-by-material></yaari-shop-by-material> -->
 
                     <!-- Brands -->
-                    <!-- <yaari-shop-by-brands></yaari-shop-by-brands> -->
+                    <yaari-shop-by-brands (brandId)="getBrandIds($event)"></yaari-shop-by-brands>
+
+                    <!-- Discount -->
+                    <yaari-shop-by-discount></yaari-shop-by-discount>
                 </div>
             </div>
 

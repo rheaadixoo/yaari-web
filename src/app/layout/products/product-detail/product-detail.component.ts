@@ -11,6 +11,7 @@ import { NgbModalConfig, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstra
 import { WishlistService } from 'src/app/shared/services/wishlist.service.js';
 import { AuthService } from 'src/app/shared/services/auth.service.js';
 import "../../../../assets/js/product_zoom.js";
+import { FormGroup } from '@angular/forms';
 @Component({
   selector: 'yaari-product-detail',
   templateUrl: './product-detail.component.html',
@@ -47,8 +48,14 @@ export class ProductDetailComponent implements OnInit {
   public showBuyNowBtn: boolean = true;
   public subTotal: any = 0;
   public productList: any = [];
+  public productReview:any=[]
   public isProductExist: boolean = false;
   public isProductExistInWishlist: boolean = false;
+  public start=0;
+  public end=5;
+  public deliveryPincode:FormGroup=new FormGroup({});
+  public collectUsers:any
+
   ngOnInit(): void {
     if (this.route.snapshot.params.id) {
       this.productId = this.route.snapshot.params.id;
@@ -330,5 +337,37 @@ export class ProductDetailComponent implements OnInit {
   goToWishlist(){
     this.router.navigateByUrl('/app/wishlist');
   }
- 
+
+  postDeliveryPincode(){
+    console.log(this.deliveryPincode.value.delivery_pincode);
+    let data=this.deliveryPincode.value.delivery_pincode;
+    this.deliverypincodeService.getDeliveryPincode(data).subscribe(res => {
+      
+      this.toastr.success('Successfully called Service');
+    });
+  }
+
+  getReviewsOfProduct(){
+    if(this.productId){
+      this.productService.getPoductReviewById(this.productId).subscribe(response => {
+        
+        this.productReview=response;
+
+        for (let index = 0; index < this.productReview.length; index++) {
+          const element = this.productReview[index];
+          // this.collectUsers.push(element.userId);
+          this.productService.getUserDetailsById(element.userId).subscribe( res => {
+           
+            this.collectUsers=res;
+            this.productReview[index].username=this.collectUsers.name
+          })
+        }
+
+      },error => {
+        console.log(error);
+      })
+    }
+  }
+  
+
 }
