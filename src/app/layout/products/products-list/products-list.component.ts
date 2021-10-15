@@ -6,6 +6,8 @@ import { CookieService } from 'ngx-cookie-service';
 import { ToastrService } from 'ngx-toastr';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import {UserProfileService} from 'src/app/shared/services/user-profile.service';
+
 @Component({
   selector: 'app-products-list',
   templateUrl: './products-list.component.html',
@@ -27,6 +29,7 @@ export class ProductsListComponent implements OnInit {
   constructor(private productService: ProductService, private router: Router, private route: ActivatedRoute
     , private wishlistService: WishlistService, private cookie: CookieService,
     private toastr: ToastrService, private localStorageService: LocalStorageService,
+    private userService: UserProfileService,
     private domSanitizer: DomSanitizer,) {
     // this.productService.currentProductStage.subscribe(res => {
     //   this.subCatId = res['item_id'];
@@ -41,6 +44,9 @@ export class ProductsListComponent implements OnInit {
     };
   }
 
+  checkId:any=0;
+  isIconShow=false;
+
   ngOnInit(): void {
     if (this.route.snapshot.queryParams.sub_id) {
       this.subCatId = this.route.snapshot.queryParams.sub_id;
@@ -53,7 +59,13 @@ export class ProductsListComponent implements OnInit {
     // },5000);
     this.getProductsList();
     // this.sortProductList('low');
+
+  if( this.userDetail.id != null){
+    //console.log(this.userDetail.id)
+    this.isIconShow=true;
   }
+  }
+
 
   getBrandIds(id){
     console.log("@output:"+id)
@@ -80,6 +92,7 @@ export class ProductsListComponent implements OnInit {
         this.products = response;
         this.getWishlistDetail();
         this.productImgs(this.products[0]['images'][0]);
+        
       })
     }
   }
@@ -150,45 +163,47 @@ export class ProductsListComponent implements OnInit {
     }
   }
 
+  
   addToWishList(product) {
-    console.log("list",this.products);
-    console.log('product: ', product);
-    let payload;
-    if (this.userDetail) {
-      payload = { userId: this.userDetail.id };
-    } else {
-      payload = { userId: null };
-    }
-    if (!this.cookie.get('wishlist')) {
-      this.wishlistService.createWishList(payload).subscribe(res => {
-        if (res['id']) {
-          const data = {
-            wishlistId: res['id'],
-            productId: product['id'],
-            quantity: 1,
-            businessId: product['businessId']
-          }
-          this.addToWishListDetails(data);
-          this.cookie.set('wishlist', JSON.stringify({ id: res['id'] }), { expires: 365, path: '/' });
-        }
-      })
-    } else if (this.cookie.get('wishlist')) {
-      const data = {
-        wishlistId: this.wishlistObj['id'],
-        productId: product.id,
-        quantity: 1,
-        businessId: product['businessId']
+      
+      console.log('the details'+this.userDetail.id);
+      console.log("list",this.products);
+      console.log('product: ', product);
+      let payload;
+      if (this.userDetail) {
+        payload = { userId: this.userDetail.id };
+      } else {
+        payload = { userId: null };
       }
-      this.wishlistService.isProductExistInWishlist(this.wishlistObj['id'], product['id']).subscribe((response: any[]) => {
-        if (!response.length) {
-          this.addToWishListDetails(data);
-        } else {
-            this.getProductsList();
+      if (!this.cookie.get('wishlist')) {
+        this.wishlistService.createWishList(payload).subscribe(res => {
+          if (res['id']) {
+            const data = {
+              wishlistId: res['id'],
+              productId: product['id'],
+              quantity: 1,
+              businessId: product['businessId']
+            }
+            this.addToWishListDetails(data);
+            this.cookie.set('wishlist', JSON.stringify({ id: res['id'] }), { expires: 365, path: '/' });
+          }
+        })
+      } else if (this.cookie.get('wishlist')) {
+        const data = {
+          wishlistId: this.wishlistObj['id'],
+          productId: product.id,
+          quantity: 1,
+          businessId: product['businessId']
         }
-      })
-    }
-  }
-
+        this.wishlistService.isProductExistInWishlist(this.wishlistObj['id'], product['id']).subscribe((response: any[]) => {
+          if (!response.length) {
+            this.addToWishListDetails(data);
+          } else {
+              this.getProductsList();
+          }
+        })
+      } 
+   }
   addToWishListDetails(data) {
     console.log('data: ', data);
     this.wishlistService.createWishListDetail(data).subscribe(res => {
