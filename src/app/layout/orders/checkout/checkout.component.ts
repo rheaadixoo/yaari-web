@@ -26,9 +26,11 @@ export class CheckoutComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.queryParamMap.subscribe((queryParam: any) => {
       // this.pageLoaderService.startLoading()
-
+      console.log(queryParam);
       this.txnToken = queryParam.params.txnToken
-      this.orderNumber = queryParam.params.orderNumber
+      this.orderNumber=queryParam.params.orderNumber
+      console.log(this.txnToken)
+      console.log(this.orderNumber)
       if (!this.txnToken || !this.orderNumber) {
         this.router.navigateByUrl("/")
       } else {
@@ -37,6 +39,7 @@ export class CheckoutComponent implements OnInit {
         // this.pageLoaderService.stopLoading()
         this.actionUrl = `${environment.apiUrl}payments/checkout?txnToken=${this.txnToken}&orderNumber=${this.orderNumber}`;
         window.open(this.actionUrl,'_parent');
+        console.log("Going to payment gateway")
         // this.router.navigateByUrl("/app/cart");
       }
     }

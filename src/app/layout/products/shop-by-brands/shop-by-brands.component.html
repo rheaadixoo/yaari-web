@@ -3,15 +3,15 @@
         <span class="material-icons prdct_sec_filter_sec_all_pnl_arw_icon">arrow_drop_down</span>
         Shop By Brands
     </h4>
-    <ul class="p-0 m-0" style="list-style-type:none">
+    <ul class="p-0 m-0" style="list-style-type:none"  *ngFor="let item of shopByBrand">
         <div class="form-check py-2">
-            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1"
-                checked [(ngModel)]="shopByBrand">
+            <input class="form-check-input" type="checkbox" name="exampleRadios" 
+            id="exampleRadios1" value="{{item.name}}" (click)="onBrand(item.id)">
             <label class="form-check-label font-500 font-18 text-dark ml-2 my-auto" for="exampleRadios1">
-                Prince
+                {{item.name}}
             </label>
         </div>
-        <div class="form-check py-2">
+        <!-- <div class="form-check py-2">
             <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
             <label class="form-check-label font-500 font-18 text-dark ml-2 my-auto" for="exampleRadios2">
                 Shining Fashion
@@ -35,6 +35,6 @@
             <label class="form-check-label font-500 font-18 text-dark ml-2 my-auto" for="exampleRadios5">
                 Prince
             </label>
-        </div>
+        </div> -->
     </ul>
 </div>

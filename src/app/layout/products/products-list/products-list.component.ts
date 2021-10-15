@@ -20,6 +20,8 @@ export class ProductsListComponent implements OnInit {
   public subCatId: number = 0;
   public subCatName: string = '';
   public catName: string = '';
+  public brandIds=[];
+  public colorIds=[];
   public isProductListLoaded: boolean = false;
   constructor(private productService: ProductService, private router: Router, private route: ActivatedRoute
     , private wishlistService: WishlistService, private cookie: CookieService,
@@ -52,9 +54,21 @@ export class ProductsListComponent implements OnInit {
     // this.sortProductList('low');
   }
 
+  getBrandIds(id){
+    console.log("@output:"+id)
+    this.brandIds=id;
+    this.getProductsList()
+  }
+
+  getColorIds(id){
+    console.log("@output:"+id)
+    this.colorIds=id;
+    this.getProductsList()
+  }
+
   getProductsList() {
     if (this.subCatId) {
-      this.productService.getProductsList(this.subCatId).subscribe(response => {
+      this.productService.getProductsList(this.subCatId,this.colorIds,this.brandIds).subscribe(response => {
         this.products = response;
         this.getWishlistDetail();
         this.productImgs(this.products[0]['images'][0]);
