@@ -17,5 +17,12 @@ export class ProductFilterService {
       return response;
     }));
   }
+  
 
+  getSize(){
+    return this.http.get(this.apiUrl+"size").pipe(map(response => {
+      return response;
+    }));
+  }
+  
 }

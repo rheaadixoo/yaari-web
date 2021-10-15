@@ -5,6 +5,7 @@ import { LocalStorageService } from 'src/app/shared/services/local-storage.servi
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ShareDataService } from 'src/app/shared/services/share-data.service'
+import { PincodeService } from 'src/app/shared/services/pincode.service';
 
 @Component({
   selector: 'yaari-user-profile',
@@ -23,12 +24,41 @@ export class UserProfileComponent implements OnInit {
 
   constructor(private toastr: ToastrService, private builder: FormBuilder, private localStorageService: LocalStorageService,
     private userService: UserProfileService, private addressService: AddressService,
+    private service : PincodeService,
     private share:ShareDataService) { }
 
   ngOnInit(): void {
 
     this.getUserRecord();
     this.buildUserForm();
+  }
+
+  
+  pincodeAutofill(){
+  
+    this.service.pincode(this.userForm.value.pincode).subscribe((res : any)=>{
+      let pincodeRes = res;
+      console.log(pincodeRes);
+      if((pincodeRes[0].Status == "Error")){
+        console.log("Invalid Pincode");
+        this.toastr.error("Invalid pincode");
+      }
+      else{
+      //  this.cityName=pincodeRes[0].PostOffice[0].District;
+      //   this.stateName=pincodeRes[0].PostOffice[0].State;
+  
+       this.userForm.controls['city'].setValue(pincodeRes[0].PostOffice[0].District);
+       this.userForm.controls['state'].setValue(pincodeRes[0].PostOffice[0].State);
+  
+      // this.userForm.value.city=this.cityName;
+      // this.userForm.value.state=this.stateName;
+      console.log(pincodeRes[0].PostOffice[0].District);
+      console.log(pincodeRes[0].PostOffice[0].State);
+      console.log(pincodeRes[0].Status);
+      
+      }
+     
+    })
   }
 
   get userData() {
