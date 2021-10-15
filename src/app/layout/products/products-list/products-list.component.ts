@@ -22,7 +22,10 @@ export class ProductsListComponent implements OnInit {
   public catName: string = '';
   public brandIds=[];
   public colorIds=[];
+  public priceIds=[];
+  public discountIds=[];
   public isProductListLoaded: boolean = false;
+
   constructor(private productService: ProductService, private router: Router, private route: ActivatedRoute
     , private wishlistService: WishlistService, private cookie: CookieService,
     private toastr: ToastrService, private localStorageService: LocalStorageService,
@@ -66,9 +69,19 @@ export class ProductsListComponent implements OnInit {
     this.getProductsList()
   }
 
+  getPriceIds(id){
+    this.priceIds=id;
+    this.getProductsList()
+  }
+
+  getDiscountIds(id){
+    this.discountIds=id;
+    this.getProductsList()
+  }
+
   getProductsList() {
     if (this.subCatId) {
-      this.productService.getProductsList(this.subCatId,this.colorIds,this.brandIds).subscribe(response => {
+      this.productService.getProductsList(this.subCatId,this.colorIds,this.brandIds,this.priceIds,this.discountIds).subscribe(response => {
         this.products = response;
         this.getWishlistDetail();
         this.productImgs(this.products[0]['images'][0]);
