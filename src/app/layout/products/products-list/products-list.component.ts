@@ -6,6 +6,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { ToastrService } from 'ngx-toastr';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 import { DomSanitizer } from '@angular/platform-browser';
+
 @Component({
   selector: 'app-products-list',
   templateUrl: './products-list.component.html',
@@ -21,10 +22,14 @@ export class ProductsListComponent implements OnInit {
   public subCatName: string = '';
   public catName: string = '';
   public isProductListLoaded: boolean = false;
+  public colorIds:any=[];
+  public brandIds:any=[];
+
   constructor(private productService: ProductService, private router: Router, private route: ActivatedRoute
     , private wishlistService: WishlistService, private cookie: CookieService,
     private toastr: ToastrService, private localStorageService: LocalStorageService,
-    private domSanitizer: DomSanitizer,) {
+    private domSanitizer: DomSanitizer,
+   ) {
     // this.productService.currentProductStage.subscribe(res => {
     //   this.subCatId = res['item_id'];
     //   this.subCatName = res['item_name'];
@@ -54,7 +59,7 @@ export class ProductsListComponent implements OnInit {
 
   getProductsList() {
     if (this.subCatId) {
-      this.productService.getProductsList(this.subCatId).subscribe(response => {
+      this.productService.getProductsList(this.subCatId,this.colorIds,this.brandIds).subscribe(response => {
         this.products = response;
         this.getWishlistDetail();
         this.productImgs(this.products[0]['images'][0]);
@@ -190,4 +195,11 @@ export class ProductsListComponent implements OnInit {
     // console.log('imgUrl: ', imgUrl['changingThisBreaksApplicationSecurity']);
     return imgUrl['changingThisBreaksApplicationSecurity'];
   }
+  
+  getColorIds(id){
+    console.log("id is"+id);
+    this.colorIds=id;
+  }
+  
+
 }

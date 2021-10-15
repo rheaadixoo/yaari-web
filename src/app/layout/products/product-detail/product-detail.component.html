@@ -312,7 +312,7 @@
                     <span>
                       <input type="text" id="delivery-pincode" name="delivery-pincode" placeholder="Add delivery pincode" formControlName="delivery_pincode">
                     </span>
-                    <span class="checkOption" (click)="postDeliveryPincode()">Check</span>
+                    <span class="checkOption" (click)="postDeliveryPincode(productObj?.businessId)">Check</span>
                   
                   </span>
                   <span class="inputTag">
@@ -738,8 +738,13 @@
         </h2>
       </div>
     </div>
+    <span class="material-icons" id="navigatebefore"> navigate_before</span>
+      
+    
     <div class="row w-100 px-5 mx-0 mt-4">
-      <ng-container *ngFor="let product of productList">
+      
+      <ng-container *ngFor="let product of productList | slice: start:end let i=index">
+        
         <div class="col-lg-3 my-3">
           <div class="prdct_sec_list_crd_mn">
             <div class="prdct_sec_list_crd_mn_img">
@@ -810,7 +815,10 @@
             </div>
           </div>
         </div>
+        
       </ng-container>
+      
+     
       <!-- <div class="col-lg-3 my-3">
         <div class="prdct_sec_list_crd_mn">
           <div class="prdct_sec_list_crd_mn_img">
@@ -1024,8 +1032,11 @@
           </div>
         </div>
       </div> -->
+      
     </div>
+   
   </div>
+  <span class="material-icons" id="navigateafter"> navigate_next</span>
 </section>
 
 <!-- Related Products section end -->

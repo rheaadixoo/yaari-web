@@ -55,10 +55,14 @@ export class ProductDetailComponent implements OnInit {
   public isProductExist: boolean = false;
   public isProductExistInWishlist: boolean = false;
   public start=0;
-  public end=5;
+  public end=4;
+  public itemsPerPage=3;
   public deliveryPincode:FormGroup=new FormGroup({});
   public deliveryDate:string="";
   public checkClicked:boolean=false;
+  public businessId:number;
+  public product_weight:number;
+public showNextButton:boolean=true;
 
   ngOnInit(): void {
     if (this.route.snapshot.params.id) {
@@ -90,7 +94,7 @@ export class ProductDetailComponent implements OnInit {
 
   buildDeliveryPincode(){
     this.deliveryPincode=this.builder.group({
-      delivery_pincode:['',[Validators.required,Validators.pattern('^[1-9][0-9]{5}$')]]
+      delivery_pincode:['']
     })
   }
 
@@ -290,12 +294,14 @@ export class ProductDetailComponent implements OnInit {
       this.productService.getProductListById(productId).subscribe((res: any[]) => {
         if (res && res.length > 0) {
           this.productList = res;
+          console.log(this.productList);
         }
       }, error => {
       })
     } else {
       this.productList = [this.productObj];
     }
+
   }
   /**
    * Method for setting dynamic background image url on the zoom overlay div when product image get clicked
@@ -321,10 +327,11 @@ export class ProductDetailComponent implements OnInit {
     this.router.navigateByUrl('/app/wishlist');
   }
 
-  postDeliveryPincode(){
+  postDeliveryPincode(businessId){
+    this.businessId=businessId;
     console.log(this.deliveryPincode.value.delivery_pincode);
-    let data=this.deliveryPincode.value.delivery_pincode;
-    this.deliverypincodeService.getDeliveryPincode(data).subscribe(res => {
+    let pincode=this.deliveryPincode.value.delivery_pincode;
+    this.deliverypincodeService.getDeliveryPincode(pincode,this.businessId).subscribe(res => {
       let response=res;
       console.log(response);
 
@@ -364,4 +371,26 @@ export class ProductDetailComponent implements OnInit {
     });
   }
 
+  previous(){
+    if(((this.start-this.itemsPerPage)>=0)&&((this.end-this.itemsPerPage)>=4)){
+      this.start=this.start-this.itemsPerPage;
+      this.end=this.end-this.itemsPerPage;
+      this.showBuyNowBtn=true;
+    }
+  }
+
+  next(){
+    if(this.start==this.end-4){
+      for(let j=this.start;j<=this.end;j++){
+        if(j==this.productList.length-1){
+          this.showNextButton=false;
+        }
+        else{
+          this.showNextButton=true;
+        }
+      }
+      this.start=this.start+this.itemsPerPage;
+      this.end=this.end+this.itemsPerPage;
+    }
+  }
 }
