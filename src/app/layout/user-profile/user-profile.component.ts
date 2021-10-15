@@ -44,12 +44,14 @@ export class UserProfileComponent implements OnInit {
         this.toastr.error("Invalid pincode");
       }
       else{
-       this.cityName=pincodeRes[0].PostOffice[0].District;
-       this.stateName=pincodeRes[0].PostOffice[0].State;
+      //  this.cityName=pincodeRes[0].PostOffice[0].District;
+      //   this.stateName=pincodeRes[0].PostOffice[0].State;
   
+       this.userForm.controls['city'].setValue(pincodeRes[0].PostOffice[0].District);
+       this.userForm.controls['state'].setValue(pincodeRes[0].PostOffice[0].State);
   
-      this.userForm.value.city=this.cityName;
-      this.userForm.value.state=this.stateName;
+      // this.userForm.value.city=this.cityName;
+      // this.userForm.value.state=this.stateName;
       console.log(pincodeRes[0].PostOffice[0].District);
       console.log(pincodeRes[0].PostOffice[0].State);
       console.log(pincodeRes[0].Status);
