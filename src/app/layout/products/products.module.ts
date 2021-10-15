@@ -13,8 +13,10 @@ import { ShopBySizeComponent } from './shop-by-size/shop-by-size.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { ModalsModule } from '../modals/modals.module';
 import "../../../assets/js/product_zoom.js";
+import { ShopByDiscountComponent } from './shop-by-discount/shop-by-discount.component';
+import { ShopByPriceComponent } from './shop-by-price/shop-by-price.component';
 @NgModule({
-  declarations: [ProductsComponent, ProductsListComponent, ProductDetailComponent, ShopByMaterialComponent, ShopByBrandsComponent, ShopByColorComponent, ShopBySizeComponent,CategoriesComponent],
+  declarations: [ProductsComponent, ProductsListComponent, ProductDetailComponent, ShopByMaterialComponent, ShopByBrandsComponent, ShopByColorComponent, ShopBySizeComponent,CategoriesComponent, ShopByDiscountComponent, ShopByPriceComponent],
   imports: [
     CommonModule,
     ProductsRoutingModule,
