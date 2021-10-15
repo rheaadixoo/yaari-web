@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'yaari-shop-by-price',
@@ -9,6 +9,7 @@ export class ShopByPriceComponent implements OnInit {
 
   constructor() { }
 
+  @Output() priceId=new EventEmitter()
   public shopByPrice: any;
   public price=[]
 
@@ -22,7 +23,18 @@ export class ShopByPriceComponent implements OnInit {
   }
 
   onPrice(id){
-
+    console.log(id);
+    if(this.price.includes(id)){
+      let index=this.price.indexOf(id)
+      this.price.splice(index,1);
+      console.log(this.price)
+      this.priceId.emit(this.price)
+    }
+    else{
+      this.price.push(id);
+      console.log(this.price);
+      this.priceId.emit(this.price)
+    }
   }
 
 }

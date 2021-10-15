@@ -90,18 +90,19 @@ export class CategoryMenuBarComponent implements OnInit {
    * 
    */
   getAllCollection() {
-    this.collectionService.getAllCollections().subscribe(res => {
-      this.collections = res;
-      let collectionArr = _.orderBy(this.collections,['id'],['asc']);
-      for (let index = 0; index < collectionArr.length; index++) {
-        const element = res[index];
-        if(this.headerCollectionLength > index){
-          this.headerCollections.push(collectionArr[index])
-        }else{
-          this.otherCollections.push(collectionArr[index])
-        }
+    this.collectionService.getAllCollections().subscribe((res:[]) => {
+      let collectionArr = _.orderBy(res,['id'],['asc']);
+      this.collections = collectionArr;
+      this.headerCollections = collectionArr
+      // for (let index = 0; index < collectionArr.length; index++) {
+      //   const element = res[index];
+      //   if(this.headerCollectionLength > index){
+      //     this.headerCollections.push(collectionArr[index])
+      //   }else{
+      //     this.otherCollections.push(collectionArr[index])
+      //   }
         
-      }
+      // }
     })
   }
 

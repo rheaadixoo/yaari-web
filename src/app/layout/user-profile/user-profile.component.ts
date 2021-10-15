@@ -19,9 +19,9 @@ export class UserProfileComponent implements OnInit {
   public imgUrl: string = '';
   public isUserAddress = false;
   public userAddress: any={};
-  public removeProfilebtn:boolean=false;
-  public cityName : string ='';
-  public stateName : string='';
+  public removeProfilebtn:boolean=false
+  public defaultImg="https://res.cloudinary.com/adixoo-com/image/upload/v1634230303/fwyhme0rbiqvtnr3tmt7.jpg"
+
   constructor(private toastr: ToastrService, private builder: FormBuilder, private localStorageService: LocalStorageService,
     private userService: UserProfileService, private addressService: AddressService,
     private service : PincodeService,
@@ -90,6 +90,7 @@ export class UserProfileComponent implements OnInit {
         this.userObj = response;
         console.log(this.userObj);
         this.imgUrl = this.userObj['profileImage'];
+        console.log(this.imgUrl);
         this.share.setimageAddress(this.imgUrl)
         this.UForm.first_name.patchValue(this.userObj.firstName);
         this.UForm.last_name.patchValue(this.userObj.lastName);
@@ -104,13 +105,21 @@ export class UserProfileComponent implements OnInit {
         this.UForm.pincode.patchValue(this.userAddress.pinCode);
         this.UForm.address.patchValue(this.userAddress.address);
         console.log("0this-", this.UForm);
-        if(this.imgUrl==="https://res.cloudinary.com/adixoo-com/image/upload/v1633762946/amnnnc0bdyr2j6kisx6a.jpg"){
+        if(this.imgUrl===this.defaultImg){
           this.removeProfilebtn=true
         }
         else{
           this.removeProfilebtn=false
         }
-    }
+      }
+      else{
+        if(this.imgUrl===this.defaultImg){
+          this.removeProfilebtn=true
+        }
+        else{
+          this.removeProfilebtn=false
+        }
+      }
         
         } ) 
       } else {
@@ -135,9 +144,9 @@ export class UserProfileComponent implements OnInit {
 
   removeProfile(){
     console.log("remove profile");
-    this.imgUrl="https://res.cloudinary.com/adixoo-com/image/upload/v1634230303/fwyhme0rbiqvtnr3tmt7.jpg"
+    this.imgUrl=this.defaultImg
     let payload={
-      profileImage:"https://res.cloudinary.com/adixoo-com/image/upload/v1634230303/fwyhme0rbiqvtnr3tmt7.jpg"
+      profileImage:this.defaultImg
     }
     this.userService.updateUserRecord(payload,this.userData.id).subscribe( res => {
         this.toastr.success("Profile have been removed")

@@ -30,7 +30,7 @@
     <div class="container-fluid">
         <div class="row mx-0">
             <!-- The Filter -->
-            <div class="col-lg-3 col-md-3 px-2 prdct_sec_main_col_3" *ngIf="products.length > 0">
+            <div class="col-lg-3 col-md-3 px-2 prdct_sec_main_col_3" >
                 <div class="prdct_sec_filter_sec">
 
                     <!-- Category -->
@@ -43,7 +43,7 @@
                     <yaari-shop-by-size (sizeId)="getSizeIds($event)"></yaari-shop-by-size>
 
                     <!-- Price -->
-                    <yaari-shop-by-price></yaari-shop-by-price>
+                    <yaari-shop-by-price (priceId)="getPriceIds($event)"></yaari-shop-by-price>
                     <!-- <div
                         class="prdct_sec_filter_sec_all_pnl prdct_sec_filter_sec_by_rdio_pnl mb-5 d-inline-block w-100">
                         <h4 class="font-500 pb-2 mb-4">
@@ -101,7 +101,7 @@
                     <yaari-shop-by-brands (brandId)="getBrandIds($event)"></yaari-shop-by-brands>
 
                     <!-- Discount -->
-                    <yaari-shop-by-discount></yaari-shop-by-discount>
+                    <yaari-shop-by-discount (discountId)="getDiscountIds($event)"></yaari-shop-by-discount>
                 </div>
             </div>
 
@@ -185,10 +185,10 @@
                     </ng-container>
                 </div>
             </div>
-            <div class="row w-100 mx-0" *ngIf="products.length == 0">
-                <p class="prdct_list_sub_title text-gray mb-3">
-                    No products available for selected filter.
-                </p>
+            <div class="col-lg-9 col-md-9 px-4  prdct_sec_main_col_9" *ngIf="products.length === 0">
+                <h1 class="prdct_list_sub_title text-gray mb-3">
+                    No products available .
+                </h1>
             </div>  
         </div>
     </div>

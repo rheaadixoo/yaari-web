@@ -39,7 +39,6 @@ export class CheckoutComponent implements OnInit {
         // this.pageLoaderService.stopLoading()
         this.actionUrl = `${environment.apiUrl}payments/checkout?txnToken=${this.txnToken}&orderNumber=${this.orderNumber}`;
         window.open(this.actionUrl,'_parent');
-        console.log("Going to payment gateway")
         // this.router.navigateByUrl("/app/cart");
       }
     }

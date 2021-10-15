@@ -22,6 +22,7 @@ export class RegisterComponent implements OnInit {
   public userInfo:any
   public checkOtp:any
   public contactNo:any
+  public defaultImg="https://res.cloudinary.com/adixoo-com/image/upload/v1634230303/fwyhme0rbiqvtnr3tmt7.jpg"
 
   public otpForm: boolean = true;
   public otpBtn: boolean = true;
@@ -197,7 +198,7 @@ export class RegisterComponent implements OnInit {
       email: this.registerForm.value.email,
       password: this.registerForm.value.password,
       mobile: this.registerForm.value.mobile,
-      profileImage:"https://res.cloudinary.com/adixoo-com/image/upload/v1634230303/fwyhme0rbiqvtnr3tmt7.jpg"
+      profileImage:this.defaultImg
     }
     if (this.registerForm.value.password != this.registerForm.value.confirm_password) {
       this.toastr.error('Confirm password is incorrect');

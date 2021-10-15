@@ -60,7 +60,7 @@ export class HeaderComponent implements OnInit,AfterViewInit
     //   return this.imgUrl
     // }
     this.imgUrl=this.share.getimageAddress()
-    return this.imgUrl
+    return this.imgUrl ? this.imgUrl :"https://res.cloudinary.com/adixoo-com/image/upload/v1634230303/fwyhme0rbiqvtnr3tmt7.jpg";
   }
 
   get isUserLoggedIn() {
