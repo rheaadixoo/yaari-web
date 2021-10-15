@@ -9,11 +9,8 @@ import { OrderService } from 'src/app/shared/services/order.service.js';
 import { ToastrService } from 'ngx-toastr';
 import { NgbModalConfig, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { WishlistService } from 'src/app/shared/services/wishlist.service.js';
+import { AuthService } from 'src/app/shared/services/auth.service.js';
 import "../../../../assets/js/product_zoom.js";
-import { FormControl,FormGroup,FormBuilder,Validators } from '@angular/forms';
-import { DeliveryPincodeService } from 'src/app/shared/services/delivery-pincode.service.js';
-import { ShareDataService } from 'src/app/shared/services/share-data.service.js';
-
 @Component({
   selector: 'yaari-product-detail',
   templateUrl: './product-detail.component.html',
@@ -26,10 +23,7 @@ export class ProductDetailComponent implements OnInit {
     private productService: ProductService, private cartService: CartService,
     private orderService: OrderService, private router: Router,
     private toastr: ToastrService, private modalService: NgbModal,
-    private wishlistService: WishlistService,
-    private builder: FormBuilder,
-    private deliverypincodeService:DeliveryPincodeService,
-    private share: ShareDataService) {
+    private wishlistService: WishlistService) {
 
     this.productService.currentProductStage.subscribe(res => {
       if (res && res.id) {
@@ -42,22 +36,19 @@ export class ProductDetailComponent implements OnInit {
       return false;
     };
   }
+  //change 
+  show=false;
+  abc=false;
 
   public modalRef: NgbModalRef;
   public quantity: number = 1;
   public productId: any = 0;
   public productObj: any = {};
-  public productReview:any=[]
   public showBuyNowBtn: boolean = true;
   public subTotal: any = 0;
   public productList: any = [];
   public isProductExist: boolean = false;
   public isProductExistInWishlist: boolean = false;
-  public start=0;
-  public end=5;
-  public deliveryPincode:FormGroup=new FormGroup({});
-  
-
   ngOnInit(): void {
     if (this.route.snapshot.params.id) {
       this.productId = this.route.snapshot.params.id;
@@ -73,6 +64,19 @@ export class ProductDetailComponent implements OnInit {
         }
       })
     }
+
+
+    //updated code
+    if(this.localStorageService.get('token'))
+     {
+        this.show=true;
+        this.abc=true;
+        console.log(this.abc);
+        
+     }
+
+
+
     if (this.cookie.get('wishlist')) {
       this.wishlistService.isProductExistInWishlist(this.wishlistObj['id'], JSON.parse(this.productId)).subscribe((response: any[]) => {
         if (response.length) {
@@ -83,20 +87,12 @@ export class ProductDetailComponent implements OnInit {
       })
     }
     this.getProductDetailById();
-    this.buildDeliveryPincode();
-  }
-
-  buildDeliveryPincode(){
-    this.deliveryPincode=this.builder.group({
-      delivery_pincode:['',[Validators.required,Validators.pattern('^[1-9][0-9]{5}$')]]
-    })
   }
 
   getProductDetailById() {
     if (this.productId) {
       this.productService.getProductById(this.productId).subscribe(res => {
         this.productObj = res;
-        console.log(res);
         this.subTotal = this.productObj.sellingPrice;
         this.getProductListById(this.productObj['subCategoryId']);
       })
@@ -130,7 +126,7 @@ export class ProductDetailComponent implements OnInit {
           })
         }
         this.cartService.getCart(res['id']).subscribe((resp: any[]) => {
-          this.share.setCartCount(resp.length)
+          this.cartService.cartItemCount.next(resp.length);
         })
         this.cookie.set('cart', JSON.stringify({ id: res['id'] }), { expires: 365, path: '/' });
       })
@@ -153,7 +149,6 @@ export class ProductDetailComponent implements OnInit {
           this.cartService.createCartDetail(payload).subscribe(response => {
             this.cartService.getCart(cartObj['id']).subscribe((res: any[]) => {
               this.isProductExist = true;
-              this.share.setCartCount(res.length)
               this.cartService.cartItemCount.next(res.length);
             })
             this.toastr.success('Product added successfully');
@@ -173,7 +168,8 @@ export class ProductDetailComponent implements OnInit {
     if (this.cookie.get('cart')) {
       const cartObj = JSON.parse(this.cookie.get('cart'));
       this.router.navigate(['/app/orders/place-order'], { queryParams: { id: cartObj['id'] } })
-    } else if (!this.cookie.get('cart')) {
+    } else if (!this.cookie.get('cart')) 
+    {
       this.cartService.createCart().subscribe(res => {
         if (res['id']) {
           this.productObj['productId'] = JSON.parse(this.productId);
@@ -187,6 +183,7 @@ export class ProductDetailComponent implements OnInit {
             businessId: this.productObj['businessId']
           }
           this.cartService.createCartDetail(payload).subscribe(response => {
+            console.log(payload);
             console.log("response---", response);
             try {
               this.toastr.success('Product added successfully',);
@@ -208,12 +205,18 @@ export class ProductDetailComponent implements OnInit {
   }
 
   addToWishList() {
-  
+    if (!this.localStorageService.get('user-detail')) {
+      // alert('User sign in or sign up is required!')
+      
+      this.warningModal.open();
+    }
     let payload;
-    if (!!this.localStorageService.get('user-detail')) {
+    if (this.localStorageService.get('user-detail')) 
+    {
       payload = { userId: this.userDetail.id };
       
           if (!this.cookie.get('wishlist')) {
+            console.log("the payload"+payload);
             this.wishlistService.createWishList(payload).subscribe(res => {
               if (res['id']) {
                 const data = {
@@ -226,7 +229,8 @@ export class ProductDetailComponent implements OnInit {
                 this.cookie.set('wishlist', JSON.stringify({ id: res['id'] }), { expires: 365, path: '/' });
               }
             })
-          } else if (this.cookie.get('wishlist')) {
+          } else if (this.cookie.get('wishlist'))
+          {
             const data = {
               wishlistId: this.wishlistObj['id'],
               productId: JSON.parse(this.productId),
@@ -243,11 +247,19 @@ export class ProductDetailComponent implements OnInit {
             })
           }
     } 
-    
-    else {
-      this.warningModal.open();
+    if(!this.localStorageService.get('token'))
+    {
+      console.log("the local service ");
+      // this.router.navigate(['/app/product/wishlist']);
+      this.router.navigate(['/login']);
     }
     
+    
+    // else {
+    //   this.warningModal.open();
+    //   //console.log( this.warningModal.open());
+    // }
+  
     
   }
 
@@ -308,7 +320,7 @@ export class ProductDetailComponent implements OnInit {
   }
 
   get productImage() {
-    return this.productObj.thumbImages
+    return this.productObj.thumbImages;
   }
 
   goToCart(){
@@ -318,14 +330,5 @@ export class ProductDetailComponent implements OnInit {
   goToWishlist(){
     this.router.navigateByUrl('/app/wishlist');
   }
-
-  postDeliveryPincode(){
-    console.log(this.deliveryPincode.value.delivery_pincode);
-    let data=this.deliveryPincode.value.delivery_pincode;
-    this.deliverypincodeService.getDeliveryPincode(data).subscribe(res => {
-      
-      this.toastr.success('Successfully called Service');
-    });
-  }
-
+ 
 }
