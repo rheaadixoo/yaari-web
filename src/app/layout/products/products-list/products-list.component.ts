@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import {UserProfileService} from 'src/app/shared/services/user-profile.service';
+import { PageLoaderService } from 'src/app/shared/page-loader/page-loader.service';
 
 @Component({
   selector: 'app-products-list',
@@ -30,11 +31,13 @@ export class ProductsListComponent implements OnInit {
   public isProductListLoaded: boolean = false;
 
 
-  constructor(private productService: ProductService, private router: Router, private route: ActivatedRoute
+  constructor(
+    private productService: ProductService, private router: Router, private route: ActivatedRoute
     , private wishlistService: WishlistService, private cookie: CookieService,
     private toastr: ToastrService, private localStorageService: LocalStorageService,
     private userService: UserProfileService,
-    private domSanitizer: DomSanitizer,) {
+    private domSanitizer: DomSanitizer,
+    private pageLoaderService: PageLoaderService) {
     // this.productService.currentProductStage.subscribe(res => {
     //   this.subCatId = res['item_id'];
     //   this.subCatName = res['item_name'];
@@ -101,7 +104,10 @@ export class ProductsListComponent implements OnInit {
   }
 
   getProductsList() {
+    
     if (this.subCatId) {
+    this.pageLoaderService.startLoading();    
+
       this.productService.getProductsList(this.subCatId,this.colorIds,this.brandIds,this.priceIds,this.discountIds,this.sizeIds).subscribe((response:[]) => {
         
         if(response && response.length){
@@ -113,7 +119,7 @@ export class ProductsListComponent implements OnInit {
           this.products = [];
           console.log("No product are there");
         }
-        
+        this.pageLoaderService.stopLoading();
         
       })
     }
