@@ -12,6 +12,23 @@
     border:none;
     margin-left: 20px;
 }
+#navigatebefore,#navigateafter{
+    font-size: 100px;
+}
+#navigateafter{
+position: absolute;
+// left: 1675px;
+top: 2800px;
+float: right;
+right: 0;
+}
+#navigatebefore{
+    position: absolute;
+    // left: 1675px;
+    top: 2800px;
+    float: left;
+    left: 0;
+    }
 
 
 $primary-color: #3c3d3d;
