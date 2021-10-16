@@ -277,9 +277,9 @@ export class RegisterComponent implements OnInit {
 
   resendOtp(){
     
-    if(this.chanceRemaining==1){
-      this.showResendOtp=false;
-    }
+    // if(this.chanceRemaining==1){
+    //   this.showResendOtp=false;
+    // }
 
     const payload={
       mobile: this.generateOtpForm.value.mobile
@@ -288,7 +288,7 @@ export class RegisterComponent implements OnInit {
         console.log(response)
         this.toastr.success('Otp have been sended');
         this.otpBtn = false;
-        this.chanceRemaining-=1;
+        // this.chanceRemaining-=1;
     },error => {
         if(error['error'].statusCode == 403){
           this.toastr.error('Invalid phone number');
