@@ -738,9 +738,9 @@
         </h2>
       </div>
     </div>
-    <span class="material-icons" id="navigatebefore"> navigate_before</span>
-      
-    
+
+
+    <span class="material-icons" id="navigatebefore" (click)="previous()"> navigate_before</span>
     <div class="row w-100 px-5 mx-0 mt-4">
       
       <ng-container *ngFor="let product of productList | slice: start:end let i=index">
@@ -1036,7 +1036,7 @@
     </div>
    
   </div>
-  <span class="material-icons" id="navigateafter"> navigate_next</span>
+  <span class="material-icons" id="navigateafter" (click)="next()" *ngIf="showNextButton"> navigate_next</span>
 </section>
 
 <!-- Related Products section end -->
