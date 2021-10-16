@@ -65,7 +65,7 @@ export class CartService {
   getCartWithUserId(user_id) {
     const query = {
       where: {
-        and: [{ userId: user_id },]
+        and: [{ userId: user_id , status : 'open'}]
       },
     };
     console.log("query:"+query)

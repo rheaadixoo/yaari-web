@@ -98,6 +98,9 @@
                     <!-- Material -->
                     <!-- <yaari-shop-by-material></yaari-shop-by-material> -->
 
+                    <!-- price -->
+                    <yaari-shop-by-price (priceId)="getPriceIds($event)"></yaari-shop-by-price>
+
                     <!-- Brands -->
                     <yaari-shop-by-brands (brandId)="getBrandIds($event)"></yaari-shop-by-brands>
 
@@ -107,7 +110,7 @@
             </div>
 
             <!-- The List -->
-            <div class="col-lg-9 col-md-9 px-2 prdct_sec_main_col_9" *ngIf="products.length > 0">
+            <div class="col-lg-9 col-md-9 px-2 prdct_sec_main_col_9" *ngIf="products && products.length > 0">
                 <div class="sort_by_filter px-3 float-right w-100 text-right mb-4">
                     <span class="font-18 text-gray font-500">
                         Sort by

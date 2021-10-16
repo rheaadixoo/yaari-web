@@ -39,23 +39,23 @@
               <!-- <li class="nav-item px-2">
                 <a class="nav-link" id="pills-ordered-tab" data-toggle="pill" href="#pills-ordered" role="tab"
                   aria-controls="pills-review" aria-selected="false">Ordered</a>
-              </li>
+              </li> 
               <li class="nav-item px-2">
                 <a class="nav-link" id="pills-delivered-tab" data-toggle="pill" href="#pills-delivered" role="tab"
                   aria-controls="pills-ship-det" aria-selected="false">Delivered</a>
-              </li>
+              </li> 
               <li class="nav-item px-2">
                 <a class="nav-link" id="pills-exchange-tab" data-toggle="pill" href="#pills-exchange" role="tab"
                   aria-controls="pills-ship-det" aria-selected="false">Exchanged</a>
-              </li>
+              </li> 
               <li class="nav-item px-2">
                 <a class="nav-link" id="pills-return-tab" data-toggle="pill" href="#pills-return" role="tab"
                   aria-controls="pills-ship-det" aria-selected="false">Returned</a>
-              </li>
+              </li> 
               <li class="nav-item px-2">
                 <a class="nav-link" id="pills-cancelled-tab" data-toggle="pill" href="#pills-cancelled" role="tab"
                   aria-controls="pills-ship-det" aria-selected="false">Cancelled</a>
-              </li> -->
+              </li>  -->
             </ul>
 
             <div class="tab-content my_order_tb_profile_content" id="pills-tabContent">
@@ -120,15 +120,17 @@
                           <div class="row">
                             <div class="hh-grayBox">
                               <div class="row justify-content-between">
+                                <ng-container *ngFor="let status of order.activities">
                                 <div class="order-tracking completed">
                                   <span class="is-complete"></span>
                                   <p>
-                                    <span class="font-500 text-dark mb-2">Order Recieved</span>
+                                    <span class="font-500 text-dark mb-2">{{status['activity']}}</span>
                                     <br>
-                                    <span class="mt-2 d-block font-14 text-gray">10:30 PM 20th October, 2020</span>
+                                    <span class="mt-2 d-block font-14 text-gray">{{status['date'] | date : 'long'}}</span>
                                   </p>
                                 </div>
-                                <div class="order-tracking completed">
+                              </ng-container>
+                                <!-- <div class="order-tracking completed">
                                   <span class="is-complete"></span>
                                   <p>
                                     <span class="font-500 text-dark mb-2">Order Placed</span>
@@ -159,7 +161,7 @@
                                     <span class="font-500 text-dark mb-2">Shipment Has Arrived At Mumbai Facility</span>
                                     <br>
                                   </p>
-                                </div>
+                                </div> -->
                                 <div class="order-tracking">
                                   <span class="is-complete"></span>
                                   <p>

@@ -168,7 +168,8 @@
                         <button class="btn-theme" [disabled]="userAddress.length == 0" (click)="createOrder()">
                             Pay Now
                         </button>
-                        <button class="btn-theme" [disabled]="userAddress.length == 0" (click)="createPayLaterOrder()"
+                        <button class="btn-theme" [disabled]="userAddress.length == 0" 
+                            (click)="payLaterConfirmationModal()"
                             style="margin-left: 10px;" [disabled]="isPayLaterClicked">
                             Pay Later
                         </button>
@@ -345,5 +346,21 @@
                 </div>
             </div>
         </div>
+    </div>
+</ng-template>
+
+<ng-template #paylaterConfirmationModal let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Warning!</h4>
+        <button type="button" class="close" aria-label="Close" (click)="close()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p>Are you sure you want to place this order ?</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="closeModal()">Cancel</button>
+        <button type="button" class="btn btn-warn" (click)="createPayLaterOrder();modalRef.close()">Yes</button>
     </div>
 </ng-template>

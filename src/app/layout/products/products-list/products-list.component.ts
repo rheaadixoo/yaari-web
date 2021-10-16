@@ -102,10 +102,18 @@ export class ProductsListComponent implements OnInit {
 
   getProductsList() {
     if (this.subCatId) {
-      this.productService.getProductsList(this.subCatId,this.colorIds,this.brandIds,this.priceIds,this.discountIds,this.sizeIds).subscribe(response => {
-        this.products = response;
-        this.getWishlistDetail();
-        this.productImgs(this.products[0]['images'][0]);
+      this.productService.getProductsList(this.subCatId,this.colorIds,this.brandIds,this.priceIds,this.discountIds,this.sizeIds).subscribe((response:[]) => {
+        
+        if(response && response.length){
+          this.products = response;
+          this.getWishlistDetail();
+          this.productImgs(this.products[0]['images'][0]);
+        }
+        else{
+          this.products = [];
+          console.log("No product are there");
+        }
+        
         
       })
     }
