@@ -29,6 +29,7 @@ export class ProductsListComponent implements OnInit {
   public discountIds=[];
   public isProductListLoaded: boolean = false;
 
+
   constructor(private productService: ProductService, private router: Router, private route: ActivatedRoute
     , private wishlistService: WishlistService, private cookie: CookieService,
     private toastr: ToastrService, private localStorageService: LocalStorageService,
@@ -240,4 +241,7 @@ export class ProductsListComponent implements OnInit {
     // console.log('imgUrl: ', imgUrl['changingThisBreaksApplicationSecurity']);
     return imgUrl['changingThisBreaksApplicationSecurity'];
   }
+
+  
+
 }

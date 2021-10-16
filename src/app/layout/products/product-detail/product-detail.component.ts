@@ -57,8 +57,14 @@ export class ProductDetailComponent implements OnInit {
   public isProductExist: boolean = false;
   public isProductExistInWishlist: boolean = false;
   public start=0;
-  public end=5;
+  public end=4;
+  public itemsPerPage=3;
   public deliveryPincode:FormGroup=new FormGroup({});
+  public deliveryDate:string="";
+  public checkClicked:boolean=false;
+  public businessId:number;
+  public product_weight:number;
+public showNextButton:boolean=true;
   public collectUsers:any
 
   ngOnInit(): void {
@@ -99,6 +105,13 @@ export class ProductDetailComponent implements OnInit {
       })
     }
     this.getProductDetailById();
+    this.buildDeliveryPincode();
+  }
+
+  buildDeliveryPincode(){
+    this.deliveryPincode=this.builder.group({
+      delivery_pincode:['']
+    })
   }
 
   getProductDetailById() {
@@ -312,12 +325,14 @@ export class ProductDetailComponent implements OnInit {
       this.productService.getProductListById(productId).subscribe((res: any[]) => {
         if (res && res.length > 0) {
           this.productList = res;
+          console.log(this.productList);
         }
       }, error => {
       })
     } else {
       this.productList = [this.productObj];
     }
+
   }
   /**
    * Method for setting dynamic background image url on the zoom overlay div when product image get clicked
@@ -343,15 +358,72 @@ export class ProductDetailComponent implements OnInit {
     this.router.navigateByUrl('/app/wishlist');
   }
 
-  postDeliveryPincode(){
+  postDeliveryPincode(businessId){
+    this.businessId=businessId;
     console.log(this.deliveryPincode.value.delivery_pincode);
-    let data=this.deliveryPincode.value.delivery_pincode;
-    this.deliverypincodeService.getDeliveryPincode(data).subscribe(res => {
+    let pincode=this.deliveryPincode.value.delivery_pincode;
+    this.deliverypincodeService.getDeliveryPincode(pincode,this.businessId).subscribe(res => {
+      let response=res;
+      console.log(response);
+
+      this.checkClicked=true;
+      let edd=0;
+      for(let i=0;i<response["data"].available_courier_companies.length;i++){
+            // console.log(response["data"].available_courier_companies[i].estimated_delivery_days);
+            // console.log(response["data"].available_courier_companies[i].etd);
+            let temp=Number(response["data"].available_courier_companies[i].estimated_delivery_days);
+
+            if(i==0){
+              edd=temp;
+            }
+            else{
+              if(temp>=edd){
+                edd=temp;
+              }
+            }
+      }
       
-      this.toastr.success('Successfully called Service');
+      
+      var numOfDaysToAdd=edd+2;
+      var estimatedDate=new Date();
+      estimatedDate.setDate(estimatedDate.getDate()+numOfDaysToAdd);
+      console.log(estimatedDate);
+
+      let dd=estimatedDate.getDate();
+      
+      const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+       let month=months[estimatedDate.getMonth()];
+      
+       const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+       let day=days[estimatedDate.getDay()];
+      
+      this.deliveryDate=dd+' '+month+','+day;
+      console.log(this.deliveryDate);
     });
   }
 
+  previous(){
+    if(((this.start-this.itemsPerPage)>=0)&&((this.end-this.itemsPerPage)>=4)){
+      this.start=this.start-this.itemsPerPage;
+      this.end=this.end-this.itemsPerPage;
+      this.showBuyNowBtn=true;
+    }
+  }
+
+  next(){
+    if(this.start==this.end-4){
+      for(let j=this.start;j<=this.end;j++){
+        if(j==this.productList.length-1){
+          this.showNextButton=false;
+        }
+        else{
+          this.showNextButton=true;
+        }
+      }
+      this.start=this.start+this.itemsPerPage;
+      this.end=this.end+this.itemsPerPage;
+    }
+  }
   getReviewsOfProduct(){
     if(this.productId){
       this.productService.getPoductReviewById(this.productId).subscribe(response => {

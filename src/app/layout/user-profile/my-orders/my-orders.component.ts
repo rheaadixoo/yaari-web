@@ -4,11 +4,7 @@ import { OrderService } from 'src/app/shared/services/order.service';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 import * as _ from "lodash";
 import { Router } from '@angular/router';
-// import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-// import {MatRadioModule} from '@angular/material/radio';
-// import { NgbdPaginationBasic } from './pagination-basic';
-// import { NgbModal ,NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormControl } from '@angular/forms';
 import { data } from 'jquery';
 import { JSDocComment } from '@angular/compiler';
@@ -55,7 +51,8 @@ export class MyOrdersComponent implements OnInit {
     console.log(this.cancelOrderForm.value);
   }
 
-  //  }
+  
+  
   selectReason(reason) {
     //  let sel=document.getElementById("try");
     this.reason = reason;
