@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CancelModalComponent } from './cancel-order/cancel-modal/cancel-modal.component';
 import { LayoutComponent } from './layout.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,15 @@ const routes: Routes = [
 
       { path: 'terms-and-condition', loadChildren: () => import('./terms-and-condition/terms-and-condition.module').then(m => m.TermsAndConditionsModule)},
       { path: 'shipping-details', loadChildren: () => import('./shipping-return-policy/shipping-return-policy.module').then(m => m.ShippingReturnPolicyModule)},
+      {
+        path: '**',
+        redirectTo: "404",
+        pathMatch: "full"
+      },
+      {
+        path: '404',
+        component: PageNotFoundComponent
+      },
     ]
   }
 ];
