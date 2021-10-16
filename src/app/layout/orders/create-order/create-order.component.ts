@@ -9,6 +9,7 @@ import { OrderService } from 'src/app/shared/services/order.service';
 import { CookieService } from 'ngx-cookie-service';
 import { ToastrService } from 'ngx-toastr';
 import { ShareDataService } from 'src/app/shared/services/share-data.service';
+import { PincodeService } from 'src/app/shared/services/pincode.service';
 @Component({
   selector: 'app-create-order',
   templateUrl: './create-order.component.html',
@@ -34,11 +35,13 @@ export class CreateOrderComponent implements OnInit {
   public coupon_code_check = 'HPB50';
   public deliveryCharges: any = 0;
   public isCouponApplied : boolean = false;
+  public cityName : string ='';
+  public stateName : string='';
   constructor(private cartService: CartService, private route: ActivatedRoute, private modalService: NgbModal,
     private formBuilder: FormBuilder, private localStorageService: LocalStorageService,
     private addressService: AddressService, private orderService: OrderService,
     private cookie: CookieService, private router: Router,
-    private toastr: ToastrService,private share:ShareDataService) {
+    private toastr: ToastrService,private share:ShareDataService,private service : PincodeService) {
     if (this.route.snapshot.queryParams.id) {
       this.cartId = this.route.snapshot.queryParams.id;
     }
@@ -48,6 +51,32 @@ export class CreateOrderComponent implements OnInit {
     this.getCartDetail();
     this.getUserAddress();
     this.buildAddAddressForm();
+  }
+
+  pincodeAutofill(){
+  
+    this.service.pincode(this.addressForm.value.pincode).subscribe((res : any)=>{
+      let pincodeRes = res;
+      console.log(pincodeRes);
+      if((pincodeRes[0].Status == "Error")){
+        console.log("Invalid Pincode");
+        this.toastr.error("Invalid pincode");
+      }
+      else{
+      //  this.cityName=pincodeRes[0].PostOffice[0].District;
+      //  this.stateName=pincodeRes[0].PostOffice[0].State;
+        this.addressForm.controls['city'].setValue(pincodeRes[0].PostOffice[0].District);
+        this.addressForm.controls['state'].setValue(pincodeRes[0].PostOffice[0].State);
+  
+      // this.addressForm.value.city=this.cityName;
+      // this.addressForm.value.state=this.stateName;
+      console.log(pincodeRes[0].PostOffice[0].District);
+      console.log(pincodeRes[0].PostOffice[0].State);
+      console.log(pincodeRes[0].Status);
+      
+      }
+     
+    })
   }
 
   getCartDetail() {
@@ -91,9 +120,9 @@ export class CreateOrderComponent implements OnInit {
     this.addressForm = this.formBuilder.group({
       name: new FormControl('', [Validators.required]),
       address: new FormControl('', [Validators.required]),
-      city: new FormControl('', [Validators.required]),
+      city: new FormControl('',[Validators.required]),
       pincode: new FormControl('', [Validators.required]),
-      state: new FormControl('', [Validators.required]),
+      state: new FormControl('',[Validators.required]),
       country: new FormControl('India', [Validators.required]),
     })
   }

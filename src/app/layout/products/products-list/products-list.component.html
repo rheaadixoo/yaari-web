@@ -30,7 +30,7 @@
     <div class="container-fluid">
         <div class="row mx-0">
             <!-- The Filter -->
-            <div class="col-lg-3 col-md-3 px-2 prdct_sec_main_col_3" *ngIf="products.length > 0">
+            <div class="col-lg-3 col-md-3 px-2 prdct_sec_main_col_3" >
                 <div class="prdct_sec_filter_sec">
 
                     <!-- Category -->
@@ -40,9 +40,12 @@
                     <yaari-shop-by-color (colorIds)="getColorIds($event)"></yaari-shop-by-color>
 
                     <!-- Size -->
-                    <!-- <yaari-shop-by-size></yaari-shop-by-size> -->
+                    <yaari-shop-by-size (sizeId)="getSizeIds($event)"></yaari-shop-by-size>
+
                     <!-- Price -->
                      <!-- <div 
+                    <yaari-shop-by-price (priceId)="getPriceIds($event)"></yaari-shop-by-price>
+                   <div
                         class="prdct_sec_filter_sec_all_pnl prdct_sec_filter_sec_by_rdio_pnl mb-5 d-inline-block w-100">
                         <h4 class="font-500 pb-2 mb-4">
                             <span class="material-icons prdct_sec_filter_sec_all_pnl_arw_icon">arrow_drop_down</span>
@@ -96,7 +99,10 @@
                     <!-- <yaari-shop-by-material></yaari-shop-by-material> -->
 
                     <!-- Brands -->
-                    <!-- <yaari-shop-by-brands></yaari-shop-by-brands> -->
+                    <yaari-shop-by-brands (brandId)="getBrandIds($event)"></yaari-shop-by-brands>
+
+                    <!-- Discount -->
+                    <yaari-shop-by-discount (discountId)="getDiscountIds($event)"></yaari-shop-by-discount>
                 </div>
             </div>
 
@@ -122,12 +128,12 @@
                                         Sale
                                     </span>
                                     <img class="img-fluid" [src]="product.thumbImages" (click)="showProductDetailView(product.id)">
-                                    <span id="heart" class="wishlist_icon" (click)="addToWishList(product)" style="color: black;"
-                                    *ngIf="!product['is_added_in_wishlist']">
+                                    <span id="heart" class="wishlist_icon" (click)="addToWishList(product)"
+                                    *ngIf="!product['is_added_in_wishlist'] && isIconShow">
                                         <span class="material-icons">favorite_border</span>
                                     </span>
-                                    <span id="heart" class="wishlist_icon" (click)="removeProductFromWishlist(product['wishlist_id'])" style="color: red;"
-                                    *ngIf="product['is_added_in_wishlist']">
+                                    <span id="heart" class="wishlist_icon" (click)="removeProductFromWishlist(product['wishlist_id'])"
+                                    *ngIf="product['is_added_in_wishlist'] && isIconShow">
                                         <span class="material-icons">favorite</span>
                                     </span>
                                 </div>
@@ -180,10 +186,10 @@
                     </ng-container>
                 </div>
             </div>
-            <div class="row w-100 mx-0" *ngIf="products.length == 0">
-                <p class="prdct_list_sub_title text-gray mb-3">
-                    No products available for selected filter.
-                </p>
+            <div class="col-lg-9 col-md-9 px-4  prdct_sec_main_col_9" *ngIf="products.length === 0">
+                <h1 class="prdct_list_sub_title text-gray mb-3">
+                    No products available .
+                </h1>
             </div>  
         </div>
     </div>

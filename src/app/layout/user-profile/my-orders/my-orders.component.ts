@@ -42,8 +42,16 @@ export class MyOrdersComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUserOrders();
-
+    // this.showtext();
   }
+  // document.getElementById("try").onclick="showtext()"
+
+
+  save(){
+    console.log(this.cancelOrderForm.value);
+  }
+
+  
   
   selectReason(reason) {
     //  let sel=document.getElementById("try");

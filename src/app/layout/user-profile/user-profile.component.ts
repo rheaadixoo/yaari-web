@@ -5,6 +5,7 @@ import { LocalStorageService } from 'src/app/shared/services/local-storage.servi
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ShareDataService } from 'src/app/shared/services/share-data.service'
+import { PincodeService } from 'src/app/shared/services/pincode.service';
 
 @Component({
   selector: 'yaari-user-profile',
@@ -19,14 +20,45 @@ export class UserProfileComponent implements OnInit {
   public isUserAddress = false;
   public userAddress: any={};
   public removeProfilebtn:boolean=false
+  public defaultImg="https://res.cloudinary.com/adixoo-com/image/upload/v1634230303/fwyhme0rbiqvtnr3tmt7.jpg"
+
   constructor(private toastr: ToastrService, private builder: FormBuilder, private localStorageService: LocalStorageService,
     private userService: UserProfileService, private addressService: AddressService,
+    private service : PincodeService,
     private share:ShareDataService) { }
 
   ngOnInit(): void {
 
     this.getUserRecord();
     this.buildUserForm();
+  }
+
+  
+  pincodeAutofill(){
+  
+    this.service.pincode(this.userForm.value.pincode).subscribe((res : any)=>{
+      let pincodeRes = res;
+      console.log(pincodeRes);
+      if((pincodeRes[0].Status == "Error")){
+        console.log("Invalid Pincode");
+        this.toastr.error("Invalid pincode");
+      }
+      else{
+      //  this.cityName=pincodeRes[0].PostOffice[0].District;
+      //   this.stateName=pincodeRes[0].PostOffice[0].State;
+  
+       this.userForm.controls['city'].setValue(pincodeRes[0].PostOffice[0].District);
+       this.userForm.controls['state'].setValue(pincodeRes[0].PostOffice[0].State);
+  
+      // this.userForm.value.city=this.cityName;
+      // this.userForm.value.state=this.stateName;
+      console.log(pincodeRes[0].PostOffice[0].District);
+      console.log(pincodeRes[0].PostOffice[0].State);
+      console.log(pincodeRes[0].Status);
+      
+      }
+     
+    })
   }
 
   get userData() {
@@ -58,6 +90,7 @@ export class UserProfileComponent implements OnInit {
         this.userObj = response;
         console.log(this.userObj);
         this.imgUrl = this.userObj['profileImage'];
+        console.log(this.imgUrl);
         this.share.setimageAddress(this.imgUrl)
         this.UForm.first_name.patchValue(this.userObj.firstName);
         this.UForm.last_name.patchValue(this.userObj.lastName);
@@ -72,13 +105,21 @@ export class UserProfileComponent implements OnInit {
         this.UForm.pincode.patchValue(this.userAddress.pinCode);
         this.UForm.address.patchValue(this.userAddress.address);
         console.log("0this-", this.UForm);
-        if(this.imgUrl==="https://res.cloudinary.com/adixoo-com/image/upload/v1633762946/amnnnc0bdyr2j6kisx6a.jpg"){
+        if(this.imgUrl===this.defaultImg){
           this.removeProfilebtn=true
         }
         else{
           this.removeProfilebtn=false
         }
-    }
+      }
+      else{
+        if(this.imgUrl===this.defaultImg){
+          this.removeProfilebtn=true
+        }
+        else{
+          this.removeProfilebtn=false
+        }
+      }
         
         } ) 
       } else {
@@ -103,9 +144,9 @@ export class UserProfileComponent implements OnInit {
 
   removeProfile(){
     console.log("remove profile");
-    this.imgUrl="https://res.cloudinary.com/adixoo-com/image/upload/v1633762946/amnnnc0bdyr2j6kisx6a.jpg"
+    this.imgUrl=this.defaultImg
     let payload={
-      profileImage:"https://res.cloudinary.com/adixoo-com/image/upload/v1633762946/amnnnc0bdyr2j6kisx6a.jpg"
+      profileImage:this.defaultImg
     }
     this.userService.updateUserRecord(payload,this.userData.id).subscribe( res => {
         this.toastr.success("Profile have been removed")

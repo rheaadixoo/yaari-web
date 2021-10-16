@@ -82,6 +82,7 @@
                                             <div class="avatar-delete" *ngIf="!removeProfilebtn">
                                                 <label>
                                                     <span (click)="removeProfile()" class="material-icons text-light">close</span>
+                                                    
                                                 </label>
                                             </div>
 
@@ -136,17 +137,17 @@
                                         </select>
                                     </div> -->
                                     <div class="form-group col-md-4 px-3 mb-4">
-                                        <input type="text" class="form-control" placeholder="City"
-                                            formControlName="city" name="city" (keyup)="validateFormField('city')">
+                                        <input type="text" class="form-control" placeholder="City" 
+                                            formControlName="city" name="city" (keyup)="validateFormField('city')" [value]="cityName">
                                     </div>
                                     <div class="form-group col-md-4 px-3 mb-4">
                                         <input type="text" class="form-control" placeholder="State"
-                                            formControlName="state" name="state" (keyup)="validateFormField('state')">
+                                            formControlName="state" name="state" (keyup)="validateFormField('state')" [value]="stateName">
                                     </div>
                                     <div class="form-group col-md-4 px-3 mb-4">
                                         <input type="text" class="form-control" placeholder="Pin Code"
                                             formControlName="pincode" name="pincode"
-                                            (blur)="validateFormField('pincode')">
+                                            (change)="pincodeAutofill()">
                                     </div>
                                     <!-- <div class="form-group col-md-12 px-3 mb-5 mt-3">
                                         <a href="javascript:void(0)" class="font-18 font-500"

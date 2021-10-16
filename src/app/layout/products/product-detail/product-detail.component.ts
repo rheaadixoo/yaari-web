@@ -9,12 +9,11 @@ import { OrderService } from 'src/app/shared/services/order.service.js';
 import { ToastrService } from 'ngx-toastr';
 import { NgbModalConfig, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { WishlistService } from 'src/app/shared/services/wishlist.service.js';
+import { AuthService } from 'src/app/shared/services/auth.service.js';
 import "../../../../assets/js/product_zoom.js";
-import { FormControl,FormGroup,FormBuilder,Validators } from '@angular/forms';
-import { DeliveryPincodeService } from 'src/app/shared/services/delivery-pincode.service.js';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ShareDataService } from 'src/app/shared/services/share-data.service.js';
-// import { ConsoleReporter } from 'jasmine';
-
+import { DeliveryPincodeService } from 'src/app/shared/services/delivery-pincode.service.js';
 @Component({
   selector: 'yaari-product-detail',
   templateUrl: './product-detail.component.html',
@@ -43,6 +42,9 @@ export class ProductDetailComponent implements OnInit {
       return false;
     };
   }
+  //change 
+  show=false;
+  abc=false;
 
   public modalRef: NgbModalRef;
   public quantity: number = 1;
@@ -63,6 +65,7 @@ export class ProductDetailComponent implements OnInit {
   public businessId:number;
   public product_weight:number;
 public showNextButton:boolean=true;
+  public collectUsers:any
 
   ngOnInit(): void {
     if (this.route.snapshot.params.id) {
@@ -79,6 +82,19 @@ public showNextButton:boolean=true;
         }
       })
     }
+
+
+    //updated code
+    if(this.localStorageService.get('token'))
+     {
+        this.show=true;
+        this.abc=true;
+        console.log(this.abc);
+        
+     }
+
+
+
     if (this.cookie.get('wishlist')) {
       this.wishlistService.isProductExistInWishlist(this.wishlistObj['id'], JSON.parse(this.productId)).subscribe((response: any[]) => {
         if (response.length) {
@@ -102,7 +118,6 @@ public showNextButton:boolean=true;
     if (this.productId) {
       this.productService.getProductById(this.productId).subscribe(res => {
         this.productObj = res;
-        console.log(res);
         this.subTotal = this.productObj.sellingPrice;
         this.getProductListById(this.productObj['subCategoryId']);
       })
@@ -136,7 +151,7 @@ public showNextButton:boolean=true;
           })
         }
         this.cartService.getCart(res['id']).subscribe((resp: any[]) => {
-          this.share.setCartCount(resp.length)
+          this.cartService.cartItemCount.next(resp.length);
         })
         this.cookie.set('cart', JSON.stringify({ id: res['id'] }), { expires: 365, path: '/' });
       })
@@ -159,7 +174,6 @@ public showNextButton:boolean=true;
           this.cartService.createCartDetail(payload).subscribe(response => {
             this.cartService.getCart(cartObj['id']).subscribe((res: any[]) => {
               this.isProductExist = true;
-              this.share.setCartCount(res.length)
               this.cartService.cartItemCount.next(res.length);
             })
             this.toastr.success('Product added successfully');
@@ -179,7 +193,8 @@ public showNextButton:boolean=true;
     if (this.cookie.get('cart')) {
       const cartObj = JSON.parse(this.cookie.get('cart'));
       this.router.navigate(['/app/orders/place-order'], { queryParams: { id: cartObj['id'] } })
-    } else if (!this.cookie.get('cart')) {
+    } else if (!this.cookie.get('cart')) 
+    {
       this.cartService.createCart().subscribe(res => {
         if (res['id']) {
           this.productObj['productId'] = JSON.parse(this.productId);
@@ -193,6 +208,7 @@ public showNextButton:boolean=true;
             businessId: this.productObj['businessId']
           }
           this.cartService.createCartDetail(payload).subscribe(response => {
+            console.log(payload);
             console.log("response---", response);
             try {
               this.toastr.success('Product added successfully',);
@@ -214,12 +230,18 @@ public showNextButton:boolean=true;
   }
 
   addToWishList() {
-  
+    if (!this.localStorageService.get('user-detail')) {
+      // alert('User sign in or sign up is required!')
+      
+      this.warningModal.open();
+    }
     let payload;
-    if (!!this.localStorageService.get('user-detail')) {
+    if (this.localStorageService.get('user-detail')) 
+    {
       payload = { userId: this.userDetail.id };
       
           if (!this.cookie.get('wishlist')) {
+            console.log("the payload"+payload);
             this.wishlistService.createWishList(payload).subscribe(res => {
               if (res['id']) {
                 const data = {
@@ -232,7 +254,8 @@ public showNextButton:boolean=true;
                 this.cookie.set('wishlist', JSON.stringify({ id: res['id'] }), { expires: 365, path: '/' });
               }
             })
-          } else if (this.cookie.get('wishlist')) {
+          } else if (this.cookie.get('wishlist'))
+          {
             const data = {
               wishlistId: this.wishlistObj['id'],
               productId: JSON.parse(this.productId),
@@ -249,11 +272,19 @@ public showNextButton:boolean=true;
             })
           }
     } 
-    
-    else {
-      this.warningModal.open();
+    if(!this.localStorageService.get('token'))
+    {
+      console.log("the local service ");
+      // this.router.navigate(['/app/product/wishlist']);
+      this.router.navigate(['/login']);
     }
     
+    
+    // else {
+    //   this.warningModal.open();
+    //   //console.log( this.warningModal.open());
+    // }
+  
     
   }
 
@@ -316,7 +347,7 @@ public showNextButton:boolean=true;
   }
 
   get productImage() {
-    return this.productObj.thumbImages
+    return this.productObj.thumbImages;
   }
 
   goToCart(){
@@ -393,4 +424,27 @@ public showNextButton:boolean=true;
       this.end=this.end+this.itemsPerPage;
     }
   }
+  getReviewsOfProduct(){
+    if(this.productId){
+      this.productService.getPoductReviewById(this.productId).subscribe(response => {
+        
+        this.productReview=response;
+
+        for (let index = 0; index < this.productReview.length; index++) {
+          const element = this.productReview[index];
+          // this.collectUsers.push(element.userId);
+          this.productService.getUserDetailsById(element.userId).subscribe( res => {
+           
+            this.collectUsers=res;
+            this.productReview[index].username=this.collectUsers.name
+          })
+        }
+
+      },error => {
+        console.log(error);
+      })
+    }
+  }
+  
+
 }
