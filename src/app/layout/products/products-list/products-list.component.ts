@@ -24,7 +24,7 @@ export class ProductsListComponent implements OnInit {
   public subCatName: string = '';
   public catName: string = '';
   public brandIds=[];
-  public sizeIds=[];
+  public size=[];
   public colorIds=[];
   public priceIds=[];
   public discountIds=[];
@@ -80,9 +80,9 @@ export class ProductsListComponent implements OnInit {
     this.getProductsList()
   }
 
-  getSizeIds(id){
+  getSizes(id){
     console.log("@output:"+id)
-    this.sizeIds=id;
+    this.size=id;
     this.getProductsList()
   }
 
@@ -108,7 +108,7 @@ export class ProductsListComponent implements OnInit {
     if (this.subCatId) {
     this.pageLoaderService.startLoading();    
 
-      this.productService.getProductsList(this.subCatId,this.colorIds,this.brandIds,this.priceIds,this.discountIds,this.sizeIds).subscribe((response:[]) => {
+      this.productService.getProductsList(this.subCatId,this.colorIds,this.brandIds,this.priceIds,this.discountIds,this.size).subscribe((response:[]) => {
         
         if(response && response.length){
           this.products = response;

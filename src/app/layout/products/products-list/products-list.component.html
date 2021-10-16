@@ -25,13 +25,13 @@
 <!-- Breadcrumb End -->
 
 <!-- Product list section -->
-<ng-container *ngIf="isProductListLoaded">
-<section class="prdct_sec_main">
-    <div class="container-fluid">
-        <div class="row mx-0">
+<ng-container *ngIf="isProductListLoaded" >
+<section class="prdct_sec_main" >
+    <div class="container-fluid" >
+        <div class="row mx-0" >
             <!-- The Filter -->
-            <div class="col-lg-3 col-md-3 px-2 prdct_sec_main_col_3" >
-                <div class="prdct_sec_filter_sec">
+            <div class="col-lg-3 col-md-3 px-2 prdct_sec_main_col_3"  >
+                <div class="prdct_sec_filter_sec"  >
 
                     <!-- Category -->
                     <app-categories></app-categories>
@@ -40,7 +40,7 @@
                     <yaari-shop-by-color (colorIds)="getColorIds($event)"></yaari-shop-by-color>
 
                     <!-- Size -->
-                    <yaari-shop-by-size (sizeId)="getSizeIds($event)"></yaari-shop-by-size>
+                    <yaari-shop-by-size (size)="getSizes($event)"></yaari-shop-by-size>
 
                     <!-- Price -->
                      <!-- <div 
@@ -189,7 +189,7 @@
                     </ng-container>
                 </div>
             </div>
-            <div class="col-lg-9 col-md-9 px-4  prdct_sec_main_col_9" *ngIf="products.length === 0">
+            <div class="col-lg-9 col-md-9 px-4  prdct_sec_main_col_9" *ngIf="products && products.length === 0">
                 <h1 class="prdct_list_sub_title text-gray mb-3">
                     No products available .
                 </h1>
