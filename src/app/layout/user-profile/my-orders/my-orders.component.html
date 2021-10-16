@@ -39,23 +39,23 @@
               <!-- <li class="nav-item px-2">
                 <a class="nav-link" id="pills-ordered-tab" data-toggle="pill" href="#pills-ordered" role="tab"
                   aria-controls="pills-review" aria-selected="false">Ordered</a>
-              </li>
+              </li> 
               <li class="nav-item px-2">
                 <a class="nav-link" id="pills-delivered-tab" data-toggle="pill" href="#pills-delivered" role="tab"
                   aria-controls="pills-ship-det" aria-selected="false">Delivered</a>
-              </li>
+              </li> 
               <li class="nav-item px-2">
                 <a class="nav-link" id="pills-exchange-tab" data-toggle="pill" href="#pills-exchange" role="tab"
                   aria-controls="pills-ship-det" aria-selected="false">Exchanged</a>
-              </li>
+              </li> 
               <li class="nav-item px-2">
                 <a class="nav-link" id="pills-return-tab" data-toggle="pill" href="#pills-return" role="tab"
                   aria-controls="pills-ship-det" aria-selected="false">Returned</a>
-              </li>
+              </li> 
               <li class="nav-item px-2">
                 <a class="nav-link" id="pills-cancelled-tab" data-toggle="pill" href="#pills-cancelled" role="tab"
                   aria-controls="pills-ship-det" aria-selected="false">Cancelled</a>
-              </li> -->
+              </li>  -->
             </ul>
 
             <div class="tab-content my_order_tb_profile_content" id="pills-tabContent">
@@ -119,80 +119,9 @@
                         
                       </div>
                     </div>
-
+                  <!-- </div> -->
+                  
                   </ng-container>
-                  <div class="d-inline-block w-100 pt-4 order_track_sec_my_order">
-                    <div class="row">
-                      <div class="hh-grayBox">
-                        <div class="row justify-content-between">
-                          <div class="order-tracking completed">
-                            <span class="is-complete"></span>
-                            <p>
-                              <span class="font-500 text-dark mb-2">Order Recieved</span>
-                              <br>
-                              <span class="mt-2 d-block font-14 text-gray">10:30 PM 20th October, 2020</span>
-                            </p>
-                          </div>
-                          <div class="order-tracking completed">
-                            <span class="is-complete"></span>
-                            <p>
-                              <span class="font-500 text-dark mb-2">Order Placed</span>
-                              <br>
-                              <span class="mt-2 d-block font-14 text-gray">10:30 PM 20th October, 2020</span>
-                            </p>
-                          </div>
-                          <div class="order-tracking ">
-                            <span class="is-complete"></span>
-                            <p>
-                              <span class="font-500 text-dark mb-2">Order Shipped</span>
-                              <br>
-                              <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span>
-                            </p>
-                          </div>
-                          <div class="order-tracking ">
-                            <span class="is-complete"></span>
-                            <p>
-                              <span class="font-500 text-dark mb-2">Shipment Has Arrived At Chandigarh
-                                Facility</span>
-                              <br>
-                              <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span>
-                            </p>
-                          </div>
-                          <div class="order-tracking">
-                            <span class="is-complete"></span>
-                            <p>
-                              <span class="font-500 text-dark mb-2">Shipment Has Arrived At Mumbai Facility</span>
-                              <br>
-                            </p>
-                          </div>
-                          <div class="order-tracking">
-                            <span class="is-complete"></span>
-                            <p>
-                              <span class="font-500 text-dark mb-2">Order Out for Delivery</span>
-                              <br>
-                              <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
-                            </p>
-                          </div>
-                          <div class="order-tracking">
-                            <span class="is-complete"></span>
-                            <p>
-                              <span class="font-500 text-dark mb-2">Order Delivered</span>
-                              <br>
-                              <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="prdct_list_price_det w-100 mb-4" *ngIf="order.status !='cancelled'"
-                  style="max-width: 200px;">
-                  <a href="javascript:void(0)"
-                  class="btn-theme-border w-100 text-center px-0 font-500 d-inline-block py-3"
-                  (click)="cancelProductOrder(order)">
-                  Cancel Order
-                </a>
-              </div>
               <div>
                 <!-- <h1> cancel-order</h1> -->
 
@@ -263,8 +192,83 @@
                 </ng-template>
                 <!-- <button class="btn btn-outline-primary mb-2 mr-2" (click)="openScrollableContent(longContent)">Modal scrollable content</button> -->
               </div>
+              <div class="d-inline-block w-100 pt-4 order_track_sec_my_order">
+                <div class="row">
+                  <div class="hh-grayBox">
+                    <div class="row justify-content-between">
+                      <ng-container *ngFor="let status of order.activities">
+                      <div class="order-tracking completed">
+                        <span class="is-complete"></span>
+                        <p>
+                          <span class="font-500 text-dark mb-2">{{status['activity']}}</span>
+                          <br>
+                          <span class="mt-2 d-block font-14 text-gray">{{status['date'] | date : 'long'}}</span>
+                        </p>
+                      </div>
+                    </ng-container>
+                      <!-- <div class="order-tracking completed">
+                        <span class="is-complete"></span>
+                        <p>
+                          <span class="font-500 text-dark mb-2">Order Placed</span>
+                          <br>
+                          <span class="mt-2 d-block font-14 text-gray">10:30 PM 20th October, 2020</span>
+                        </p>
+                      </div>
+                      <div class="order-tracking ">
+                        <span class="is-complete"></span>
+                        <p>
+                          <span class="font-500 text-dark mb-2">Order Shipped</span>
+                          <br>
+                          <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span>
+                        </p>
+                      </div>
+                      <div class="order-tracking ">
+                        <span class="is-complete"></span>
+                        <p>
+                          <span class="font-500 text-dark mb-2">Shipment Has Arrived At Chandigarh
+                            Facility</span>
+                          <br>
+                          <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span>
+                        </p>
+                      </div>
+                      <div class="order-tracking">
+                        <span class="is-complete"></span>
+                        <p>
+                          <span class="font-500 text-dark mb-2">Shipment Has Arrived At Mumbai Facility</span>
+                          <br>
+                        </p>
+                      </div> -->
+                      <div class="order-tracking">
+                        <span class="is-complete"></span>
+                        <p>
+                          <span class="font-500 text-dark mb-2">Order Out for Delivery</span>
+                          <br>
+                          <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
+                        </p>
+                      </div>
+                      <div class="order-tracking">
+                        <span class="is-complete"></span>
+                        <p>
+                          <span class="font-500 text-dark mb-2">Order Delivered</span>
+                          <br>
+                          <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="prdct_list_price_det w-100 mb-4" *ngIf="order.status !='cancelled'"
+              style="max-width: 200px;">
+              <a href="javascript:void(0)"
+              class="btn-theme-border w-100 text-center px-0 font-500 d-inline-block py-3"
+              (click)="cancelProductOrder(order)">
+              Cancel Order
+            </a>
+          </div>
               
             </ng-container>
+            
             <pagination-controls (pageChange)="p = $event"></pagination-controls>
             
 
