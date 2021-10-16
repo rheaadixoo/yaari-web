@@ -15,26 +15,35 @@ export class ShopByPriceComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.getProductPrice()
+    // this.getProductPrice()
   }
 
   getProductPrice(){
+
+    this.shopByPrice=[
+      {
+
+      }
+    ]
 
   }
 
   onPrice(id){
     console.log(id);
-    if(this.price.includes(id)){
-      let index=this.price.indexOf(id)
-      this.price.splice(index,1);
-      console.log(this.price)
-      this.priceId.emit(this.price)
-    }
-    else{
-      this.price.push(id);
-      console.log(this.price);
-      this.priceId.emit(this.price)
-    }
+    this.price=id;
+    this.priceId.emit(this.price)
+    // if(this.price.includes(id)){
+    //   let index=this.price.indexOf(id)
+    //   this.price.splice(index,1);
+    //   console.log(this.price)
+    //   this.priceId.emit(this.price)
+    // }
+    // else{
+    //   this.price.push(id);
+    //   console.log(this.price);
+    //   this.priceId.emit(this.price)
+    // }
+
   }
 
 }
