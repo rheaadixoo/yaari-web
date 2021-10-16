@@ -10,7 +10,7 @@ const routes: Routes = [
   { path: 'register', loadChildren: () => import('./register/register.module').then(m => m.RegisterModule) },
   { path: 'redirectTo', loadChildren: () => import('./redirect-to/redirect-to.module').then(m => m.RedirectToModule) },
   { path: 'forget_password', loadChildren: () => import('./forgot-password/forgot-password.module').then(m => m.ForgotPasswordModule) },
-  { path : '', loadChildren : () => import('src/app/layout/cancel-order/cancel-order.module').then(m => m.CancelOrderModule)},
+  // { path : '', loadChildren : () => import('src/app/layout/cancel-order/cancel-order.module').then(m => m.CancelOrderModule)},
   {
     path: '**',
     redirectTo: "404",
@@ -19,7 +19,7 @@ const routes: Routes = [
   {
     path: '404',
     component: PageNotFoundComponent
-  },
+  }
 ];
 
 @NgModule({

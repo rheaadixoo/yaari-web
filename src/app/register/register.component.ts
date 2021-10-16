@@ -225,7 +225,7 @@ export class RegisterComponent implements OnInit {
 
     this.registerService.generatingOtp(payload).subscribe(response => {
         console.log(response)
-        this.toastr.success('Otp have been sended');
+        this.toastr.success('OTP sent');
         this.otpBtn = false;
     },error => {
         if(error['error'].statusCode == 403){
