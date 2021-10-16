@@ -58,6 +58,11 @@ public filters : any;
   isIconShow=false;
 
   ngOnInit(): void {
+    if (this.route.snapshot.queryParams.sub_id) {
+      this.subCatId = this.route.snapshot.queryParams.sub_id;
+      this.subCatName = this.route.snapshot.queryParams['item_name'];
+      this.catName = this.route.snapshot.queryParams['category'];
+    }
     if (this.route.snapshot.queryParams.section && this.route.snapshot.queryParams.position ) {
       this.section = this.route.snapshot.queryParams.section;
       this.position = this.route.snapshot.queryParams.position;
@@ -113,7 +118,7 @@ public filters : any;
 
   getProductsList() {
     
-    if (this.subCatId) {
+    if (this.subCatId || this.section) {
     this.pageLoaderService.startLoading();    
 
       this.productService.getProductsList(this.subCatId,this.colorIds,this.brandIds,this.priceIds,this.discountIds,this.size,this.filters).subscribe((response:[]) => {
