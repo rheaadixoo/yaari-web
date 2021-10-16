@@ -58,6 +58,11 @@ public filters : any;
   isIconShow=false;
 
   ngOnInit(): void {
+    if(this.route.snapshot.queryParams. subCatId){
+      this. subCatId = this.route.snapshot.queryParams.subCatId;
+      this.subCatName = this.route.snapshot.queryParams.subCatName;
+      this.catName = this.route.snapshot.queryParams.catName;
+    }
     if (this.route.snapshot.queryParams.section && this.route.snapshot.queryParams.position ) {
       this.section = this.route.snapshot.queryParams.section;
       this.position = this.route.snapshot.queryParams.position;
