@@ -125,7 +125,7 @@ public showNextButton:boolean=true;
       return;
     }
   }
-
+ 
   addToCart() {
     if (!this.cookie.get('cart')) {
       this.cartService.createCart().subscribe(res => {
