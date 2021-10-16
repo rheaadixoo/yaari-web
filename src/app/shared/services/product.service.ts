@@ -12,12 +12,27 @@ export class ProductService {
   public stage: BehaviorSubject<any> = new BehaviorSubject([]);
   currentProductStage = this.stage.asObservable();
 
-  getProductsList(subCatId,colorId?:any[],brandId?:any[],sellingPrice?:any[],internalDiscount?:any[],size?:any[]) {
-    const query:any = {
-      where: {
-        and: [{ subCategoryId: subCatId, productStatus: 'approved', status: 'active' }]
-      }
-    };
+  getProductsList(
+    subCatId,
+    colorId?:any[],
+    brandId?:any[],
+    sellingPrice?:any[],
+    internalDiscount?:any[],
+    size?:any[],
+    filters?:any) {
+let query:any;
+if(filters){
+  query = {
+    where : filters
+  }
+}else{
+  query = {
+   where: {
+     and: [{ subCategoryId: subCatId, productStatus: 'approved', status: 'active' }]
+   }
+ };
+
+}
 
     if(colorId && colorId.length){
       console.log("color:"+colorId);
