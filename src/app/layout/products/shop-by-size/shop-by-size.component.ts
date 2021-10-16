@@ -8,43 +8,43 @@ import { ProductFilterService } from 'src/app/shared/services/product-filter.ser
 })
 export class ShopBySizeComponent implements OnInit {
 
-  @Output() sizeId=new EventEmitter()
+  @Output() size=new EventEmitter()
 
   public shopBySize: any;
-  public size=[]
+  public sizes=[]
 
 
   constructor(private productfilter:ProductFilterService) { }
 
   ngOnInit(): void {
-    this.getProductSize()
+    // this.getProductSize()
   }
 
   
-  getProductSize(){
+  // getProductSize(){
     
-    this.productfilter.getSize().subscribe((response:[]) => {
-      console.log(response)
-      this.shopBySize=response
-    },error => {
-      console.log(error);
-    })
-  }
+  //   this.productfilter.getSize().subscribe((response:[]) => {
+  //     console.log(response)
+  //     this.shopBySize=response
+  //   },error => {
+  //     console.log(error);
+  //   })
+  // }
 
   
 
   onSize(id){
     console.log(id);
-    if(this.size.includes(id)){
-      let index=this.size.indexOf(id)
-      this.size.splice(index,1);
-      console.log(this.size)
-      this.sizeId.emit(this.size)
+    if(this.sizes.includes(id)){
+      let index=this.sizes.indexOf(id)
+      this.sizes.splice(index,1);
+      console.log(this.sizes)
+      this.size.emit(this.sizes)
     }
     else{
-      this.size.push(id);
-      console.log(this.size);
-      this.sizeId.emit(this.size)
+      this.sizes.push(id);
+      console.log(this.sizes);
+      this.size.emit(this.sizes)
     }
   }
 
