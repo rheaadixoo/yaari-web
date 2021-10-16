@@ -137,7 +137,7 @@ export class ProductService {
     }))
   }
 
-  getPoductReviewById(productId) {
+  getProductReviewById(productId) {
     const query = {
       where : {
         productId
@@ -149,6 +149,12 @@ export class ProductService {
     }
     return this.http.get(this.apiUrl + 'comments', options).pipe(map(response => {
       return response;
+    }))
+  }
+
+  saveProductReview(payload){
+    return this.http.post(this.apiUrl + 'comments',payload).pipe(map(response => {
+      return response
     }))
   }
 

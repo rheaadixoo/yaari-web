@@ -94,7 +94,7 @@ export class ForgotPasswordComponent implements OnInit {
         }
       },error => {
         if(error['error'].statusCode == 403){
-          this.toastr.error('No user exist with this number');
+          this.toastr.error('Invalid Otp');
         }else{
           this.toastr.error(error.error.message);
         }
@@ -141,7 +141,7 @@ export class ForgotPasswordComponent implements OnInit {
         this.chanceRemaining-=1;
     },error => {
         if(error['error'].statusCode == 403){
-          this.toastr.error('No user exist with this number');
+          this.toastr.error('Invalid Otp');
         }else{
           this.toastr.error(error.error.message);
         }

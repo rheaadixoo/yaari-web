@@ -30,7 +30,7 @@ import { SharedModule } from './shared/shared.module';
     ReactiveFormsModule,
     NgxPaginationModule,
     ToastrModule.forRoot({
-      timeOut: 10000,
+      timeOut: 4000,
       positionClass: 'toast-top-right',
       preventDuplicates: true,
     }),

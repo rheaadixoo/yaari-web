@@ -214,7 +214,6 @@ export class CreateOrderComponent implements OnInit {
         //   this.cartService.cartItemCount.next(0);
         // })
         this.router.navigate(['/app/orders/checkout'], { queryParams: { txnToken: res['txnToken'], orderNumber: res['order']['orderNumber'] } })
-        this.toastr.success('Order created successfully');
       }, error => {
         this.toastr.error(error['error']['message']);
       })

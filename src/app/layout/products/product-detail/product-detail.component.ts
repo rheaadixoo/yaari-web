@@ -11,7 +11,7 @@ import { NgbModalConfig, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstra
 import { WishlistService } from 'src/app/shared/services/wishlist.service.js';
 import { AuthService } from 'src/app/shared/services/auth.service.js';
 import "../../../../assets/js/product_zoom.js";
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ShareDataService } from 'src/app/shared/services/share-data.service.js';
 import { DeliveryPincodeService } from 'src/app/shared/services/delivery-pincode.service.js';
 @Component({
@@ -64,8 +64,12 @@ export class ProductDetailComponent implements OnInit {
   public checkClicked:boolean=false;
   public businessId:number;
   public product_weight:number;
-public showNextButton:boolean=true;
+  public productThumbImage:any
+  public addReview:FormGroup=new FormGroup({});
+  public showNextButton:boolean=true;
   public collectUsers:any
+  public userDetails:any
+  public showComment:boolean=false
 
   ngOnInit(): void {
     if (this.route.snapshot.params.id) {
@@ -93,7 +97,10 @@ public showNextButton:boolean=true;
         
      }
 
-
+     if(!!localStorage.getItem('user-detail')){
+       this.userDetails=JSON.parse(localStorage.getItem('user-detail'))
+       this.showComment=true
+     }
 
     if (this.cookie.get('wishlist')) {
       this.wishlistService.isProductExistInWishlist(this.wishlistObj['id'], JSON.parse(this.productId)).subscribe((response: any[]) => {
@@ -106,6 +113,14 @@ public showNextButton:boolean=true;
     }
     this.getProductDetailById();
     this.buildDeliveryPincode();
+    this.getReviewsOfProduct();
+    this.buildReviewForm();
+  }
+
+  buildReviewForm(){
+      this.addReview= this.builder.group({
+        review:['',Validators.required]
+      })
   }
 
   buildDeliveryPincode(){
@@ -118,6 +133,7 @@ public showNextButton:boolean=true;
     if (this.productId) {
       this.productService.getProductById(this.productId).subscribe(res => {
         this.productObj = res;
+        this.productThumbImage=this.productObj.thumbImages
         this.subTotal = this.productObj.sellingPrice;
         this.getProductListById(this.productObj['subCategoryId']);
       })
@@ -144,7 +160,8 @@ public showNextButton:boolean=true;
             try {
               this.cartService.getCart(res['id']).subscribe((res: any[]) => {
                 this.isProductExist = true;
-                this.cartService.cartItemCount.next(res.length);
+                // this.cartService.cartItemCount.next(res.length);
+                this.share.setCartCount(res.length);
               })
               this.toastr.success('Product added successfully');
             } catch (error) {
@@ -155,7 +172,8 @@ public showNextButton:boolean=true;
           })
         }
         this.cartService.getCart(res['id']).subscribe((resp: any[]) => {
-          this.cartService.cartItemCount.next(resp.length);
+          // this.cartService.cartItemCount.next(resp.length);
+          this.share.setCartCount(resp.length);
         })
         this.cookie.set('cart', JSON.stringify({ id: res['id'] }), { expires: 365, path: '/' });
       })
@@ -179,6 +197,7 @@ public showNextButton:boolean=true;
             this.cartService.getCart(cartObj['id']).subscribe((res: any[]) => {
               this.isProductExist = true;
               this.cartService.cartItemCount.next(res.length);
+              this.share.setCartCount(res.length);
             })
             this.toastr.success('Product added successfully');
           })
@@ -305,6 +324,19 @@ public showNextButton:boolean=true;
     })
   }
 
+  saveReview(){
+    const payload={
+      comment:this.addReview.value.review,
+      userId:this.userDetails.id,
+      productId:Number(this.productId)
+    }
+    this.productService.saveProductReview(payload).subscribe( res => {
+      this.toastr.success('review saved');
+      this.getReviewsOfProduct();
+    }, error => {
+      this.toastr.error(error);
+    })
+  }
 
   increaseQuantity() {
     if (this.quantity != 10) {
@@ -329,7 +361,6 @@ public showNextButton:boolean=true;
       this.productService.getProductListById(productId).subscribe((res: any[]) => {
         if (res && res.length > 0) {
           this.productList = res;
-          console.log(this.productList);
         }
       }, error => {
       })
@@ -360,6 +391,10 @@ public showNextButton:boolean=true;
 
   goToWishlist(){
     this.router.navigateByUrl('/app/wishlist');
+  }
+
+  changeProductImage(url){
+    this.productThumbImage=url
   }
 
   postDeliveryPincode(businessId){
@@ -430,9 +465,10 @@ public showNextButton:boolean=true;
   }
   getReviewsOfProduct(){
     if(this.productId){
-      this.productService.getPoductReviewById(this.productId).subscribe(response => {
+      this.productService.getProductReviewById(this.productId).subscribe(response => {
         
         this.productReview=response;
+        console.log("Reviews"+this.productReview);
 
         for (let index = 0; index < this.productReview.length; index++) {
           const element = this.productReview[index];
@@ -441,6 +477,7 @@ public showNextButton:boolean=true;
            
             this.collectUsers=res;
             this.productReview[index].username=this.collectUsers.name
+            this.productReview[index].profile=this.collectUsers.profileImage
           })
         }
 
