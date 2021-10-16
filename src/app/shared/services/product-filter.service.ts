@@ -24,5 +24,14 @@ export class ProductFilterService {
       return response;
     }));
   }
+
+  
+  getColors(){
+
+    return this.http.get(this.apiUrl+'colors').pipe(map(response => {
+      return response;
+    }))
+
+  }
   
 }
