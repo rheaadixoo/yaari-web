@@ -23,6 +23,8 @@ export class ProductsListComponent implements OnInit {
   public subCatId: number = 0;
   public subCatName: string = '';
   public catName: string = '';
+  public section: string = '';
+  public position: string = '';
   public brandIds=[];
   public size=[];
   public colorIds=[];
@@ -55,10 +57,9 @@ export class ProductsListComponent implements OnInit {
   isIconShow=false;
 
   ngOnInit(): void {
-    if (this.route.snapshot.queryParams.sub_id) {
-      this.subCatId = this.route.snapshot.queryParams.sub_id;
-      this.subCatName = this.route.snapshot.queryParams['item_name'];
-      this.catName = this.route.snapshot.queryParams['category'];
+    if (this.route.snapshot.queryParams.section && this.route.snapshot.queryParams.position ) {
+      this.section = this.route.snapshot.queryParams.section;
+      this.position = this.route.snapshot.queryParams.position;
     }
     // setTimeout(()=>{
       this.isProductListLoaded = true;

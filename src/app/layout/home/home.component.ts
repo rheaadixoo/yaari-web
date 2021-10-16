@@ -114,59 +114,11 @@ export class HomeComponent implements OnInit {
     // },5000)
   }
 
-  onChange(item) {
+  onChange(section,position) {
 
-    if(item === "Indian & Fusion Wear"){
-      this.router.navigate([`app/products`], { queryParams: { 'sub_id': 24, item_name: "Indian & fusion wear", category: "Indian & fusion wear" } });
-    }
-    else if(item==="T-shirts"){
-      this.router.navigate([`app/products`], { queryParams: { 'sub_id': 62, item_name: "T-shirts", category: "Men's Topwear" } });
-    }
-    else if(item==="Tops & Tunics"){
-      this.router.navigate([`app/products`], { queryParams: { 'sub_id': 24, item_name: "Tops & Tunics", category: "Women Western Topwear" } });
-    }
-    else if(item==="All Collection"){
-      this.router.navigate([`app/products`], { queryParams: { 'sub_id': 62, item_name: "10% off deals" ,category: "All Collection"} });
-    }
+    this.router.navigate([`app/products`], { queryParams: { section, position} });
 
-    else if(item==="Jewellery Sets"){
-      this.router.navigate([`app/products`], { queryParams: { 'sub_id': 24, item_name: "Jewellery Sets", category: "Women's Jewellery" } });
-    }
-    else if(item==="Showpieces & Figurines"){
-      this.router.navigate([`app/products`], { queryParams: { 'sub_id': 62, item_name: "Showpieces & Figurines", category: "Home Décor" } });
-    }
-    else if(item==="Earrings"){
-      this.router.navigate([`app/products`], { queryParams: { 'sub_id': 24, item_name: "Earrings", category: "Women's Jewellery"} });
-    }
-    else if(item==="Bedding Sets"){
-      this.router.navigate([`app/products`], { queryParams: { 'sub_id': 62, item_name: "Bedding Sets", category: "Bedsheets & Furnishing"} });
-    }
-
-    else if(item==="Sarees"){
-      this.router.navigate([`app/products`], { queryParams: { 'sub_id': 24, item_name: "Sarees", category: "Indian & Fusion Wear" } });
-    }
-    else if(item==="Kurtas & Kurtis"){
-      this.router.navigate([`app/products`], { queryParams: { 'sub_id': 62, item_name: "Kurtas & Kurtis", category: "Indian & Fusion Wear" } });
-    }
-    else if(item==="Poncho"){
-      this.router.navigate([`app/products`], { queryParams: { 'sub_id': 24, item_name: "Poncho", category: "Women Western Topwear"} });
-    }
-    else if(item==="Men\'s Topwear"){
-      this.router.navigate([`app/products`], { queryParams: { 'sub_id': 62, item_name: "Men\'s Topwear"} });
-    }
-
-    else if(item==="Face Makeup"){
-      this.router.navigate([`app/products`], { queryParams: { 'sub_id': 24, item_name: "Face Makeup", category: "Makeup" } });
-    }
-    else if(item==="Footwear"){
-      this.router.navigate([`app/products`], { queryParams: { 'sub_id': 62, item_name: "Footwear" } });
-    }
-    else if(item==="Handbags"){
-      this.router.navigate([`app/products`], { queryParams: { 'sub_id': 24, item_name: "Handbags", category: "Women\'s Bags"} });
-    }
-    else if(item==="Makeup Accessory"){
-      this.router.navigate([`app/products`], { queryParams: { 'sub_id': 62, item_name: "Makeup Accessory", category: "Makeup"} });
-    }
+    
 
 
 
