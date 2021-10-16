@@ -13,10 +13,9 @@ import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PageLoaderService } from './shared/page-loader/page-loader.service';
 import { SharedModule } from './shared/shared.module';
-
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
