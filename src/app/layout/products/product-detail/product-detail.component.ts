@@ -141,7 +141,7 @@ export class ProductDetailComponent implements OnInit {
       return;
     }
   }
-
+ 
   addToCart() {
     if (!this.cookie.get('cart')) {
       this.cartService.createCart().subscribe(res => {

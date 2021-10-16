@@ -52,6 +52,10 @@ export class CreateOrderComponent implements OnInit {
     this.getCartDetail();
     this.getUserAddress();
     this.buildAddAddressForm();
+    this.cartService.cartItemCount.subscribe(response => {
+      this.getCartDetail();
+
+    })
   }
 
   pincodeAutofill(){
@@ -84,7 +88,7 @@ export class CreateOrderComponent implements OnInit {
     this.cartService.getCart(this.cartId).subscribe(res => {
       try {
         this.cartDetails = res;
-        this.setTotalAmount();
+        this.setTotalAmount(); 
       } catch (error) {
         console.log("=---err---", error);
       }

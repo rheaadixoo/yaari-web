@@ -69,7 +69,7 @@
                 <!-- <ng-container *ngFor="let key of Object.keys(myOrders)"> -->
                 <ng-container *ngFor="let order of myOrders |paginate: { itemsPerPage: 2, currentPage: p }">
                   <ng-container *ngFor="let item of order.cartDetails ">
-                    <div class="my_order_crd_main">
+                    <div class="my_order_crd_main" *ngIf="order.status!=='cancelled'">
                       <div class="best_sellers_prdct_on_det_pg_list">
                         <div class="d-flex float-left pl-0">
                           <div class="best_sellers_prdct_on_det_pg_list_img">
@@ -92,7 +92,7 @@
                                 class="font-16 text-dark p-1 ml-2 d-flex text-decoration-none">
                                 View Order Details
                                 <span class="material-icons ml-0">chevron_right</span>
-                              </a> -->
+                              </a> 
                             </div>
                             <div class="w-100 mb-3 d-inline-block">
                               <span class="badge_on_order text-gray float-left px-2 py-1 mr-2">
@@ -184,7 +184,7 @@
                         </div>
                       </div>
                     </div>
-                  </ng-container>
+                 
                   <div class="prdct_list_price_det w-100 mb-4" *ngIf="order.status !='cancelled'"
                   style="max-width: 200px;">
                   <a href="javascript:void(0)"
@@ -192,14 +192,6 @@
                   (click)="cancelProductOrder(order)">
                   Cancel Order
                 </a>
-              </div>
-              
-              
-            </ng-container>
-            <pagination-controls (pageChange)="p = $event"></pagination-controls>
-            
-
-                <!-- </ng-container> -->
               </div>
               <div>
                 <!-- <h1> cancel-order</h1> -->
@@ -224,7 +216,7 @@
                               
 
                                 <div class="col-lg-12 mt-3 container-fluid">
-                                  <form [formGroup]="cancelOrderForm" (change)="Exchange()">
+                                  <form [formGroup]="cancelOrderForm" (change)="selectReason()">
                                     <!-- <div class="col-lg-12-px-0"> -->
                                     <div class="form-group  text-light font-400 w-100 d-inline-block p-0 ">
                                       <select formControlName="reason">
@@ -252,7 +244,7 @@
                                     <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
                                     <div class="modal-footer">
                                       <button type="button" class="btn btn-light" (click)="closeModal()">Close</button>
-                                      <button type="button" class="btn btn-light" (click)="save()">Save</button>
+                                      <button type="button" class="btn btn-light" (click)="save(order)">Save</button>
                                     </div>
                                   </form>
                                 </div>
@@ -271,6 +263,88 @@
                 </ng-template>
                 <!-- <button class="btn btn-outline-primary mb-2 mr-2" (click)="openScrollableContent(longContent)">Modal scrollable content</button> -->
               </div>
+              <div class="d-inline-block w-100 pt-4 order_track_sec_my_order">
+                <div class="row">
+                  <div class="hh-grayBox">
+                    <div class="row justify-content-between">
+                      <ng-container *ngFor="let status of order.activities">
+                      <div class="order-tracking completed">
+                        <span class="is-complete"></span>
+                        <p>
+                          <span class="font-500 text-dark mb-2">{{status['activity']}}</span>
+                          <br>
+                          <span class="mt-2 d-block font-14 text-gray">{{status['date'] | date : 'long'}}</span>
+                        </p>
+                      </div>
+                    </ng-container>
+                      <!-- <div class="order-tracking completed">
+                        <span class="is-complete"></span>
+                        <p>
+                          <span class="font-500 text-dark mb-2">Order Placed</span>
+                          <br>
+                          <span class="mt-2 d-block font-14 text-gray">10:30 PM 20th October, 2020</span>
+                        </p>
+                      </div>
+                      <div class="order-tracking ">
+                        <span class="is-complete"></span>
+                        <p>
+                          <span class="font-500 text-dark mb-2">Order Shipped</span>
+                          <br>
+                          <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span>
+                        </p>
+                      </div>
+                      <div class="order-tracking ">
+                        <span class="is-complete"></span>
+                        <p>
+                          <span class="font-500 text-dark mb-2">Shipment Has Arrived At Chandigarh
+                            Facility</span>
+                          <br>
+                          <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span>
+                        </p>
+                      </div>
+                      <div class="order-tracking">
+                        <span class="is-complete"></span>
+                        <p>
+                          <span class="font-500 text-dark mb-2">Shipment Has Arrived At Mumbai Facility</span>
+                          <br>
+                        </p>
+                      </div> -->
+                      <div class="order-tracking">
+                        <span class="is-complete"></span>
+                        <p>
+                          <span class="font-500 text-dark mb-2">Order Out for Delivery</span>
+                          <br>
+                          <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
+                        </p>
+                      </div>
+                      <div class="order-tracking">
+                        <span class="is-complete"></span>
+                        <p>
+                          <span class="font-500 text-dark mb-2">Order Delivered</span>
+                          <br>
+                          <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="prdct_list_price_det w-100 mb-4" *ngIf="order.status !='cancelled'"
+              style="max-width: 200px;">
+              <a href="javascript:void(0)"
+              class="btn-theme-border w-100 text-center px-0 font-500 d-inline-block py-3"
+              (click)="cancelProductOrder(order)">
+              Cancel Order
+            </a>
+          </div>
+              
+           
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            
+
+                <!-- </ng-container> -->
+              
+             
               <!-- <button class="btn btn-outline-primary mb-2 mr-2" (click)="openScrollableContent(longContent)">Modal scrollable content</button> -->
 
               <!-- Ordered Tab -->
@@ -1012,14 +1086,11 @@
                 </div>
               </div>
 
-            </div>
-          </div>
+            
+         
 
-        </div>
-      </div>
-    </div>
-  </div>
+        
 
-</div>
+
 
 <!-- Profile section End -->

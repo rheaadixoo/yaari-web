@@ -47,18 +47,27 @@ export class MyOrdersComponent implements OnInit {
   // document.getElementById("try").onclick="showtext()"
 
 
-  save(){
+  save(item){
     console.log(this.cancelOrderForm.value);
+    let payload={
+      value:this.cancelOrderForm.value
+    }
+    this.orderService.cancelOrder(item.id,payload).subscribe(resp=>{
+      console.log(resp);
+      this.closeModal();
+      this.getUserOrders();
+    })
+
   }
 
   
   
   selectReason(reason) {
     //  let sel=document.getElementById("try");
-    this.reason = reason;
-    console.log(this.reason);
+    // this.reason = reason;
+    // console.log(this.reason);
     // console.log(this.cancelOrderForm.value.reason);
-    if (reason == "Other") {
+    if (this.cancelOrderForm.value.reason == "Other") {
       this.show = true;
     }
     else {
@@ -92,16 +101,16 @@ export class MyOrdersComponent implements OnInit {
   }
 
   cancelProductOrder(item) {
-    this.orderService.cancelOrder(item.id).subscribe(resp => {
-      console.log("resp", resp);
-      console.log(item);
+    // this.orderService.cancelOrder(item.id).subscribe(resp => {
+    //   console.log("resp", resp);
+    //   console.log(item);
       // this.show=true;
       this.getUserOrders();
       this.modalRef = this.modalService.open(this.modal, { windowClass: 'orderSummary', centered: true, keyboard: false });
       console.log(this.show);
       // this.showtext();
       // this.router.navigate(['app/cancelOrder']);
-    })
+    // })
   }
 
 }
