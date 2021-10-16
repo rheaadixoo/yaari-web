@@ -1,14 +1,14 @@
 export const bannersFilter = {
     1 :{
-        1 :{
+        1 :{and :[{
             categoryId  : 1,
             sellingPrice  : {
                 gte : 250
             },
             productStatus: 'approved',
              status: 'active'
-        },
-        2 : {
+        }]},
+        2 :{and :[ {
             categoryId  : {
                 in: [16,17,20]
             },
@@ -20,8 +20,8 @@ export const bannersFilter = {
             },
             productStatus: 'approved',
              status: 'active'
-        },
-        3 : {
+        }]},
+        3 : {and :[ {
             categoryId  : {
                 in:[2,3]
             },
@@ -33,23 +33,23 @@ export const bannersFilter = {
             },
             productStatus: 'approved',
              status: 'active'
-        },
-        4 : {          
+        }]},
+        4 : {and :[ {          
             productStatus: 'approved',
              status: 'active'
-        },
+        }]},
 
     },
     2 :{
-        1 :{
+        1 : {and :[{
             categoryId  : 14,
             sellingPrice  : {
                 gte : 110
             },
             productStatus: 'approved',
              status: 'active'
-        },
-        2 : {
+        }]},
+        2 : {and :[ {
             categoryId  : {
                 in: [43,45]
             },
@@ -61,8 +61,8 @@ export const bannersFilter = {
             },
             productStatus: 'approved',
              status: 'active'
-        },
-        3 : {
+        }]},
+        3 : {and :[ {
             categoryId  : {
                 in:[14]
             },
@@ -74,8 +74,8 @@ export const bannersFilter = {
             },
             productStatus: 'approved',
              status: 'active'
-        },
-        4 : { 
+        }]},
+        4 : {and :[ { 
             categoryId  : {
                 in:[40]
             },
@@ -87,19 +87,19 @@ export const bannersFilter = {
             },         
             productStatus: 'approved',
              status: 'active'
-        },
+        }]},
 
     },
     3 :{
-        1 :{
+        1 : {and :[{
             
             sellingPrice  : {
                 gte : 349
             },
             productStatus: 'approved',
              status: 'active'
-        },
-        2 : {
+        }]},
+        2 : {and :[ {
             categoryId  : {
                 in: [1,14,15]
             },
@@ -111,34 +111,33 @@ export const bannersFilter = {
             },
             productStatus: 'approved',
              status: 'active'
-        },
-        3 : {
+        }]},
+        3 : {and :[ {
             order :['createdAt','desc'],
             limit : 500,
             productStatus: 'approved',
              status: 'active'
-        },
-        4 : { 
+        }]},
+        4 : {and :[ { 
             internalDiscount  : {
                 e : 50
             },         
             productStatus: 'approved',
              status: 'active'
-        },
-        5: {
+        }]},
+        5: {and :[ {
             sellingPrice  : {
                 gte : 299
             },
             productStatus: 'approved',
              status: 'active'
-        },
-        6:{
+        }]},
+        6: {and :[{
 
-        }
-
+        }]},
     },
     4 :{
-        1 :{
+        1 : {and :[{
             categoryId  : {
                 in:[1]
             },
@@ -150,8 +149,8 @@ export const bannersFilter = {
             },
             productStatus: 'approved',
              status: 'active'
-        },
-        2 : {
+        }]},
+        2 : {and :[ {
             categoryId  : {
                 in:[1]
             },
@@ -163,8 +162,8 @@ export const bannersFilter = {
             },
             productStatus: 'approved',
              status: 'active'
-        },
-        3 : {
+        }]},
+        3 : {and :[ {
             categoryId  : {
                 in:[2]
             },
@@ -176,8 +175,8 @@ export const bannersFilter = {
             },
             productStatus: 'approved',
              status: 'active'
-        },
-        4 : { 
+        }]},
+        4 : {and :[ { 
             categoryId  : {
                 in:[16,19]
             },
@@ -189,11 +188,10 @@ export const bannersFilter = {
             },         
             productStatus: 'approved',
              status: 'active'
-        }
-
+        }]},
     },
-    5 :{
-        1 :{
+    5 : {
+        1 : {and :[{
             categoryId  : {
                 in:[36]
             },
@@ -202,8 +200,8 @@ export const bannersFilter = {
             },
             productStatus: 'approved',
              status: 'active'
-        },
-        2 : {
+        } ]},
+        2 : {and :[ {
             categoryId  : {
                 in:[9,22]
             },
@@ -212,8 +210,8 @@ export const bannersFilter = {
             },
             productStatus: 'approved',
              status: 'active'
-        },
-        3 : {
+        }]},
+        3 : {and :[ {
             categoryId  : {
                 in:[10,23]
             },
@@ -225,8 +223,8 @@ export const bannersFilter = {
             },
             productStatus: 'approved',
              status: 'active'
-        },
-        4 : { 
+        }]},
+        4 : {and :[ { 
             categoryId  : {
                 in:[36,37]
             },
@@ -235,7 +233,6 @@ export const bannersFilter = {
             },         
             productStatus: 'approved',
              status: 'active'
-        }
-
-    },
+        }]},
+}
 }

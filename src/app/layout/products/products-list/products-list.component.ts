@@ -8,6 +8,7 @@ import { LocalStorageService } from 'src/app/shared/services/local-storage.servi
 import { DomSanitizer } from '@angular/platform-browser';
 import {UserProfileService} from 'src/app/shared/services/user-profile.service';
 import { PageLoaderService } from 'src/app/shared/page-loader/page-loader.service';
+import { bannersFilter } from '../banners-filter';
 
 @Component({
   selector: 'app-products-list',
@@ -31,7 +32,7 @@ export class ProductsListComponent implements OnInit {
   public priceIds=[];
   public discountIds=[];
   public isProductListLoaded: boolean = false;
-
+public filters : any;
 
   constructor(
     private productService: ProductService, private router: Router, private route: ActivatedRoute
@@ -60,6 +61,7 @@ export class ProductsListComponent implements OnInit {
     if (this.route.snapshot.queryParams.section && this.route.snapshot.queryParams.position ) {
       this.section = this.route.snapshot.queryParams.section;
       this.position = this.route.snapshot.queryParams.position;
+      this.applyBannerFilter();
     }
     // setTimeout(()=>{
       this.isProductListLoaded = true;
@@ -72,6 +74,11 @@ export class ProductsListComponent implements OnInit {
     //console.log(this.userDetail.id)
     this.isIconShow=true;
   }
+  }
+  applyBannerFilter() {
+    this.filters = bannersFilter[this.section][this.position];
+    this.getProductsList();
+
   }
 
 
@@ -109,7 +116,7 @@ export class ProductsListComponent implements OnInit {
     if (this.subCatId) {
     this.pageLoaderService.startLoading();    
 
-      this.productService.getProductsList(this.subCatId,this.colorIds,this.brandIds,this.priceIds,this.discountIds,this.size).subscribe((response:[]) => {
+      this.productService.getProductsList(this.subCatId,this.colorIds,this.brandIds,this.priceIds,this.discountIds,this.size,this.filters).subscribe((response:[]) => {
         
         if(response && response.length){
           this.products = response;
