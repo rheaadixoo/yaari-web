@@ -98,6 +98,9 @@
                     <!-- Material -->
                     <!-- <yaari-shop-by-material></yaari-shop-by-material> -->
 
+                    <!-- price -->
+                    <yaari-shop-by-price (priceId)="getPriceIds($event)"></yaari-shop-by-price>
+
                     <!-- Brands -->
                     <yaari-shop-by-brands (brandId)="getBrandIds($event)"></yaari-shop-by-brands>
 
@@ -154,7 +157,7 @@
                                                 ₹{{product.price}}
                                             </span>
                                             <span class="font-500 text-success offer_dis font-16 mr-1">
-                                                50% off
+                                               {{product.internalDiscount}}% off
                                             </span>
                                         </h5>
                                     </div>

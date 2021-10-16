@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { ToastrService } from 'ngx-toastr';
 import { CartService } from '../shared/services/cart.service';
 import { ShareDataService } from '../shared/services/share-data.service';
 
@@ -16,7 +17,8 @@ export class RedirectToComponent implements OnInit {
               private router : Router,
               private cookie: CookieService,
               private cart:CartService,
-              private share:ShareDataService) { }
+              private share:ShareDataService,
+              private toastr: ToastrService) { }
 
   public userObj:any
   public cartObj:any
@@ -52,6 +54,7 @@ export class RedirectToComponent implements OnInit {
         }
         setTimeout(()=>{
           this.router.navigateByUrl('/app/cart');
+          this.toastr.success('Order created successfully');
         },5000)
       } 
       else if (this.route.snapshot.queryParams['status'] == 'failed') {

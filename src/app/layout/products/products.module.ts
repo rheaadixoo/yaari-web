@@ -15,6 +15,11 @@ import { ModalsModule } from '../modals/modals.module';
 import "../../../assets/js/product_zoom.js";
 import { ShopByDiscountComponent } from './shop-by-discount/shop-by-discount.component';
 import { ShopByPriceComponent } from './shop-by-price/shop-by-price.component';
+<<<<<<< HEAD
+=======
+import { ShopByGenderComponent } from './products-list/shop-by-gender/shop-by-gender.component';
+
+>>>>>>> 0946820a92763a9f84f710a53de3bafdd72a7e27
 @NgModule({
   declarations: [ProductsComponent, ProductsListComponent, ProductDetailComponent, ShopByMaterialComponent, ShopByBrandsComponent, ShopByColorComponent, ShopBySizeComponent,CategoriesComponent, ShopByDiscountComponent, ShopByPriceComponent],
   imports: [

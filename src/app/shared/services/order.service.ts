@@ -42,8 +42,8 @@ export class OrderService {
     }))
   }
 
-  cancelOrder(id){
-    return this.http.patch(this.apiUrl + 'deliveries/order-cancel/'+id,{}).pipe(map(response =>{
+  cancelOrder(id,value){
+    return this.http.patch(this.apiUrl + 'deliveries/order-cancel/'+id,value).pipe(map(response =>{
       
         return response;
     }))

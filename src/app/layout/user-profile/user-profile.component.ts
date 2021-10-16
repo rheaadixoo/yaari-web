@@ -6,6 +6,7 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr';
 import { ShareDataService } from 'src/app/shared/services/share-data.service'
 import { PincodeService } from 'src/app/shared/services/pincode.service';
+import { PageLoaderService } from 'src/app/shared/page-loader/page-loader.service';
 
 @Component({
   selector: 'yaari-user-profile',
@@ -25,7 +26,8 @@ export class UserProfileComponent implements OnInit {
   constructor(private toastr: ToastrService, private builder: FormBuilder, private localStorageService: LocalStorageService,
     private userService: UserProfileService, private addressService: AddressService,
     private service : PincodeService,
-    private share:ShareDataService) { }
+    private share:ShareDataService,
+    private pageLoaderService: PageLoaderService) { }
 
   ngOnInit(): void {
 
@@ -83,7 +85,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   getUserRecord() {
-    
+    this.pageLoaderService.startLoading();    
     // this.addressService.getAddressByUserId(this.userData.id).subscribe((response: any[]) => {
      this.userService.getUserDetailsById(this.userData.id).subscribe((response)=>{
      if (response) {
@@ -111,6 +113,7 @@ export class UserProfileComponent implements OnInit {
         else{
           this.removeProfilebtn=false
         }
+        this.pageLoaderService.stopLoading();
       }
       else{
         if(this.imgUrl===this.defaultImg){
@@ -137,6 +140,7 @@ export class UserProfileComponent implements OnInit {
       }
 
     }, error => {
+      this.pageLoaderService.stopLoading();
       console.log("uuuuser========", error);
       
     })
@@ -178,9 +182,14 @@ export class UserProfileComponent implements OnInit {
     this.userService.updateUserRecord(payload, this.userData.id).subscribe(response => {
 
       if(this.isUserAddress){
-        this.addressService.updateUserAddress(addressPayload, this.userObj.id).subscribe(res => {
+        this.addressService.updateUserAddress(addressPayload, this.userAddress.id).subscribe(res => {
           this.toastr.success('Profile Updated Successfully');
-          this.removeProfilebtn=false
+          if(this.imgUrl===this.defaultImg){
+            this.removeProfilebtn=true
+          }
+          else{
+            this.removeProfilebtn=false
+          }
           this.share.setimageAddress(this.userObj.id,payload.profileImage)
 
         }, err => {
@@ -189,7 +198,12 @@ export class UserProfileComponent implements OnInit {
       }else{
         this.addressService.createNewAddress(addressPayload).subscribe(res => {
           this.toastr.success('Profile Updated Successfully');
-          this.removeProfilebtn=false
+          if(this.imgUrl===this.defaultImg){
+            this.removeProfilebtn=true
+          }
+          else{
+            this.removeProfilebtn=false
+          }
           this.share.setimageAddress(this.userObj.id,payload.profileImage)
         }, err => {
           this.toastr.error(err, "Address");

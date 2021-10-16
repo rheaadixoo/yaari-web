@@ -34,6 +34,11 @@ export class HeaderComponent implements OnInit,AfterViewInit
     this.cartService.cartItemCount.subscribe(response => {
       this.productCount = response;
     })
+    console.log("init");
+    console.log('localStorage.getItem ', localStorage.getItem('user-detail'));
+    if (localStorage.getItem('user-detail')) {
+      this.getUserRecord();
+    }
   }
 
   ngOnInit(): void {

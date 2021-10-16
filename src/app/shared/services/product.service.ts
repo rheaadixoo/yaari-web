@@ -12,7 +12,7 @@ export class ProductService {
   public stage: BehaviorSubject<any> = new BehaviorSubject([]);
   currentProductStage = this.stage.asObservable();
 
-  getProductsList(subCatId,colorId?:any[],brandId?:any[],priceId?:any[],discountId?:any[],size?:any[]) {
+  getProductsList(subCatId,colorId?:any[],brandId?:any[],sellingPrice?:any[],internalDiscount?:any[],size?:any[]) {
     const query:any = {
       where: {
         and: [{ subCategoryId: subCatId, productStatus: 'approved', status: 'active' }]
@@ -35,13 +35,27 @@ export class ProductService {
         }
         })
     }
-    if(priceId && priceId.length){
-      console.log("color:"+priceId);
-      query.where.and.push({priceId})
+    if(sellingPrice && sellingPrice.length){
+      console.log("price:"+sellingPrice);
+      query.where.and.push({
+        "sellingPrice": {
+          "between": [
+             sellingPrice[0],
+             sellingPrice[1]
+           ]
+         } 
+      })
     }
-    if(discountId && discountId.length){
-      console.log("brand:"+discountId);
-      query.where.and.push({discountId})
+    if(internalDiscount && internalDiscount.length){
+      console.log("discount:"+internalDiscount);
+       query.where.and.push({
+               "internalDiscount": {
+                "between": [
+                   internalDiscount[0].toString(),
+                   "100"
+                 ]
+               }  
+      })
     }
 
     if(size && size.length){
@@ -127,7 +141,7 @@ export class ProductService {
     }))
   }
 
-  getPoductReviewById(productId) {
+  getProductReviewById(productId) {
     const query = {
       where : {
         productId
@@ -139,6 +153,12 @@ export class ProductService {
     }
     return this.http.get(this.apiUrl + 'comments', options).pipe(map(response => {
       return response;
+    }))
+  }
+
+  saveProductReview(payload){
+    return this.http.post(this.apiUrl + 'comments',payload).pipe(map(response => {
+      return response
     }))
   }
 

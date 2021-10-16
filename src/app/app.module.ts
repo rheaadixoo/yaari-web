@@ -11,10 +11,12 @@ import { NgbModule,NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { PageLoaderService } from './shared/page-loader/page-loader.service';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -24,16 +26,17 @@ import { NgxPaginationModule } from 'ngx-pagination';
     BrowserAnimationsModule,
     NgbModule,
     FormsModule,
+    SharedModule,
     ReactiveFormsModule,
     NgxPaginationModule,
     ToastrModule.forRoot({
-      timeOut: 10000,
+      timeOut: 4000,
       positionClass: 'toast-top-right',
       preventDuplicates: true,
     }),
     NgSelectModule
   ],
-  providers: [CookieService],
+  providers: [CookieService, PageLoaderService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
