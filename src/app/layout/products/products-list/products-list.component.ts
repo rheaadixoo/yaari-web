@@ -23,7 +23,7 @@ export class ProductsListComponent implements OnInit {
   public subCatName: string = '';
   public catName: string = '';
   public brandIds=[];
-  public sizeIds=[];
+  public size=[];
   public colorIds=[];
   public priceIds=[];
   public discountIds=[];
@@ -77,9 +77,9 @@ export class ProductsListComponent implements OnInit {
     this.getProductsList()
   }
 
-  getSizeIds(id){
+  getSizes(id){
     console.log("@output:"+id)
-    this.sizeIds=id;
+    this.size=id;
     this.getProductsList()
   }
 
@@ -102,10 +102,14 @@ export class ProductsListComponent implements OnInit {
 
   getProductsList() {
     if (this.subCatId) {
-      this.productService.getProductsList(this.subCatId,this.colorIds,this.brandIds,this.priceIds,this.discountIds,this.sizeIds).subscribe(response => {
-        this.products = response;
+      this.productService.getProductsList(this.subCatId,this.colorIds,this.brandIds,this.priceIds,this.discountIds,this.size).subscribe((response:any[]) => {
+        if(response && response.length){
+          this.products = response;
         this.getWishlistDetail();
         this.productImgs(this.products[0]['images'][0]);
+        }else{
+          console.log("No Prodcts Found");
+        }
         
       })
     }

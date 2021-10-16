@@ -40,7 +40,7 @@
                     <yaari-shop-by-color (colorIds)="getColorIds($event)"></yaari-shop-by-color>
 
                     <!-- Size -->
-                    <yaari-shop-by-size (sizeId)="getSizeIds($event)"></yaari-shop-by-size>
+                    <yaari-shop-by-size (size)="getSizes($event)"></yaari-shop-by-size>
 
                     <!-- Price -->
                      <!-- <div 
@@ -107,7 +107,7 @@
             </div>
 
             <!-- The List -->
-            <div class="col-lg-9 col-md-9 px-2 prdct_sec_main_col_9" *ngIf="products.length > 0">
+            <div class="col-lg-9 col-md-9 px-2 prdct_sec_main_col_9" *ngIf="products && products.length > 0">
                 <div class="sort_by_filter px-3 float-right w-100 text-right mb-4">
                     <span class="font-18 text-gray font-500">
                         Sort by
@@ -186,7 +186,7 @@
                     </ng-container>
                 </div>
             </div>
-            <div class="col-lg-9 col-md-9 px-4  prdct_sec_main_col_9" *ngIf="products.length === 0">
+            <div class="col-lg-9 col-md-9 px-4  prdct_sec_main_col_9" *ngIf="products && products.length === 0">
                 <h1 class="prdct_list_sub_title text-gray mb-3">
                     No products available .
                 </h1>
