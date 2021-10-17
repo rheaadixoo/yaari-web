@@ -108,7 +108,7 @@ if(filters){
     const options = {
       params : new HttpParams().append('filter',JSON.stringify(query))
     }
-    return this.http.get(this.apiUrl + 'products',options).pipe(map(response => {
+    return this.http.get(this.apiUrl + 'products/grouped',options).pipe(map(response => {
       return response;
     }))
   }
@@ -129,28 +129,33 @@ if(filters){
     }))
   }
 
-  filterProductsList(payload) {
+  filterProductsList(payload,filters) {
     let query = {};
     if (payload['isFeatured']) {
-      query = {
+      query = filters ?{where : filters }:{
         where: {
-          and: [{ sub_category_id: payload['subCategoryId'], productStatus: 'approved', status: 'active', featured: payload['isFeatured'] }]
+          and: [{  productStatus: 'approved', status: 'active', featured: payload['isFeatured'] }]
         }
       };
     } else if (payload['sort']) {
-      query = {
+      query = filters ? { where : filters , 
+        order: [[payload['sort']['by'], payload['sort']['type']]]
+      } :{
         where: {
-          and: [{ sub_category_id: payload['subCategoryId'], productStatus: 'approved', status: 'active' }]
+          and: [{  productStatus: 'approved', status: 'active' }]
         },
         order: [[payload['sort']['by'], payload['sort']['type']]]
       };
+    }
+    if(payload['subCategoryId']){
+      query['where']['and'][0]['subCategoryId'] = payload['subCategoryId']
     }
     const filter = JSON.stringify(query);
     const options = {
       params: new HttpParams()
         .append("filter", filter)
     };
-    return this.http.get(this.apiUrl + 'products', options).pipe(map(response => {
+    return this.http.get(this.apiUrl + 'products/grouped', options).pipe(map(response => {
       return response;
     }))
   }
@@ -166,7 +171,7 @@ if(filters){
       params: new HttpParams()
         .append("filter", filter)
     };
-    return this.http.get(this.apiUrl + 'products', options).pipe(map(response => {
+    return this.http.get(this.apiUrl + 'products/grouped', options).pipe(map(response => {
       return response;
     }))
   }

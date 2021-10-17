@@ -131,11 +131,13 @@ public filters : any;
           try {
             this.productImgs(this.products[this.productIds[0]][0]['images'][0]);
           } catch (error) {
+            this.productIds = []
             console.log("error >>>>>>>>>>",error);
             
           }
         }
         else{
+          this.productIds = []
           this.products = [];
           console.log("No product are there");
         }
@@ -146,7 +148,7 @@ public filters : any;
   }
 
   getProduct(productId){
-    const product = this.products[productId][0];
+    const product = this.products[productId] && this.products[productId][0]? this.products[productId][0]: {};
     return product;
   }
   getWishlistDetail() {
@@ -176,8 +178,10 @@ public filters : any;
     })
   }
 
-  filterProductData(payload) {
-    this.productService.filterProductsList(payload).subscribe(response => {
+  filterProductData(payload , filter) {
+    this.productService.filterProductsList(payload,filter).subscribe(response => {
+      // this.products = response;
+      this.productIds = Object.keys(response)
       this.products = response;
     })
   }
@@ -191,22 +195,22 @@ public filters : any;
     switch (type) {
       case ('feature'): {
         filterOptions = { subCategoryId: this.subCatId, isFeatured: true };
-        this.filterProductData(filterOptions);
+        this.filterProductData(filterOptions,this.filters);
         break;
       }
       case ('low'): {
         filterOptions = { subCategoryId: this.subCatId, sort: { by: 'price', type: 'ASC' } };
-        this.filterProductData(filterOptions);
+        this.filterProductData(filterOptions,this.filters);
         break;
       }
       case ('high'): {
         filterOptions = { subCategoryId: this.subCatId, sort: { by: 'price', type: 'DESC' } };
-        this.filterProductData(filterOptions);
+        this.filterProductData(filterOptions,this.filters);
         break;
       }
       case ('new'): {
         filterOptions = { subCategoryId: this.subCatId, sort: { by: 'createdAt', type: 'DESC' } };
-        this.filterProductData(filterOptions);
+        this.filterProductData(filterOptions,this.filters);
         break;
       }
       default: {
