@@ -87,13 +87,28 @@ if(filters){
       params: new HttpParams()
         .append("filter", filter)
     };
-    return this.http.get(this.apiUrl + 'products', options).pipe(map(response => {
+    return this.http.get(this.apiUrl + 'products/grouped', options).pipe(map(response => {
       return response;
     }))
   }
 
   getProductById(id) {
     return this.http.get(this.apiUrl + 'products/' + id).pipe(map(response => {
+      return response;
+    }))
+  }
+
+  getGroupedProducts(productId) {
+    const query = {
+      where : {
+        productId
+      },
+      include: [{ "all": true }],
+    }
+    const options = {
+      params : new HttpParams().append('filter',JSON.stringify(query))
+    }
+    return this.http.get(this.apiUrl + 'products',options).pipe(map(response => {
       return response;
     }))
   }

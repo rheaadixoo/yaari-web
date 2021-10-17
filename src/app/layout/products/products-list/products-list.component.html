@@ -110,7 +110,7 @@
             </div>
 
             <!-- The List -->
-            <div class="col-lg-9 col-md-9 px-2 prdct_sec_main_col_9" *ngIf="products && products.length > 0">
+            <div class="col-lg-9 col-md-9 px-2 prdct_sec_main_col_9" *ngIf="productIds && productIds.length > 0">
                 <div class="sort_by_filter px-3 float-right w-100 text-right mb-4">
                     <span class="font-18 text-gray font-500">
                         Sort by
@@ -122,42 +122,42 @@
                         <option value="new">Newest First</option>
                     </select>
                 </div>
-                <div class="row w-100 mx-0" *ngIf="products.length > 0">
-                    <ng-container *ngFor="let product of products">
+                <div class="row w-100 mx-0" *ngIf="productIds.length > 0">
+                    <ng-container *ngFor="let productId of productIds">
                         <div class="col-lg-4 col-md-6 my-3">
                             <div class="prdct_sec_list_crd_mn">
                                 <div class="prdct_sec_list_crd_mn_img">
                                     <span class="sale_badge">
                                         Sale
                                     </span>
-                                    <img class="img-fluid" [src]="product.thumbImages" (click)="showProductDetailView(product.id)">
-                                    <span id="heart" class="wishlist_icon" (click)="addToWishList(product)"
-                                    *ngIf="!product['is_added_in_wishlist'] && isIconShow">
+                                    <img class="img-fluid" [src]="getProduct(productId).thumbImages" (click)="showProductDetailView(getProduct(productId).id, productId)">
+                                    <span id="heart" class="wishlist_icon" (click)="addToWishList(getProduct(productId))"
+                                    *ngIf="!getProduct(productId)['is_added_in_wishlist'] && isIconShow">
                                         <span class="material-icons">favorite_border</span>
                                     </span>
-                                    <span id="heart" class="wishlist_icon" (click)="removeProductFromWishlist(product['wishlist_id'])"
-                                    *ngIf="product['is_added_in_wishlist'] && isIconShow">
+                                    <span id="heart" class="wishlist_icon" (click)="removeProductFromWishlist(getProduct(productId)['wishlist_id'])"
+                                    *ngIf="getProduct(productId)['is_added_in_wishlist'] && isIconShow">
                                         <span class="material-icons">favorite</span>
                                     </span>
                                 </div>
                                 <div class="prdct_sec_list_crd_mn_content p-3 w-100 d-inline-block" 
-                                (click)="showProductDetailView(product.id)">
+                                (click)="showProductDetailView(getProduct(productId).id)">
                                     <h5 class="prdct_list_title mb-3 font-500 text-dark">
-                                        {{product.name}}
+                                        {{getProduct(productId).name}}
                                     </h5>
                                     <p class="prdct_list_sub_title text-gray mb-3">
-                                        {{product.description}}
+                                        {{getProduct(productId).description}}
                                     </p>
                                     <div class="prdct_list_price_det w-100 mb-3">
                                         <h5>
                                             <span class="font-600 text-dark price_fnl mr-1">
-                                                ₹{{product.sellingPrice}}
+                                                ₹{{getProduct(productId).sellingPrice}}
                                             </span>
                                             <span class="font-500 text-gray price_cross position-relative font-16 mr-1">
-                                                ₹{{product.price}}
+                                                ₹{{getProduct(productId).price}}
                                             </span>
                                             <span class="font-500 text-success offer_dis font-16 mr-1">
-                                               {{product.internalDiscount}}% off
+                                               {{getProduct(productId).internalDiscount}}% off
                                             </span>
                                         </h5>
                                     </div>
@@ -175,7 +175,7 @@
                                         Free delivery
                                     </span>
                                     <div class="row prdct_sec_list_crd_mn_btm_imgs mt-4">
-                                        <ng-container *ngFor="let image of product?.images">
+                                        <ng-container *ngFor="let image of getProduct(productId)?.images">
                                             <div class="col-lg-3 col-md-3 col-3 px-2 text-center mx-auto">
                                                 <div class="prdct_sec_list_crd_mn_btm_imgs_cntnr mx-auto">
                                                     <img class="img-fluid" [src]="productImgs(image)">
@@ -189,7 +189,7 @@
                     </ng-container>
                 </div>
             </div>
-            <div class="col-lg-9 col-md-9 px-4  prdct_sec_main_col_9" *ngIf="products && products.length === 0">
+            <div class="col-lg-9 col-md-9 px-4  prdct_sec_main_col_9" *ngIf="productIds && productIds.length === 0">
                 <h1 class="prdct_list_sub_title text-gray mb-3">
                     No products available .
                 </h1>
