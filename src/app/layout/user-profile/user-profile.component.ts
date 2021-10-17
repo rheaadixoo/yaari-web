@@ -89,6 +89,7 @@ export class UserProfileComponent implements OnInit {
     // this.addressService.getAddressByUserId(this.userData.id).subscribe((response: any[]) => {
      this.userService.getUserDetailsById(this.userData.id).subscribe((response)=>{
      if (response) {
+      this.pageLoaderService.stopLoading();
         this.userObj = response;
         console.log(this.userObj);
         this.imgUrl = this.userObj['profileImage'];
@@ -113,7 +114,7 @@ export class UserProfileComponent implements OnInit {
         else{
           this.removeProfilebtn=false
         }
-        this.pageLoaderService.stopLoading();
+       
       }
       else{
         if(this.imgUrl===this.defaultImg){

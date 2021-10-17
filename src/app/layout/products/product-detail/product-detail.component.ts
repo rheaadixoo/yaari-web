@@ -29,9 +29,11 @@ export class ProductDetailComponent implements OnInit {
     private wishlistService: WishlistService,
     private builder: FormBuilder,
     private deliverypincodeService:DeliveryPincodeService,
-    private share: ShareDataService) {
+    private share: ShareDataService,
+    private activateRoute:ActivatedRoute) {
 
     this.productService.currentProductStage.subscribe(res => {
+      console.log(res);
       if (res && res.id) {
         this.productId = res.id;
         this.productKey = res.productId
@@ -81,7 +83,19 @@ export class ProductDetailComponent implements OnInit {
     if (this.route.snapshot.params.id) {
       this.productId = this.route.snapshot.params.id;
       this.productKey = this.route.snapshot.params.productId;
+      console.log(this.productId);
+     
     }
+    // this.activateRoute.params.subscribe(params => {
+    //   if(params['id']) {
+    //     console.log(params['id']);
+    //     console.log(params['productId']);
+    //     this.productId = params['id'];
+    //     this.productKey = params['productId'];
+    //     console.log(this.productId);
+    //     console.log(this.productKey);
+    //   }
+  // })
     if (this.cookie.get('cart')) {
       const cartObj = JSON.parse(this.cookie.get('cart'));
       this.showBuyNowBtn = true;
@@ -149,6 +163,18 @@ export class ProductDetailComponent implements OnInit {
   //   }
   // }
   getProductDetailById() {
+    this.productId = this.route.snapshot.params.id;
+    this.productKey = this.route.snapshot.params.productId;
+  //   this.activateRoute.params.subscribe(params => {
+  //     if(params['id']) {
+  //       console.log(params['id']);
+  //       console.log(params['productId']);
+  //       this.productId = params['id'];
+  //       this.productKey = params['productId'];
+  //       console.log(this.productId);
+  //       console.log(this.productKey);
+  //     }
+  // })
     if (this.productKey) {
       this.productService.getGroupedProducts(this.productKey).subscribe((res : any[]) => {
         this.products = res;
@@ -171,6 +197,7 @@ export class ProductDetailComponent implements OnInit {
           }
         }
         this.productObj = this.products[this.selectedProductIndex];
+        console.log(this.productObj);
         this.productThumbImage=this.productObj.thumbImages
         this.subTotal = this.productObj.sellingPrice;
         this.getProductListById(this.productObj['subCategoryId']);
@@ -424,7 +451,9 @@ export class ProductDetailComponent implements OnInit {
   }
 
   openInDetailView(item) {
+    console.log(item);
     this.router.navigate([`app/products/detail/${item.id}`]);
+    console.log(item);
   }
 
   get productImage() {
