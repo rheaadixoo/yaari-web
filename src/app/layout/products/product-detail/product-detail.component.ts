@@ -34,6 +34,7 @@ export class ProductDetailComponent implements OnInit {
     this.productService.currentProductStage.subscribe(res => {
       if (res && res.id) {
         this.productId = res.id;
+        this.productKey = res.productId
       }
       this.getProductDetailById();
     })
@@ -49,8 +50,10 @@ export class ProductDetailComponent implements OnInit {
   public modalRef: NgbModalRef;
   public quantity: number = 1;
   public productId: any = 0;
+  public productKey: string;
   public productObj: any = {};
   public productReview:any=[]
+  public products:any[] = [];
   public showBuyNowBtn: boolean = true;
   public subTotal: any = 0;
   public productList: any = [];
@@ -70,10 +73,14 @@ export class ProductDetailComponent implements OnInit {
   public collectUsers:any
   public userDetails:any
   public showComment:boolean=false
+  public colors: any[] = [];
+  public size: any[] = [];
+  public selectedProductIndex : number ;
 
   ngOnInit(): void {
     if (this.route.snapshot.params.id) {
       this.productId = this.route.snapshot.params.id;
+      this.productKey = this.route.snapshot.params.productId;
     }
     if (this.cookie.get('cart')) {
       const cartObj = JSON.parse(this.cookie.get('cart'));
@@ -129,10 +136,41 @@ export class ProductDetailComponent implements OnInit {
     })
   }
 
+  // getProductDetailById() {
+  //   if (this.productId) {
+  //     this.productService.getProductById(this.productId).subscribe(res => {
+  //       this.productObj = res;
+  //       this.productThumbImage=this.productObj.thumbImages
+  //       this.subTotal = this.productObj.sellingPrice;
+  //       this.getProductListById(this.productObj['subCategoryId']);
+  //     })
+  //   } else {
+  //     return;
+  //   }
+  // }
   getProductDetailById() {
-    if (this.productId) {
-      this.productService.getProductById(this.productId).subscribe(res => {
-        this.productObj = res;
+    if (this.productKey) {
+      this.productService.getGroupedProducts(this.productKey).subscribe((res : any[]) => {
+        this.products = res;
+        for (let index = 0; index < this.products.length; index++) {
+          if(this.products[index]['id'] == this.productId){
+            this.selectedProductIndex = index;
+          }
+          if(this.products[index]['color']){
+            this.colors.push({
+              index,
+              hex: this.products[index]['color']['hex'],
+              name:this.products[index]['color']['name']
+            })
+          }
+          if(this.products[index]['size']){
+            this.size.push({
+              index,
+              size: this.products[index]['size']
+            })
+          }
+        }
+        this.productObj = this.products[this.selectedProductIndex];
         this.productThumbImage=this.productObj.thumbImages
         this.subTotal = this.productObj.sellingPrice;
         this.getProductListById(this.productObj['subCategoryId']);
@@ -140,6 +178,14 @@ export class ProductDetailComponent implements OnInit {
     } else {
       return;
     }
+  }
+
+  changeProduct(index){
+    this.selectedProductIndex = index;
+    this.productObj = this.products[this.selectedProductIndex];
+    this.productThumbImage=this.productObj.thumbImages
+    this.subTotal = this.productObj.sellingPrice;
+    this.getProductListById(this.productObj['subCategoryId']);
   }
  
   addToCart() {

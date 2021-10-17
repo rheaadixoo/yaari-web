@@ -169,19 +169,19 @@
               </div>
               <div class="col-lg-8 pl-0">
                 <ul class="p-0 m-0 d-inline-block w-100" style="list-style-type:none">
-                  <li class="py-2 d-flex m-auto float-left px-2">
-                    <div class="color" style="background-color: #0066ff">
-                      <input type="radio" name="color" checked>
+                  <li class="py-2 d-flex m-auto float-left px-2" *ngFor="let color of colors">
+                    <div class="color" [ngStyle]="{'background-color': color.hex}">
+                      <input type="radio" name="color" (click)="changeProduct(color.index)" [checked] ="color.index == selectedProductIndex">
                       <i class="checkbox-icon"></i>
                     </div>
                   </li>
-                  <li class="py-2 d-flex m-auto float-left px-2">
+                  <!-- <li class="py-2 d-flex m-auto float-left px-2">
                     <div class="color" style="background-color: #fd4949">
-                      <input type="radio" name="color">
+                      <input type="radio" name="color" [checked] ="color.index == selectedProductIndex">
                       <i class="checkbox-icon"></i>
                     </div>
-                  </li>
-                  <li class="py-2 d-flex m-auto float-left px-2">
+                  </li> -->
+                  <!-- <li class="py-2 d-flex m-auto float-left px-2">
                     <div class="color" style="background-color: #ffbc00">
                       <input type="radio" name="color">
                       <i class="checkbox-icon"></i>
@@ -198,7 +198,7 @@
                       <input type="radio" name="color">
                       <i class="checkbox-icon"></i>
                     </div>
-                  </li>
+                  </li> -->
                 </ul>
               </div>
             </div>

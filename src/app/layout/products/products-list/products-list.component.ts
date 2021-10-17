@@ -26,6 +26,7 @@ export class ProductsListComponent implements OnInit {
   public catName: string = '';
   public section: string = '';
   public position: string = '';
+  public productIds: string[] = [];
   public brandIds=[];
   public size=[];
   public colorIds=[];
@@ -123,10 +124,16 @@ public filters : any;
 
       this.productService.getProductsList(this.subCatId,this.colorIds,this.brandIds,this.priceIds,this.discountIds,this.size,this.filters).subscribe((response:[]) => {
         
-        if(response && response.length){
+        if(response){
+          this.productIds = Object.keys(response)
           this.products = response;
           this.getWishlistDetail();
-          this.productImgs(this.products[0]['images'][0]);
+          try {
+            this.productImgs(this.products[this.productIds[0]][0]['images'][0]);
+          } catch (error) {
+            console.log("error >>>>>>>>>>",error);
+            
+          }
         }
         else{
           this.products = [];
@@ -138,6 +145,10 @@ public filters : any;
     }
   }
 
+  getProduct(productId){
+    const product = this.products[productId][0];
+    return product;
+  }
   getWishlistDetail() {
     if (this.cookie.get('wishlist')) {
       const wishlistObj = JSON.parse(this.cookie.get('wishlist'));
@@ -171,8 +182,8 @@ public filters : any;
     })
   }
 
-  showProductDetailView(id) {
-    this.router.navigateByUrl(`app/products/detail/${id}`)
+  showProductDetailView(id,productId) {
+    this.router.navigateByUrl(`app/products/detail/${id}/${productId}`)
   }
 
   sortProductList(type) {
