@@ -187,15 +187,15 @@ public filters : any;
   }
 
   showProductDetailView(id,productId) {
-    // const url = this.router.serializeUrl(
-    //   this.router.createUrlTree([`app/products/detail/${id}/${productId}`])
-    // );
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree([`app/products/detail/${id}/${productId}`])
+    );
   
-    // window.open(url, '_blank');
+    window.open(url, '_blank');
     // console.log(productId);
-    console.log(id);
-    console.log(productId)
-    this.router.navigateByUrl(`app/products/detail/${id}/${productId}`)
+    // console.log(id);
+    // console.log(productId)
+    // this.router.navigateByUrl(`app/products/detail/${id}/${productId}`)
   }
 
   sortProductList(type) {

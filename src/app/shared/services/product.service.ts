@@ -172,6 +172,7 @@ if(filters){
         .append("filter", filter)
     };
     return this.http.get(this.apiUrl + 'products/grouped', options).pipe(map(response => {
+     
       return response;
     }))
   }
