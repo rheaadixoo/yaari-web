@@ -156,7 +156,7 @@
                                     </div> -->
                                     <div class="form-group col-md-12 text-center px-3 mb-4">
                                         <button type="button" (click)="updateUser()" class="btn btn-theme font-18 py-3 px-5 mt-2"
-                                            [disabled]="!userForm.valid">Save</button>
+                                            [disabled]="!(userForm.valid && userForm.dirty)">Save</button>
                                     </div>
                                 </div>
                             </form>

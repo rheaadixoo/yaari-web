@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ShareDataService } from 'src/app/shared/services/share-data.service'
 import { PincodeService } from 'src/app/shared/services/pincode.service';
 import { PageLoaderService } from 'src/app/shared/page-loader/page-loader.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'yaari-user-profile',
@@ -27,7 +28,8 @@ export class UserProfileComponent implements OnInit {
     private userService: UserProfileService, private addressService: AddressService,
     private service : PincodeService,
     private share:ShareDataService,
-    private pageLoaderService: PageLoaderService) { }
+    private pageLoaderService: PageLoaderService,
+    private router: Router) { }
 
   ngOnInit(): void {
 
@@ -191,6 +193,7 @@ export class UserProfileComponent implements OnInit {
             this.removeProfilebtn=false
           }
           this.share.setimageAddress(this.userObj.id,payload.profileImage)
+          window.open('/app/profile','_parent')
 
         }, err => {
           this.toastr.error(err, "Address");
@@ -205,6 +208,7 @@ export class UserProfileComponent implements OnInit {
             this.removeProfilebtn=false
           }
           this.share.setimageAddress(this.userObj.id,payload.profileImage)
+          window.open('/app/profile','_parent')
         }, err => {
           this.toastr.error(err, "Address");
         })

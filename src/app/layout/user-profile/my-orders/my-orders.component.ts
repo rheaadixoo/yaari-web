@@ -1,4 +1,3 @@
-
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { OrderService } from 'src/app/shared/services/order.service';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
@@ -8,6 +7,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormControl } from '@angular/forms';
 import { data } from 'jquery';
 import { JSDocComment } from '@angular/compiler';
+import { PageLoaderService } from 'src/app/shared/page-loader/page-loader.service';
 
 
 @Component({
@@ -38,7 +38,8 @@ export class MyOrdersComponent implements OnInit {
 
   //  public cancelOrderForm: FormGroup = new FormGroup({});
   constructor(private orderService: OrderService, private localStorageService: LocalStorageService
-    , private router: Router, private modalService: NgbModal) { }
+    , private router: Router, private modalService: NgbModal, 
+    private loader:PageLoaderService) { }
 
   ngOnInit(): void {
     this.getUserOrders();
@@ -88,12 +89,11 @@ export class MyOrdersComponent implements OnInit {
   }
 
   getUserOrders() {
+    this.loader.startLoading();
     this.orderService.getOrders(this.userData.id).subscribe((res: any[]) => {
       this.myOrders = res;
-
-
-      console.log(this.myOrders);
-     
+      console.log(res);
+      this.loader.stopLoading();
       // //GET —-> /delhiveries/track-order/{orderId}
       // POST ——> /delhiveries/cancel-order/{orderId}
       // console.log(this.data);

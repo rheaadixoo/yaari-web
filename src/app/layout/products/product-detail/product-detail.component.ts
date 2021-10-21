@@ -14,6 +14,7 @@ import "../../../../assets/js/product_zoom.js";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ShareDataService } from 'src/app/shared/services/share-data.service.js';
 import { DeliveryPincodeService } from 'src/app/shared/services/delivery-pincode.service.js';
+import { PageLoaderService } from 'src/app/shared/page-loader/page-loader.service.js';
 @Component({
   selector: 'yaari-product-detail',
   templateUrl: './product-detail.component.html',
@@ -29,7 +30,8 @@ export class ProductDetailComponent implements OnInit {
     private wishlistService: WishlistService,
     private builder: FormBuilder,
     private deliverypincodeService:DeliveryPincodeService,
-    private share: ShareDataService) {
+    private share: ShareDataService,
+    private pageLoaderService: PageLoaderService) {
 
     this.productService.currentProductStage.subscribe(res => {
       if (res && res.id) {
@@ -150,30 +152,32 @@ export class ProductDetailComponent implements OnInit {
   // }
   getProductDetailById() {
     if (this.productKey) {
+      this.pageLoaderService.startLoading();
       this.productService.getGroupedProducts(this.productKey).subscribe((res : any[]) => {
         this.products = res;
-        for (let index = 0; index < this.products.length; index++) {
-          if(this.products[index]['id'] == this.productId){
+        for (let index = 0; index < this.products[this.productKey].length; index++) {
+          if(this.products[this.productKey][index]['id'] == this.productId){
             this.selectedProductIndex = index;
           }
-          if(this.products[index]['color']){
+          if(this.products[this.productKey][index]['color']){
             this.colors.push({
               index,
-              hex: this.products[index]['color']['hex'],
-              name:this.products[index]['color']['name']
+              hex: this.products[this.productKey][index]['color']['hex'],
+              name:this.products[this.productKey][index]['color']['name']
             })
           }
-          if(this.products[index]['size']){
+          if(this.products[this.productKey][index]['size']){
             this.size.push({
               index,
-              size: this.products[index]['size']
+              size: this.products[this.productKey][index]['size']
             })
           }
         }
-        this.productObj = this.products[this.selectedProductIndex];
+        this.productObj = this.products[this.productKey][this.selectedProductIndex];
         this.productThumbImage=this.productObj.thumbImages
         this.subTotal = this.productObj.sellingPrice;
         this.getProductListById(this.productObj['subCategoryId']);
+        this.pageLoaderService.stopLoading();
       })
     } else {
       return;

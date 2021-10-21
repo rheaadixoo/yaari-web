@@ -28,7 +28,7 @@
               Don't have an account?
             </span>
             <a class="dropdown-item my-2 d-inline-block font-16 text-center btn-theme anchor" href="javascript:void(0)"
-              [routerLink]="['/register']" (click)="isBtnClicked = false" id="sign_in_option">
+              [routerLink]="['/register']" [queryParams]="{Otp:true}" (click)="isBtnClicked = false" id="sign_in_option">
               Create Account
             </a>
           </div>
