@@ -27,9 +27,13 @@ export class MyOrdersComponent implements OnInit {
   public modalRef: NgbModalRef;
   public reason = "0";
   //  page = 4;
-  TotalLength: any;
-  p: number = 1;
+  // TotalLength: any;
+  // p: number = 1;
 
+  public productCount:number=5;
+  public allProducts:any=[];
+ public order:any=[];
+public activities:any=[];
   cancelOrderForm = new FormGroup({
     reason: new FormControl('Select the reason for cancel order'),
     text: new FormControl('')
@@ -38,11 +42,11 @@ export class MyOrdersComponent implements OnInit {
 
   //  public cancelOrderForm: FormGroup = new FormGroup({});
   constructor(private orderService: OrderService, private localStorageService: LocalStorageService
-    , private router: Router, private modalService: NgbModal, 
-    private loader:PageLoaderService) { }
+    , private router: Router, private modalService: NgbModal,private pageloader:PageLoaderService) { }
 
   ngOnInit(): void {
-    this.getUserOrders();
+     this.getUserOrders();
+      //  this.getAllProducts();
     // this.showtext();
   }
   // document.getElementById("try").onclick="showtext()"
@@ -56,7 +60,8 @@ export class MyOrdersComponent implements OnInit {
     this.orderService.cancelOrder(item.id,payload).subscribe(resp=>{
       console.log(resp);
       this.closeModal();
-      this.getUserOrders();
+      // this.getUserOrders();
+      // this.getAllProducts();
     })
 
   }
@@ -89,15 +94,19 @@ export class MyOrdersComponent implements OnInit {
   }
 
   getUserOrders() {
-    this.loader.startLoading();
+    this.pageloader.startLoading();
     this.orderService.getOrders(this.userData.id).subscribe((res: any[]) => {
       this.myOrders = res;
       console.log(res);
-      this.loader.stopLoading();
+      this.pageloader.stopLoading();
       // //GET —-> /delhiveries/track-order/{orderId}
       // POST ——> /delhiveries/cancel-order/{orderId}
       // console.log(this.data);
     })
+    
+
+    
+    console.log(this.allProducts);
   }
 
   cancelProductOrder(item) {
@@ -105,12 +114,20 @@ export class MyOrdersComponent implements OnInit {
     //   console.log("resp", resp);
     //   console.log(item);
       // this.show=true;
-      this.getUserOrders();
+      // this.getUserOrders();
       this.modalRef = this.modalService.open(this.modal, { windowClass: 'orderSummary', centered: true, keyboard: false });
       console.log(this.show);
       // this.showtext();
       // this.router.navigate(['app/cancelOrder']);
     // })
+  }
+
+  viewMore() {
+    this.productCount += 5; 
+  }
+
+  viewLess(){
+    
   }
 
 }

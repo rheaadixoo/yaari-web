@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ComponentFactoryResolver, OnInit, ViewChild } from '@angular/core';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 import { CookieService } from 'ngx-cookie-service';
 import { HttpClient } from '@angular/common/http';
@@ -34,6 +34,7 @@ export class ProductDetailComponent implements OnInit {
     private pageLoaderService: PageLoaderService) {
 
     this.productService.currentProductStage.subscribe(res => {
+      console.log(res);
       if (res && res.id) {
         this.productId = res.id;
         this.productKey = res.productId
@@ -46,44 +47,56 @@ export class ProductDetailComponent implements OnInit {
     };
   }
   //change 
-  show=false;
-  abc=false;
+  show = false;
+  abc = false;
 
   public modalRef: NgbModalRef;
   public quantity: number = 1;
   public productId: any = 0;
   public productKey: string;
   public productObj: any = {};
-  public productReview:any=[]
-  public products:any[] = [];
+  public productReview: any = []
+  public products: any[] = [];
   public showBuyNowBtn: boolean = true;
   public subTotal: any = 0;
   public productList: any = [];
   public isProductExist: boolean = false;
   public isProductExistInWishlist: boolean = false;
-  public start=0;
-  public end=4;
-  public itemsPerPage=3;
-  public deliveryPincode:FormGroup=new FormGroup({});
-  public deliveryDate:string="";
-  public checkClicked:boolean=false;
-  public businessId:number;
-  public product_weight:number;
-  public productThumbImage:any
-  public addReview:FormGroup=new FormGroup({});
-  public showNextButton:boolean=true;
-  public collectUsers:any
-  public userDetails:any
-  public showComment:boolean=false
+  public start = 0;
+  public end = 4;
+  public itemsPerPage = 3;
+  public deliveryPincode: FormGroup = new FormGroup({});
+  public deliveryDate: string = "";
+  public checkClicked: boolean = false;
+  public businessId: number;
+  public product_weight: number;
+  public productThumbImage: any
+  public addReview: FormGroup = new FormGroup({});
+  public showNextButton: boolean = true;
+  public collectUsers: any
+  public userDetails: any
+  public showComment: boolean = false
   public colors: any[] = [];
   public size: any[] = [];
-  public selectedProductIndex : number ;
+  public selectedProductIndex: number;
 
   ngOnInit(): void {
-    if (this.route.snapshot.params.id) {
-      this.productId = this.route.snapshot.params.id;
-      this.productKey = this.route.snapshot.params.productId;
-    }
+    // if (this.route.snapshot.params.id) {
+    //   this.productId = this.route.snapshot.params.id;
+    //   this.productKey = this.route.snapshot.params.productId;
+    //   console.log(this.productId);
+
+    // }
+    this.route.params.subscribe(params => {
+      if(params['id']) {
+        console.log(params['id']);
+        console.log(params['productId']);
+        this.productId = params['id'];
+        this.productKey = params['productId'];
+        console.log(this.productId);
+        console.log(this.productKey);
+      }
+    })
     if (this.cookie.get('cart')) {
       const cartObj = JSON.parse(this.cookie.get('cart'));
       this.showBuyNowBtn = true;
@@ -98,18 +111,17 @@ export class ProductDetailComponent implements OnInit {
 
 
     //updated code
-    if(this.localStorageService.get('token'))
-     {
-        this.show=true;
-        this.abc=true;
-        console.log(this.abc);
-        
-     }
+    if (this.localStorageService.get('token')) {
+      this.show = true;
+      this.abc = true;
+      console.log(this.abc);
 
-     if(!!localStorage.getItem('user-detail')){
-       this.userDetails=JSON.parse(localStorage.getItem('user-detail'))
-       this.showComment=true
-     }
+    }
+
+    if (!!localStorage.getItem('user-detail')) {
+      this.userDetails = JSON.parse(localStorage.getItem('user-detail'))
+      this.showComment = true
+    }
 
     if (this.cookie.get('wishlist')) {
       this.wishlistService.isProductExistInWishlist(this.wishlistObj['id'], JSON.parse(this.productId)).subscribe((response: any[]) => {
@@ -126,15 +138,15 @@ export class ProductDetailComponent implements OnInit {
     this.buildReviewForm();
   }
 
-  buildReviewForm(){
-      this.addReview= this.builder.group({
-        review:['',Validators.required]
-      })
+  buildReviewForm() {
+    this.addReview = this.builder.group({
+      review: ['', Validators.required]
+    })
   }
 
-  buildDeliveryPincode(){
-    this.deliveryPincode=this.builder.group({
-      delivery_pincode:['']
+  buildDeliveryPincode() {
+    this.deliveryPincode = this.builder.group({
+      delivery_pincode: ['']
     })
   }
 
@@ -151,22 +163,44 @@ export class ProductDetailComponent implements OnInit {
   //   }
   // }
   getProductDetailById() {
+    // this.productId = this.route.snapshot.params.id;
+    // this.productKey = this.route.snapshot.params.productId;
+      this.route.params.subscribe(params => {
+        if(params['id']) {
+          console.log(params['id']);
+          console.log(params['productId']);
+          this.productId = params['id'];
+          this.productKey = params['productId'];
+          console.log(this.productId);
+          console.log(this.productKey);
+        }
+    })
     if (this.productKey) {
-      this.pageLoaderService.startLoading();
-      this.productService.getGroupedProducts(this.productKey).subscribe((res : any[]) => {
+      this.productService.getGroupedProducts(this.productKey).subscribe((res: any[]) => {
+        console.log(this.productKey);
         this.products = res;
+        console.log(this.products);
+        console.log(typeof (this.products));
+        // console.log(this.products['1'][0]['id']);
+
+
+        // this.products = this.products[1];
+        console.log(this.products.length);
         for (let index = 0; index < this.products[this.productKey].length; index++) {
-          if(this.products[this.productKey][index]['id'] == this.productId){
+
+          if (this.products[this.productKey][index]['id'] == this.productId) {
+
             this.selectedProductIndex = index;
+            console.log(this.selectedProductIndex);
           }
-          if(this.products[this.productKey][index]['color']){
+          if (this.products[this.productKey][index]['color']) {
             this.colors.push({
               index,
               hex: this.products[this.productKey][index]['color']['hex'],
-              name:this.products[this.productKey][index]['color']['name']
+              name: this.products[this.productKey][index]['color']['name']
             })
           }
-          if(this.products[this.productKey][index]['size']){
+          if (this.products[this.productKey][index]['size']) {
             this.size.push({
               index,
               size: this.products[this.productKey][index]['size']
@@ -174,7 +208,9 @@ export class ProductDetailComponent implements OnInit {
           }
         }
         this.productObj = this.products[this.productKey][this.selectedProductIndex];
-        this.productThumbImage=this.productObj.thumbImages
+        console.log(this.productObj);
+        this.productThumbImage = this.productObj.thumbImages
+        console.log(this.productThumbImage);
         this.subTotal = this.productObj.sellingPrice;
         this.getProductListById(this.productObj['subCategoryId']);
         this.pageLoaderService.stopLoading();
@@ -184,14 +220,14 @@ export class ProductDetailComponent implements OnInit {
     }
   }
 
-  changeProduct(index){
+  changeProduct(index) {
     this.selectedProductIndex = index;
     this.productObj = this.products[this.selectedProductIndex];
-    this.productThumbImage=this.productObj.thumbImages
+    this.productThumbImage = this.productObj.thumbImages
     this.subTotal = this.productObj.sellingPrice;
     this.getProductListById(this.productObj['subCategoryId']);
   }
- 
+
   addToCart() {
     if (!this.cookie.get('cart')) {
       this.cartService.createCart().subscribe(res => {
@@ -262,103 +298,99 @@ export class ProductDetailComponent implements OnInit {
     if (!this.localStorageService.get('user-detail')) {
       // alert('User sign in or sign up is required!')
       this.warningModal.open();
-    }else{
-       if (this.cookie.get('cart')) {
-      const cartObj = JSON.parse(this.cookie.get('cart'));
-      this.router.navigate(['/app/orders/place-order'], { queryParams: { id: cartObj['id'] } })
-    } else if (!this.cookie.get('cart')) 
-    {
-      this.cartService.createCart().subscribe(res => {
-        if (res['id']) {
-          this.productObj['productId'] = JSON.parse(this.productId);
-          this.productObj['cartId'] = res['id'];
-          // this.productObj['status'] = 'active';
-          this.showBuyNowBtn = true;
-          const payload = {
-            cartId: res['id'],
-            productId: JSON.parse(this.productId),
-            quantity: this.quantity,
-            businessId: this.productObj['businessId']
-          }
-          this.cartService.createCartDetail(payload).subscribe(response => {
-            console.log(payload);
-            console.log("response---", response);
-            try {
-              this.toastr.success('Product added successfully',);
-            } catch (error) {
-              this.toastr.error('Error,', error);
+    } else {
+      if (this.cookie.get('cart')) {
+        const cartObj = JSON.parse(this.cookie.get('cart'));
+        this.router.navigate(['/app/orders/place-order'], { queryParams: { id: cartObj['id'] } })
+      } else if (!this.cookie.get('cart')) {
+        this.cartService.createCart().subscribe(res => {
+          if (res['id']) {
+            this.productObj['productId'] = JSON.parse(this.productId);
+            this.productObj['cartId'] = res['id'];
+            // this.productObj['status'] = 'active';
+            this.showBuyNowBtn = true;
+            const payload = {
+              cartId: res['id'],
+              productId: JSON.parse(this.productId),
+              quantity: this.quantity,
+              businessId: this.productObj['businessId']
             }
-          })
-        }
-        if (!this.cookie.get('cart')) {
-          this.cookie.set('cart', JSON.stringify({ id: res['id'] }), { expires: 365, path: '/' });
-        }
-        if (this.cookie.get('cart')) {
-          const cartObj = JSON.parse(this.cookie.get('cart'));
-          this.router.navigate(['/app/orders/place-order'], { queryParams: { id: cartObj['id'] } })
-        }
-      })
+            this.cartService.createCartDetail(payload).subscribe(response => {
+              console.log(payload);
+              console.log("response---", response);
+              try {
+                this.toastr.success('Product added successfully',);
+              } catch (error) {
+                this.toastr.error('Error,', error);
+              }
+            })
+          }
+          if (!this.cookie.get('cart')) {
+            this.cookie.set('cart', JSON.stringify({ id: res['id'] }), { expires: 365, path: '/' });
+          }
+          if (this.cookie.get('cart')) {
+            const cartObj = JSON.parse(this.cookie.get('cart'));
+            this.router.navigate(['/app/orders/place-order'], { queryParams: { id: cartObj['id'] } })
+          }
+        })
+      }
     }
-  }
   }
 
   addToWishList() {
     if (!this.localStorageService.get('user-detail')) {
       // alert('User sign in or sign up is required!')
-      
+
       this.warningModal.open();
     }
     let payload;
-    if (this.localStorageService.get('user-detail')) 
-    {
+    if (this.localStorageService.get('user-detail')) {
       payload = { userId: this.userDetail.id };
-      
-          if (!this.cookie.get('wishlist')) {
-            console.log("the payload"+payload);
-            this.wishlistService.createWishList(payload).subscribe(res => {
-              if (res['id']) {
-                const data = {
-                  wishlistId: res['id'],
-                  productId: JSON.parse(this.productId),
-                  quantity: this.quantity,
-                  businessId: this.productObj['businessId']
-                }
-                this.addToWishListDetails(data);
-                this.cookie.set('wishlist', JSON.stringify({ id: res['id'] }), { expires: 365, path: '/' });
-              }
-            })
-          } else if (this.cookie.get('wishlist'))
-          {
+
+      if (!this.cookie.get('wishlist')) {
+        console.log("the payload" + payload);
+        this.wishlistService.createWishList(payload).subscribe(res => {
+          if (res['id']) {
             const data = {
-              wishlistId: this.wishlistObj['id'],
+              wishlistId: res['id'],
               productId: JSON.parse(this.productId),
               quantity: this.quantity,
               businessId: this.productObj['businessId']
             }
-            this.wishlistService.isProductExistInWishlist(this.wishlistObj['id'], JSON.parse(this.productId)).subscribe((response: any[]) => {
-              if (!response.length) {
-                this.isProductExistInWishlist = false;
-                this.addToWishListDetails(data);
-              } else {
-                this.isProductExistInWishlist = true;
-              }
-            })
+            this.addToWishListDetails(data);
+            this.cookie.set('wishlist', JSON.stringify({ id: res['id'] }), { expires: 365, path: '/' });
           }
-    } 
-    if(!this.localStorageService.get('token'))
-    {
+        })
+      } else if (this.cookie.get('wishlist')) {
+        const data = {
+          wishlistId: this.wishlistObj['id'],
+          productId: JSON.parse(this.productId),
+          quantity: this.quantity,
+          businessId: this.productObj['businessId']
+        }
+        this.wishlistService.isProductExistInWishlist(this.wishlistObj['id'], JSON.parse(this.productId)).subscribe((response: any[]) => {
+          if (!response.length) {
+            this.isProductExistInWishlist = false;
+            this.addToWishListDetails(data);
+          } else {
+            this.isProductExistInWishlist = true;
+          }
+        })
+      }
+    }
+    if (!this.localStorageService.get('token')) {
       console.log("the local service ");
       // this.router.navigate(['/app/product/wishlist']);
       this.router.navigate(['/login']);
     }
-    
-    
+
+
     // else {
     //   this.warningModal.open();
     //   //console.log( this.warningModal.open());
     // }
-  
-    
+
+
   }
 
   get wishlistObj() {
@@ -374,13 +406,13 @@ export class ProductDetailComponent implements OnInit {
     })
   }
 
-  saveReview(){
-    const payload={
-      comment:this.addReview.value.review,
-      userId:this.userDetails.id,
-      productId:Number(this.productId)
+  saveReview() {
+    const payload = {
+      comment: this.addReview.value.review,
+      userId: this.userDetails.id,
+      productId: Number(this.productId)
     }
-    this.productService.saveProductReview(payload).subscribe( res => {
+    this.productService.saveProductReview(payload).subscribe(res => {
       this.toastr.success('review saved');
       this.getReviewsOfProduct();
     }, error => {
@@ -406,12 +438,27 @@ export class ProductDetailComponent implements OnInit {
     return JSON.parse(this.localStorageService.get('user-detail'));
   }
 
-  getProductListById(productId) {
+  getProductListById(productId) { //productsubcategoryid=productid
     if (productId) {
       this.productService.getProductListById(productId).subscribe((res: any[]) => {
-        if (res && res.length > 0) {
-          this.productList = res;
+
+        console.log(res);
+        let keys = Object.keys(res);
+        for (let i of keys) {
+          console.log(res[i]);
+          for (let j = 0; j < res[i].length; j++) {
+           
+            this.productList.push(res[i][j]);
+          }
         }
+       console.log(this.productList);
+
+        // if (res && res.length > 0) {
+        //   console.log(res);
+        //   this.productList = res;
+        // console.log(this.productList)
+        // }
+
       }, error => {
       })
     } else {
@@ -428,114 +475,116 @@ export class ProductDetailComponent implements OnInit {
   }
 
   openInDetailView(item) {
+    console.log(item);
     this.router.navigate([`app/products/detail/${item.id}`]);
+    console.log(item);
   }
 
   get productImage() {
     return this.productObj.thumbImages;
   }
 
-  goToCart(){
+  goToCart() {
     this.router.navigateByUrl('/app/cart');
   }
 
-  goToWishlist(){
+  goToWishlist() {
     this.router.navigateByUrl('/app/wishlist');
   }
 
-  changeProductImage(url){
-    this.productThumbImage=url
+  changeProductImage(url) {
+    this.productThumbImage = url
   }
 
-  postDeliveryPincode(businessId){
-    this.businessId=businessId;
+  postDeliveryPincode(businessId) {
+    this.businessId = businessId;
     console.log(this.deliveryPincode.value.delivery_pincode);
-    let pincode=this.deliveryPincode.value.delivery_pincode;
-    this.deliverypincodeService.getDeliveryPincode(pincode,this.businessId).subscribe(res => {
-      let response=res;
+    let pincode = this.deliveryPincode.value.delivery_pincode;
+    this.deliverypincodeService.getDeliveryPincode(pincode, this.businessId).subscribe(res => {
+      let response = res;
       console.log(response);
 
-      this.checkClicked=true;
-      let edd=0;
-      for(let i=0;i<response["data"].available_courier_companies.length;i++){
-            // console.log(response["data"].available_courier_companies[i].estimated_delivery_days);
-            // console.log(response["data"].available_courier_companies[i].etd);
-            let temp=Number(response["data"].available_courier_companies[i].estimated_delivery_days);
+      this.checkClicked = true;
+      let edd = 0;
+      for (let i = 0; i < response["data"].available_courier_companies.length; i++) {
+        // console.log(response["data"].available_courier_companies[i].estimated_delivery_days);
+        // console.log(response["data"].available_courier_companies[i].etd);
+        let temp = Number(response["data"].available_courier_companies[i].estimated_delivery_days);
 
-            if(i==0){
-              edd=temp;
-            }
-            else{
-              if(temp>=edd){
-                edd=temp;
-              }
-            }
+        if (i == 0) {
+          edd = temp;
+        }
+        else {
+          if (temp >= edd) {
+            edd = temp;
+          }
+        }
       }
-      
-      
-      var numOfDaysToAdd=edd+2;
-      var estimatedDate=new Date();
-      estimatedDate.setDate(estimatedDate.getDate()+numOfDaysToAdd);
+
+
+      var numOfDaysToAdd = edd + 2;
+      var estimatedDate = new Date();
+      estimatedDate.setDate(estimatedDate.getDate() + numOfDaysToAdd);
       console.log(estimatedDate);
 
-      let dd=estimatedDate.getDate();
-      
-      const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-       let month=months[estimatedDate.getMonth()];
-      
-       const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-       let day=days[estimatedDate.getDay()];
-      
-      this.deliveryDate=dd+' '+month+','+day;
+      let dd = estimatedDate.getDate();
+
+      const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      let month = months[estimatedDate.getMonth()];
+
+      const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      let day = days[estimatedDate.getDay()];
+
+      this.deliveryDate = dd + ' ' + month + ',' + day;
       console.log(this.deliveryDate);
     });
   }
 
-  previous(){
-    if(((this.start-this.itemsPerPage)>=0)&&((this.end-this.itemsPerPage)>=4)){
-      this.start=this.start-this.itemsPerPage;
-      this.end=this.end-this.itemsPerPage;
-      this.showBuyNowBtn=true;
+  previous() {
+    if (((this.start - this.itemsPerPage) >= 0) && ((this.end - this.itemsPerPage) >= 4)) {
+      this.start = this.start - this.itemsPerPage;
+      this.end = this.end - this.itemsPerPage;
+      this.showBuyNowBtn = true;
     }
   }
 
-  next(){
-    if(this.start==this.end-4){
-      for(let j=this.start;j<=this.end;j++){
-        if(j==this.productList.length-1){
-          this.showNextButton=false;
+  next() {
+    if (this.start == this.end - 4) {
+      for (let j = this.start; j <= this.end; j++) {
+        if (j == this.productList.length - 1) {
+          this.showNextButton = false;
         }
-        else{
-          this.showNextButton=true;
+        else {
+          this.showNextButton = true;
         }
       }
-      this.start=this.start+this.itemsPerPage;
-      this.end=this.end+this.itemsPerPage;
+      this.start = this.start + this.itemsPerPage;
+      this.end = this.end + this.itemsPerPage;
     }
   }
-  getReviewsOfProduct(){
-    if(this.productId){
+  getReviewsOfProduct() {
+    if (this.productId) {
       this.productService.getProductReviewById(this.productId).subscribe(response => {
-        
-        this.productReview=response;
-        console.log("Reviews"+this.productReview);
+
+        this.productReview = response;
+        console.log("Reviews" + this.productReview);
 
         for (let index = 0; index < this.productReview.length; index++) {
           const element = this.productReview[index];
           // this.collectUsers.push(element.userId);
-          this.productService.getUserDetailsById(element.userId).subscribe( res => {
-           
-            this.collectUsers=res;
-            this.productReview[index].username=this.collectUsers.name
-            this.productReview[index].profile=this.collectUsers.profileImage
+          this.productService.getUserDetailsById(element.userId).subscribe(res => {
+
+            this.collectUsers = res;
+            this.productReview[index].username = this.collectUsers.name
+            this.productReview[index].profile = this.collectUsers.profileImage
           })
         }
 
-      },error => {
+      }, error => {
         console.log(error);
       })
     }
   }
-  
+
 
 }

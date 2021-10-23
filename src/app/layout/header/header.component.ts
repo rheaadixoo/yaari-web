@@ -132,12 +132,14 @@ export class HeaderComponent implements OnInit,AfterViewInit
     this.productService.searchProducts(this.searchValue).subscribe(res => {
       // console.log("Re-s---", res);
       this.productList = res;
+      console.log(res);
     })
   }
 
   onChange(product) {
+    console.log(product);
     if (product) {
-      this.router.navigateByUrl(`app/products/detail/${product.id}`);
+      this.router.navigateByUrl(`app/products/detail/${product.id}/${product.productId}`);
     }
   }
 

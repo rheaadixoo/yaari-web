@@ -67,9 +67,14 @@
                   All Order
                 </h5>
                 <!-- <ng-container *ngFor="let key of Object.keys(myOrders)"> -->
-                <ng-container *ngFor="let order of myOrders |paginate: { itemsPerPage: 2, currentPage: p }">
+
+
+                <!-- my orders with pagination  -->
+
+
+                <!-- <ng-container *ngFor="let order of myOrders |paginate: { itemsPerPage: 2, currentPage: p }">
                   <ng-container *ngFor="let item of order.cartDetails ">
-                    <div class="my_order_crd_main" *ngIf="order.status!=='cancelled'">
+                    <div class="my_order_crd_main">
                       <div class="best_sellers_prdct_on_det_pg_list">
                         <div class="d-flex float-left pl-0">
                           <div class="best_sellers_prdct_on_det_pg_list_img">
@@ -99,9 +104,9 @@
                                 Size:
                               </span>
                               <span class="float-left material_prdct_spn font-500 px-4 py-1 mr-2">
-                                <!-- {{item.product.size}} -->
-                                S
-                              </span>
+                                {{item.product.size}} 
+                                
+                               </span>
                               <span class="badge_on_order text-gray float-left px-2 py-1 mr-2">
                                 Qty:
                               </span>
@@ -126,48 +131,17 @@
                                     <p>
                                       <span class="font-500 text-dark mb-2">{{status['activity']}}</span>
                                       <br>
-                                      <span class="mt-2 d-block font-14 text-gray">{{status['date'] | date :
-                                        'long'}}</span>
+                                      <span class="mt-2 d-block font-14 text-gray">{{status['date'] | date : 'long'}}</span>
                                     </p>
                                   </div>
                                 </ng-container>
-                                <!-- <div class="order-tracking completed">
-                                  <span class="is-complete"></span>
-                                  <p>
-                                    <span class="font-500 text-dark mb-2">Order Placed</span>
-                                    <br>
-                                    <span class="mt-2 d-block font-14 text-gray">10:30 PM 20th October, 2020</span>
-                                  </p>
-                                </div>
-                                <div class="order-tracking ">
-                                  <span class="is-complete"></span>
-                                  <p>
-                                    <span class="font-500 text-dark mb-2">Order Shipped</span>
-                                    <br>
-                                    <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span>
-                                  </p>
-                                </div>
-                                <div class="order-tracking ">
-                                  <span class="is-complete"></span>
-                                  <p>
-                                    <span class="font-500 text-dark mb-2">Shipment Has Arrived At Chandigarh
-                                      Facility</span>
-                                    <br>
-                                    <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span>
-                                  </p>
-                                </div>
+                                
                                 <div class="order-tracking">
-                                  <span class="is-complete"></span>
-                                  <p>
-                                    <span class="font-500 text-dark mb-2">Shipment Has Arrived At Mumbai Facility</span>
-                                    <br>
-                                  </p>
-                                </div> -->
-                                <!-- <div class="order-tracking">
                                   <span class="is-complete"></span>
                                   <p>
                                     <span class="font-500 text-dark mb-2">Order Out for Delivery</span>
                                     <br>
+                                    <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span>
                                   </p>
                                 </div>
                                 <div class="order-tracking">
@@ -175,209 +149,405 @@
                                   <p>
                                     <span class="font-500 text-dark mb-2">Order Delivered</span>
                                     <br>
+                                    <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> 
                                   </p>
                                 </div> -->
                               </div>
                             </div>
                           </div>
                         </div>
+                        
                       </div>
+                    
                     </div>
-
                     <div class="prdct_list_price_det w-100 mb-4" *ngIf="order.status !='cancelled'"
-                      style="max-width: 200px;">
-                      <a href="javascript:void(0)"
-                        class="btn-theme-border w-100 text-center px-0 font-500 d-inline-block py-3"
-                        (click)="cancelProductOrder(order)">
-                        Cancel Order
-                      </a>
-                    </div>
-                    <div>
-                      <ng-template #modal>
-                        <div class="modal-header">
-                          <h4 class="modal-title">Order Cancellation</h4>
-                          <button type="button" class="close" aria-label="Close" (click)="closeModal()">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
+                          style="max-width: 200px;">
+                          <a href="javascript:void(0)"
+                            class="btn-theme-border w-100 text-center px-0 font-500 d-inline-block py-3"
+                            (click)="cancelProductOrder(order)">
+                            Cancel Order
+                          </a>
                         </div>
-                        <div class="modal-body">
-                          <div class="container-fluid">
-                            <div class="row mx-0 px-3">
-                              <div class="col-lg-12">
-                                <div class="row mx-0">
-                                  <div class="col-lg-12 px-0">
 
-                                    <div class="col-lg-12 mt-3 container-fluid">
-                                      <form [formGroup]="cancelOrderForm" (change)="selectReason()">
-                                        <!-- <div class="col-lg-12-px-0"> -->
-                                        <div class="form-group  text-light font-400 w-100 d-inline-block p-0 ">
-                                          <select formControlName="reason">
-                                            <option [defaultSelected]=true>Choose reason</option>
-                                            <option>Expected delievery time is long</option>
-                                            <option>Price for the product has decreased</option>
-                                            <option>Need different size or color</option>
-                                            <option>I want to cancel due to product quality issue</option>
-                                            <option>I will not be available at home on delievery day</option>
-                                            <option>I want to change my phone number</option>
-                                            <option>I have purchased the product elsewhere</option>
-                                            <option>I want to change address for order</option>
-                                            <option>I have changed my mind</option>
-                                            <option>Other</option>
-                                          </select>
-                                        </div>
-                                        <!-- </div> -->
-                                        <div class="form-group" *ngIf="show==true">
-                                          <p> write the reason to cancel: </p>
-                                          <textarea id="w3review" name="w3review" rows="4" cols="25"
-                                            formControlName="text">
-                                          </textarea>
-                                        </div>
+                  
 
-                                        <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
-                                        <div class="modal-footer">
-                                          <button type="button" class="btn btn-light"
-                                            (click)="closeModal()">Close</button>
-                                          <button type="button" class="btn btn-light"
-                                            (click)="save(order)">Save</button>
-                                        </div>
-                                      </form>
-                                    </div>
+                    <!-- Cancel order modal  -->
+                  <!-- <div>
+                    <ng-template #modal>
+                      <div class="modal-header">
+                        <h4 class="modal-title">Order Cancellation</h4>
+                        <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
 
-                                  </div>
+                      <div class="modal-body">
+                        <div class="container-fluid">
+                          <div class="row mx-0 px-3">
+                            <div class="col-lg-12">
+                              <div class="row mx-0">
+                                <div class="col-lg-12 px-0">
+                                  <div class="col-lg-12 mt-3 container-fluid">
+                                    <form [formGroup]="cancelOrderForm" (change)="selectReason()">
+                                       <div class="col-lg-12-px-0"> -->
+                                      <!-- <div class="form-group  text-light font-400 w-100 d-inline-block p-0 ">
+                                        <select formControlName="reason">
+                                          <option [defaultSelected]=true>Choose reason</option>
+                                          <option>Expected delievery time is long</option>
+                                          <option>Price for the product has decreased</option>
+                                          <option>Need different size or color</option>
+                                          <option>I want to cancel due to product quality issue</option>
+                                          <option>I will not be available at home on delievery day</option>
+                                          <option>I want to change my phone number</option>
+                                          <option>I have purchased the product elsewhere</option>
+                                          <option>I want to change address for order</option>
+                                          <option>I have changed my mind</option>
+                                          <option>Other</option>
+                                        </select>
+                                      </div> -->
+                                      <!-- </div> -->
+                                      <!-- <div class="form-group" *ngIf="show==true">
+                                        <p> write the reason to cancel: </p>
+                                        <textarea id="w3review" name="w3review" rows="4" cols="25"
+                                          formControlName="text">
+                                        </textarea>
+                                      </div>
+
+                                       <button type="submit" class="btn btn-primary">Submit</button> -->
+                                      <!-- <div class="modal-footer">
+                                        <button type="button" class="btn btn-light"
+                                          (click)="closeModal()">Close</button>
+                                        <button type="button" class="btn btn-light" (click)="save(order)">Save</button>
+                                      </div>
+                                    </form>  -->
+                                  <!-- </div>
+
                                 </div>
                               </div>
                             </div>
                           </div>
+
+
                         </div>
-
-
-
-                      </ng-template>
-                      <!-- <button class="btn btn-outline-primary mb-2 mr-2" (click)="openScrollableContent(longContent)">Modal scrollable content</button> -->
-                    </div>
-
-
-                  </ng-container>
-                </ng-container>
-                <pagination-controls (pageChange)="p = $event"></pagination-controls>
-              </div>
-              <!-- <button class="btn btn-outline-primary mb-2 mr-2" (click)="openScrollableContent(longContent)">Modal scrollable content</button> -->
-
-              <!-- Ordered Tab -->
-              <div class="tab-pane fade" id="pills-ordered" role="tabpanel" aria-labelledby="pills-ordered-tab">
-                <h5 class="text-dark font-500 mb-4 w-100">
-                  Ordered
-                </h5>
-                <div class="my_order_crd_main">
-                  <div class="best_sellers_prdct_on_det_pg_list">
-                    <div class="d-flex float-left pl-0">
-                      <div class="best_sellers_prdct_on_det_pg_list_img">
-                        <img class="img-fluid" src="../../../../assets/images/product_list_img.png">
                       </div>
-                    </div>
-                    <div class="d-flex w-50 float-left pl-3">
-                      <div class="prdct_sec_list_crd_mn_content p-0 w-100 d-inline-block">
-                        <h5 class="prdct_list_title mb-3 w-75 font-500 text-dark">
-                          Velvet Long Gown
-                        </h5>
-                        <p class="prdct_list_sub_title text-gray mb-2 w-75">
-                          Nam tempus turpis at scelerisque in placerat
-                          turpis at scelerisque Nam tempus turpis at in placerat
-                        </p>
-                        <div class="prdct_list_price_det w-100 mb-4">
-                          <span class="badge_on_order float-left px-2 py-1 mr-2">
-                            Ordered
+                 </ng-template>
+                </div> -->
+
+                <!-- Order tracking section -->
+
+                 
+
+                <!-- </ng-container> -->
+
+
+
+                <!-- </ng-container>  -->
+
+                <!-- <pagination-controls (pageChange)="p = $event"></pagination-controls>  -->
+
+                <!-- <button class="btn btn-outline-primary mb-2 mr-2" (click)="openScrollableContent(longContent)">Modal scrollable content</button> -->
+
+
+
+                <!--  my orders tab with load more functionality -->
+                
+                
+                   <ng-container *ngFor="let item of allProducts | slice:0:productCount  let i=index">
+                  
+                    <div class="my_order_crd_main">
+                      <div class="best_sellers_prdct_on_det_pg_list">
+                        <div class="d-flex float-left pl-0">
+                          <div class="best_sellers_prdct_on_det_pg_list_img">
+                            <img class="img-fluid" [src]="item.product.thumbImages">
+                          </div>
+                        </div>
+                        <div class="d-flex w-50 float-left pl-3">
+                          <div class="prdct_sec_list_crd_mn_content p-0 w-100 d-inline-block">
+                            <h5 class="prdct_list_title mb-3 w-75 font-500 text-dark">
+                              {{item.product.name}}
+                            </h5>
+                            <p class="prdct_list_sub_title text-gray mb-2 w-75">
+                              {{item.product.description}}
+                            </p>
+                            <div class="prdct_list_price_det w-100 mb-4">
+                              <span class="badge_on_order float-left px-2 py-1 mr-2">
+                                Order Number
+                              </span>
+                              <a href="javascript:void(0)"
+                                class="font-16 text-dark p-1 ml-2 d-flex text-decoration-none">
+                                View Order Details
+                                <span class="material-icons ml-0">chevron_right</span>
+                              </a>
+                            </div>
+                            <div class="w-100 mb-3 d-inline-block">
+                              <span class="badge_on_order text-gray float-left px-2 py-1 mr-2">
+                                Size:
+                              </span>
+                              <span class="float-left material_prdct_spn font-500 px-4 py-1 mr-2">
+                                {{item.product.size}}
+                                
+                              </span>
+                              <span class="badge_on_order text-gray float-left px-2 py-1 mr-2">
+                                Qty:
+                              </span>
+                              <span class="material_prdct_spn float-left font-500 px-4 py-1 mr-2">
+                                {{item.quantity}}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="d-inline-block text-right w-25 float-right pl-3 justify-content-end">
+                          <span class="font-600 font-20 text-dark price_fnl mr-1 d-block mb-5">
+                            ₹{{item.product.sellingPrice}}
                           </span>
-                          <a href="#" class="font-16 text-dark p-1 ml-2 d-flex text-decoration-none">
-                            View Order Details
-                            <span class="material-icons ml-0">chevron_right</span>
+                        </div>
+                      
+                      
+              
+                        <div class="d-inline-block w-100 pt-4 order_track_sec_my_order">
+                          <div class="row">
+                            <div class="hh-grayBox">
+                              <div class="row justify-content-between">
+                                  
+                                  <ng-container *ngFor="let activity of activities">
+                                    <div class="order-tracking completed">
+                                      <span class="is-complete"></span>
+                                      <p>
+                                        <span class="font-500 text-dark mb-2">{{activity['activity']}}</span>
+                                        <br>
+                                        <!-- <span class="mt-2 d-block font-14 text-gray">{{status['date'] | date : 'long'}}</span> -->
+                                      </p>
+                                    </div>
+                                  </ng-container>
+                                  
+                                  <div class="order-tracking">
+                                    <span class="is-complete"></span>
+                                    <p>
+                                      <span class="font-500 text-dark mb-2">Order Out for Delivery</span>
+                                      <br>
+                                      <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span>
+                                    </p>
+                                  </div>
+                                  <div class="order-tracking">
+                                    <span class="is-complete"></span>
+                                    <p>
+                                      <span class="font-500 text-dark mb-2">Order Delivered</span>
+                                      <br>
+                                      <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> 
+                                    </p>
+                                  </div>
+                                
+                               
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                      </div>
+                    
+                    </div>
+                    <div class="prdct_list_price_det w-100 mb-4" *ngIf="order.status !='cancelled'"
+                          style="max-width: 200px;">
+                          <a href="javascript:void(0)"
+                            class="btn-theme-border w-100 text-center px-0 font-500 d-inline-block py-3"
+                            (click)="cancelProductOrder(order)">
+                            Cancel Order
                           </a>
-                        </div>
-                        <div class="w-100 mb-3 d-inline-block">
-                          <span class="badge_on_order text-gray float-left px-2 py-1 mr-2">
-                            Size:
-                          </span>
-                          <span class="float-left material_prdct_spn font-500 px-4 py-1 mr-2">
-                            S
-                          </span>
-                          <span class="badge_on_order text-gray float-left px-2 py-1 mr-2">
-                            Qty:
-                          </span>
-                          <span class="material_prdct_spn float-left font-500 px-4 py-1 mr-2">
-                            2
-                          </span>
+                        </div> 
+
+
+                    <!-- Cancel order modal --->
+                   <div> 
+                    <ng-template #modal>
+                      <div class="modal-header">
+                        <h4 class="modal-title">Order Cancellation</h4>
+                        <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+
+                      <div class="modal-body">
+                        <div class="container-fluid">
+                          <div class="row mx-0 px-3">
+                            <div class="col-lg-12">
+                              <div class="row mx-0">
+                                <div class="col-lg-12 px-0">
+                                  <div class="col-lg-12 mt-3 container-fluid">
+                                    <form [formGroup]="cancelOrderForm" (change)="selectReason()">
+                                      <!-- <div class="col-lg-12-px-0"> --> -->
+                                       <div class="form-group  text-light font-400 w-100 d-inline-block p-0 ">
+                                        <select formControlName="reason">
+                                          <option [defaultSelected]=true>Choose reason</option>
+                                          <option>Expected delievery time is long</option>
+                                          <option>Price for the product has decreased</option>
+                                          <option>Need different size or color</option>
+                                          <option>I want to cancel due to product quality issue</option>
+                                          <option>I will not be available at home on delievery day</option>
+                                          <option>I want to change my phone number</option>
+                                          <option>I have purchased the product elsewhere</option>
+                                          <option>I want to change address for order</option>
+                                          <option>I have changed my mind</option>
+                                          <option>Other</option>
+                                        </select>
+                                      </div>
+                                      <!-- </div> -->
+                                      <div class="form-group" *ngIf="show==true">
+                                        <p> write the reason to cancel: </p>
+                                        <textarea id="w3review" name="w3review" rows="4" cols="25"
+                                          formControlName="text">
+                                        </textarea>
+                                      </div>
+
+                                      <button type="submit" class="btn btn-primary">Submit</button> -->
+                                       <div class="modal-footer">
+                                        <button type="button" class="btn btn-light"
+                                          (click)="closeModal()">Close</button>
+                                        <!-- <button type="button" class="btn btn-light" (click)="save(order)">Save</button> -->
+                                      </div>
+                                    </form> 
+                                  </div> 
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+
                         </div>
                       </div>
-                    </div>
-                    <div class="d-inline-block text-right w-25 float-right pl-3 justify-content-end">
-                      <span class="font-600 font-20 text-dark price_fnl mr-1 d-block mb-5">
-                        ₹500.0
-                      </span>
-                      <a href="#" class="btn-theme-border w-100 text-center px-0 font-500 d-inline-block py-3">
-                        Cancel Order
-                      </a>
-                    </div>
-                    <div class="d-inline-block w-100 pt-4 order_track_sec_my_order">
-                      <div class="row">
-                        <div class="hh-grayBox">
-                          <div class="row justify-content-between">
-                            <div class="order-tracking completed">
-                              <span class="is-complete"></span>
-                              <p>
-                                <span class="font-500 text-dark mb-2">Order Recieved</span>
-                                <br>
-                                <span class="mt-2 d-block font-14 text-gray">10:30 PM 20th October, 2020</span>
-                              </p>
-                            </div>
-                            <div class="order-tracking completed">
-                              <span class="is-complete"></span>
-                              <p>
-                                <span class="font-500 text-dark mb-2">Order Packed</span>
-                                <br>
-                                <span class="mt-2 d-block font-14 text-gray">10:30 PM 20th October, 2020</span>
-                              </p>
-                            </div>
-                            <div class="order-tracking completed">
-                              <span class="is-complete"></span>
-                              <p>
-                                <span class="font-500 text-dark mb-2">Order Shipped</span>
-                                <br>
-                                <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span>
-                              </p>
-                            </div>
-                            <div class="order-tracking completed">
-                              <span class="is-complete"></span>
-                              <p>
-                                <span class="font-500 text-dark mb-2">Shipment Has Arrived At Chandigarh
-                                  Facility</span>
-                                <br>
-                                <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span>
-                              </p>
-                            </div>
-                            <div class="order-tracking">
-                              <span class="is-complete"></span>
-                              <p>
-                                <span class="font-500 text-dark mb-2">Shipment Has Arrived At Mumbai
-                                  Facility</span>
-                                <br>
-                                <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
-                              </p>
-                            </div>
-                            <div class="order-tracking">
-                              <span class="is-complete"></span>
-                              <p>
-                                <span class="font-500 text-dark mb-2">Order Out for Delivery</span>
-                                <br>
-                                <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
-                              </p>
-                            </div>
-                            <div class="order-tracking">
-                              <span class="is-complete"></span>
-                              <p>
-                                <span class="font-500 text-dark mb-2">Order Delivered</span>
-                                <br>
-                                <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
-                              </p>
+                 </ng-template>
+                </div> 
+
+                <!-- Order tracking section -->
+
+              </ng-container> 
+              
+              
+               
+              
+              
+                
+                <button *ngIf="productCount < allProducts.length" (click)="viewMore()">Load More Button</button>
+                <button *ngIf="productCount == allProducts.length" (click)="viewLess()">View Less Button</button>
+                
+                <!-- <pagination-controls (pageChange)="p = $event"></pagination-controls>  -->
+
+                <!-- Ordered Tab -->
+                <div class="tab-pane fade" id="pills-ordered" role="tabpanel" aria-labelledby="pills-ordered-tab">
+                  <h5 class="text-dark font-500 mb-4 w-100">
+                    Ordered
+                  </h5>
+                  <div class="my_order_crd_main">
+                    <div class="best_sellers_prdct_on_det_pg_list">
+                      <div class="d-flex float-left pl-0">
+                        <div class="best_sellers_prdct_on_det_pg_list_img">
+                          <img class="img-fluid" src="../../../../assets/images/product_list_img.png">
+                        </div>
+                      </div>
+                      <div class="d-flex w-50 float-left pl-3">
+                        <div class="prdct_sec_list_crd_mn_content p-0 w-100 d-inline-block">
+                          <h5 class="prdct_list_title mb-3 w-75 font-500 text-dark">
+                            Velvet Long Gown
+                          </h5>
+                          <p class="prdct_list_sub_title text-gray mb-2 w-75">
+                            Nam tempus turpis at scelerisque in placerat
+                            turpis at scelerisque Nam tempus turpis at in placerat
+                          </p>
+                          <div class="prdct_list_price_det w-100 mb-4">
+                            <span class="badge_on_order float-left px-2 py-1 mr-2">
+                              Ordered
+                            </span>
+                            <a href="#" class="font-16 text-dark p-1 ml-2 d-flex text-decoration-none">
+                              View Order Details
+                              <span class="material-icons ml-0">chevron_right</span>
+                            </a>
+                          </div>
+                          <div class="w-100 mb-3 d-inline-block">
+                            <span class="badge_on_order text-gray float-left px-2 py-1 mr-2">
+                              Size:
+                            </span>
+                            <span class="float-left material_prdct_spn font-500 px-4 py-1 mr-2">
+                              S
+                            </span>
+                            <span class="badge_on_order text-gray float-left px-2 py-1 mr-2">
+                              Qty:
+                            </span>
+                            <span class="material_prdct_spn float-left font-500 px-4 py-1 mr-2">
+                              2
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="d-inline-block text-right w-25 float-right pl-3 justify-content-end">
+                        <span class="font-600 font-20 text-dark price_fnl mr-1 d-block mb-5">
+                          ₹500.0
+                        </span>
+                        <a href="#" class="btn-theme-border w-100 text-center px-0 font-500 d-inline-block py-3">
+                          Cancel Order
+                        </a>
+                      </div>
+                      <div class="d-inline-block w-100 pt-4 order_track_sec_my_order">
+                        <div class="row">
+                          <div class="hh-grayBox">
+                            <div class="row justify-content-between">
+                              <div class="order-tracking completed">
+                                <span class="is-complete"></span>
+                                <p>
+                                  <span class="font-500 text-dark mb-2">Order Recieved</span>
+                                  <br>
+                                  <span class="mt-2 d-block font-14 text-gray">10:30 PM 20th October, 2020</span>
+                                </p>
+                              </div>
+                              <div class="order-tracking completed">
+                                <span class="is-complete"></span>
+                                <p>
+                                  <span class="font-500 text-dark mb-2">Order Packed</span>
+                                  <br>
+                                  <span class="mt-2 d-block font-14 text-gray">10:30 PM 20th October, 2020</span>
+                                </p>
+                              </div>
+                              <div class="order-tracking completed">
+                                <span class="is-complete"></span>
+                                <p>
+                                  <span class="font-500 text-dark mb-2">Order Shipped</span>
+                                  <br>
+                                  <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span>
+                                </p>
+                              </div>
+                              <div class="order-tracking completed">
+                                <span class="is-complete"></span>
+                                <p>
+                                  <span class="font-500 text-dark mb-2">Shipment Has Arrived At Chandigarh
+                                    Facility</span>
+                                  <br>
+                                  <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span>
+                                </p>
+                              </div>
+                              <div class="order-tracking">
+                                <span class="is-complete"></span>
+                                <p>
+                                  <span class="font-500 text-dark mb-2">Shipment Has Arrived At Mumbai
+                                    Facility</span>
+                                  <br>
+                                  <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
+                                </p>
+                              </div>
+                              <div class="order-tracking">
+                                <span class="is-complete"></span>
+                                <p>
+                                  <span class="font-500 text-dark mb-2">Order Out for Delivery</span>
+                                  <br>
+                                  <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
+                                </p>
+                              </div>
+                              <div class="order-tracking">
+                                <span class="is-complete"></span>
+                                <p>
+                                  <span class="font-500 text-dark mb-2">Order Delivered</span>
+                                  <br>
+                                  <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
+                                </p>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -385,130 +555,130 @@
                     </div>
                   </div>
                 </div>
-              </div>
 
-              <!-- Delivered Tab -->
-              <div class="tab-pane fade" id="pills-delivered" role="tabpanel" aria-labelledby="pills-delivered-tab">
-                <h5 class="text-dark font-500 mb-4 w-100">
-                  Delivered
-                </h5>
-                <div class="my_order_crd_main">
-                  <div class="best_sellers_prdct_on_det_pg_list">
-                    <div class="d-flex float-left pl-0">
-                      <div class="best_sellers_prdct_on_det_pg_list_img">
-                        <img class="img-fluid" src="../../../../assets/images/product_list_img.png">
-                      </div>
-                    </div>
-                    <div class="d-flex w-50 float-left pl-3">
-                      <div class="prdct_sec_list_crd_mn_content p-0 w-100 d-inline-block">
-                        <h5 class="prdct_list_title mb-3 w-75 font-500 text-dark">
-                          Velvet Long Gown
-                        </h5>
-                        <p class="prdct_list_sub_title text-gray mb-2 w-75">
-                          Nam tempus turpis at scelerisque in placerat
-                          turpis at scelerisque Nam tempus turpis at in placerat
-                        </p>
-                        <div class="prdct_list_price_det w-100 mb-4">
-                          <span class="badge_on_deliver_order float-left px-2 py-1 mr-2">
-                            Delivered
-                          </span>
-                          <a href="#" class="font-16 text-dark p-1 ml-2 d-flex text-decoration-none">
-                            View Order Details
-                            <span class="material-icons ml-0">chevron_right</span>
-                          </a>
-                        </div>
-                        <div class="w-100 mb-3 d-inline-block">
-                          <span class="badge_on_order text-gray float-left px-2 py-1 mr-2">
-                            Size:
-                          </span>
-                          <span class="float-left material_prdct_spn font-500 px-4 py-1 mr-2">
-                            S
-                          </span>
-                          <span class="badge_on_order text-gray float-left px-2 py-1 mr-2">
-                            Qty:
-                          </span>
-                          <span class="material_prdct_spn float-left font-500 px-4 py-1 mr-2">
-                            2
-                          </span>
+                <!-- Delivered Tab -->
+                <div class="tab-pane fade" id="pills-delivered" role="tabpanel" aria-labelledby="pills-delivered-tab">
+                  <h5 class="text-dark font-500 mb-4 w-100">
+                    Delivered
+                  </h5>
+                  <div class="my_order_crd_main">
+                    <div class="best_sellers_prdct_on_det_pg_list">
+                      <div class="d-flex float-left pl-0">
+                        <div class="best_sellers_prdct_on_det_pg_list_img">
+                          <img class="img-fluid" src="../../../../assets/images/product_list_img.png">
                         </div>
                       </div>
-                    </div>
-                    <div class="d-inline-block text-right w-25 float-right pl-3 justify-content-end">
-                      <span class="font-600 font-20 text-dark price_fnl mr-1 d-block mb-5">
-                        ₹500.0
-                      </span>
-                      <a href="#" class="btn-theme-border w-100 text-center px-0 mb-2 font-500 d-inline-block py-3">
-                        Exchange Order
-                      </a>
-                      <a href="#" class="btn-theme-border w-100 text-center px-0 mb-2 font-500 d-inline-block py-3"
-                        data-toggle="modal" data-target="#return--order-modal">
-                        Return Order
-                      </a>
-                      <a href="#" class="btn-theme-border w-100 text-center px-0 font-500 d-inline-block py-3">
-                        Review Order
-                      </a>
-                    </div>
-                    <div class="d-inline-block w-100 pt-4 order_track_sec_my_order">
-                      <div class="row">
-                        <div class="hh-grayBox">
-                          <div class="row justify-content-between">
-                            <div class="order-tracking completed">
-                              <span class="is-complete"></span>
-                              <p>
-                                <span class="font-500 text-dark mb-2">Order Recieved</span>
-                                <br>
-                                <span class="mt-2 d-block font-14 text-gray">10:30 PM 20th October, 2020</span>
-                              </p>
-                            </div>
-                            <div class="order-tracking completed">
-                              <span class="is-complete"></span>
-                              <p>
-                                <span class="font-500 text-dark mb-2">Order Packed</span>
-                                <br>
-                                <span class="mt-2 d-block font-14 text-gray">10:30 PM 20th October, 2020</span>
-                              </p>
-                            </div>
-                            <div class="order-tracking completed">
-                              <span class="is-complete"></span>
-                              <p>
-                                <span class="font-500 text-dark mb-2">Order Shipped</span>
-                                <br>
-                                <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span>
-                              </p>
-                            </div>
-                            <div class="order-tracking completed">
-                              <span class="is-complete"></span>
-                              <p>
-                                <span class="font-500 text-dark mb-2">Shipment Has Arrived At Chandigarh
-                                  Facility</span>
-                                <br>
-                                <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span>
-                              </p>
-                            </div>
-                            <div class="order-tracking">
-                              <span class="is-complete"></span>
-                              <p>
-                                <span class="font-500 text-dark mb-2">Shipment Has Arrived At Mumbai
-                                  Facility</span>
-                                <br>
-                                <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
-                              </p>
-                            </div>
-                            <div class="order-tracking">
-                              <span class="is-complete"></span>
-                              <p>
-                                <span class="font-500 text-dark mb-2">Order Out for Delivery</span>
-                                <br>
-                                <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
-                              </p>
-                            </div>
-                            <div class="order-tracking">
-                              <span class="is-complete"></span>
-                              <p>
-                                <span class="font-500 text-dark mb-2">Order Delivered</span>
-                                <br>
-                                <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
-                              </p>
+                      <div class="d-flex w-50 float-left pl-3">
+                        <div class="prdct_sec_list_crd_mn_content p-0 w-100 d-inline-block">
+                          <h5 class="prdct_list_title mb-3 w-75 font-500 text-dark">
+                            Velvet Long Gown
+                          </h5>
+                          <p class="prdct_list_sub_title text-gray mb-2 w-75">
+                            Nam tempus turpis at scelerisque in placerat
+                            turpis at scelerisque Nam tempus turpis at in placerat
+                          </p>
+                          <div class="prdct_list_price_det w-100 mb-4">
+                            <span class="badge_on_deliver_order float-left px-2 py-1 mr-2">
+                              Delivered
+                            </span>
+                            <a href="#" class="font-16 text-dark p-1 ml-2 d-flex text-decoration-none">
+                              View Order Details
+                              <span class="material-icons ml-0">chevron_right</span>
+                            </a>
+                          </div>
+                          <div class="w-100 mb-3 d-inline-block">
+                            <span class="badge_on_order text-gray float-left px-2 py-1 mr-2">
+                              Size:
+                            </span>
+                            <span class="float-left material_prdct_spn font-500 px-4 py-1 mr-2">
+                              S
+                            </span>
+                            <span class="badge_on_order text-gray float-left px-2 py-1 mr-2">
+                              Qty:
+                            </span>
+                            <span class="material_prdct_spn float-left font-500 px-4 py-1 mr-2">
+                              2
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="d-inline-block text-right w-25 float-right pl-3 justify-content-end">
+                        <span class="font-600 font-20 text-dark price_fnl mr-1 d-block mb-5">
+                          ₹500.0
+                        </span>
+                        <a href="#" class="btn-theme-border w-100 text-center px-0 mb-2 font-500 d-inline-block py-3">
+                          Exchange Order
+                        </a>
+                        <a href="#" class="btn-theme-border w-100 text-center px-0 mb-2 font-500 d-inline-block py-3"
+                          data-toggle="modal" data-target="#return--order-modal">
+                          Return Order
+                        </a>
+                        <a href="#" class="btn-theme-border w-100 text-center px-0 font-500 d-inline-block py-3">
+                          Review Order
+                        </a>
+                      </div>
+                      <div class="d-inline-block w-100 pt-4 order_track_sec_my_order">
+                        <div class="row">
+                          <div class="hh-grayBox">
+                            <div class="row justify-content-between">
+                              <div class="order-tracking completed">
+                                <span class="is-complete"></span>
+                                <p>
+                                  <span class="font-500 text-dark mb-2">Order Recieved</span>
+                                  <br>
+                                  <span class="mt-2 d-block font-14 text-gray">10:30 PM 20th October, 2020</span>
+                                </p>
+                              </div>
+                              <div class="order-tracking completed">
+                                <span class="is-complete"></span>
+                                <p>
+                                  <span class="font-500 text-dark mb-2">Order Packed</span>
+                                  <br>
+                                  <span class="mt-2 d-block font-14 text-gray">10:30 PM 20th October, 2020</span>
+                                </p>
+                              </div>
+                              <div class="order-tracking completed">
+                                <span class="is-complete"></span>
+                                <p>
+                                  <span class="font-500 text-dark mb-2">Order Shipped</span>
+                                  <br>
+                                  <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span>
+                                </p>
+                              </div>
+                              <div class="order-tracking completed">
+                                <span class="is-complete"></span>
+                                <p>
+                                  <span class="font-500 text-dark mb-2">Shipment Has Arrived At Chandigarh
+                                    Facility</span>
+                                  <br>
+                                  <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span>
+                                </p> 
+                              </div>
+                              <div class="order-tracking">
+                                <span class="is-complete"></span>
+                                <p>
+                                  <span class="font-500 text-dark mb-2">Shipment Has Arrived At Mumbai
+                                    Facility</span>
+                                  <br>
+                                  <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
+                                </p>
+                              </div>
+                              <div class="order-tracking">
+                                <span class="is-complete"></span>
+                                <p>
+                                  <span class="font-500 text-dark mb-2">Order Out for Delivery</span>
+                                  <br>
+                                  <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
+                                </p>
+                              </div>
+                              <div class="order-tracking">
+                                <span class="is-complete"></span>
+                                <p>
+                                  <span class="font-500 text-dark mb-2">Order Delivered</span>
+                                  <br>
+                                  <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
+                                </p>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -516,123 +686,123 @@
                     </div>
                   </div>
                 </div>
-              </div>
 
-              <!-- Return Policy Tab -->
-              <div class="tab-pane fade" id="pills-exchange" role="tabpanel" aria-labelledby="pills-exchange-tab">
-                <h5 class="text-dark font-500 mb-4 w-100">
-                  All Order
-                </h5>
-                <div class="my_order_crd_main">
-                  <div class="best_sellers_prdct_on_det_pg_list">
-                    <div class="d-flex float-left pl-0">
-                      <div class="best_sellers_prdct_on_det_pg_list_img">
-                        <img class="img-fluid" src="../../../../assets/images/product_list_img.png">
-                      </div>
-                    </div>
-                    <div class="d-flex w-50 float-left pl-3">
-                      <div class="prdct_sec_list_crd_mn_content p-0 w-100 d-inline-block">
-                        <h5 class="prdct_list_title mb-3 w-75 font-500 text-dark">
-                          Velvet Long Gown
-                        </h5>
-                        <p class="prdct_list_sub_title text-gray mb-2 w-75">
-                          Nam tempus turpis at scelerisque in placerat
-                          turpis at scelerisque Nam tempus turpis at in placerat
-                        </p>
-                        <div class="prdct_list_price_det w-100 mb-4">
-                          <span class="badge_on_order float-left px-2 py-1 mr-2">
-                            Ordered
-                          </span>
-                          <a href="#" class="font-16 text-dark p-1 ml-2 d-flex text-decoration-none">
-                            View Order Details
-                            <span class="material-icons ml-0">chevron_right</span>
-                          </a>
-                        </div>
-                        <div class="w-100 mb-3 d-inline-block">
-                          <span class="badge_on_order text-gray float-left px-2 py-1 mr-2">
-                            Size:
-                          </span>
-                          <span class="float-left material_prdct_spn font-500 px-4 py-1 mr-2">
-                            S
-                          </span>
-                          <span class="badge_on_order text-gray float-left px-2 py-1 mr-2">
-                            Qty:
-                          </span>
-                          <span class="material_prdct_spn float-left font-500 px-4 py-1 mr-2">
-                            2
-                          </span>
+                <!-- Return Policy Tab -->
+                <div class="tab-pane fade" id="pills-exchange" role="tabpanel" aria-labelledby="pills-exchange-tab">
+                  <h5 class="text-dark font-500 mb-4 w-100">
+                    All Order
+                  </h5>
+                  <div class="my_order_crd_main">
+                    <div class="best_sellers_prdct_on_det_pg_list">
+                      <div class="d-flex float-left pl-0">
+                        <div class="best_sellers_prdct_on_det_pg_list_img">
+                          <img class="img-fluid" src="../../../../assets/images/product_list_img.png">
                         </div>
                       </div>
-                    </div>
-                    <div class="d-inline-block text-right w-25 float-right pl-3 justify-content-end">
-                      <span class="font-600 font-20 text-dark price_fnl mr-1 d-block mb-5">
-                        ₹500.0
-                      </span>
-                      <a href="#" class="btn-theme-border w-100 text-center px-0 font-500 d-inline-block py-3">
-                        Cancel Order
-                      </a>
-                    </div>
-                    <div class="d-inline-block w-100 pt-4 order_track_sec_my_order">
-                      <div class="row">
-                        <div class="hh-grayBox">
-                          <div class="row justify-content-between">
-                            <div class="order-tracking completed">
-                              <span class="is-complete"></span>
-                              <p>
-                                <span class="font-500 text-dark mb-2">Order Recieved</span>
-                                <br>
-                                <span class="mt-2 d-block font-14 text-gray">10:30 PM 20th October, 2020</span>
-                              </p>
-                            </div>
-                            <div class="order-tracking completed">
-                              <span class="is-complete"></span>
-                              <p>
-                                <span class="font-500 text-dark mb-2">Order Packed</span>
-                                <br>
-                                <span class="mt-2 d-block font-14 text-gray">10:30 PM 20th October, 2020</span>
-                              </p>
-                            </div>
-                            <div class="order-tracking completed">
-                              <span class="is-complete"></span>status
-                              <p>
-                                <span class="font-500 text-dark mb-2">Order Shipped</span>
-                                <br>
-                                <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span>
-                              </p>
-                            </div>
-                            <div class="order-tracking completed">
-                              <span class="is-complete"></span>
-                              <p>
-                                <span class="font-500 text-dark mb-2">Shipment Has Arrived At Chandigarh
-                                  Facility</span>
-                                <br>
-                                <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span>
-                              </p>
-                            </div>
-                            <div class="order-tracking">
-                              <span class="is-complete"></span>
-                              <p>
-                                <span class="font-500 text-dark mb-2">Shipment Has Arrived At Mumbai
-                                  Facility</span>
-                                <br>
-                                <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
-                              </p>
-                            </div>
-                            <div class="order-tracking">
-                              <span class="is-complete"></span>
-                              <p>
-                                <span class="font-500 text-dark mb-2">Order Out for Delivery</span>
-                                <br>
-                                <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
-                              </p>
-                            </div>
-                            <div class="order-tracking">
-                              <span class="is-complete"></span>
-                              <p>
-                                <span class="font-500 text-dark mb-2">Order Delivered</span>
-                                <br>
-                                <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
-                              </p>
+                      <div class="d-flex w-50 float-left pl-3">
+                        <div class="prdct_sec_list_crd_mn_content p-0 w-100 d-inline-block">
+                          <h5 class="prdct_list_title mb-3 w-75 font-500 text-dark">
+                            Velvet Long Gown
+                          </h5>
+                          <p class="prdct_list_sub_title text-gray mb-2 w-75">
+                            Nam tempus turpis at scelerisque in placerat
+                            turpis at scelerisque Nam tempus turpis at in placerat
+                          </p>
+                          <div class="prdct_list_price_det w-100 mb-4">
+                            <span class="badge_on_order float-left px-2 py-1 mr-2">
+                              Ordered
+                            </span>
+                            <a href="#" class="font-16 text-dark p-1 ml-2 d-flex text-decoration-none">
+                              View Order Details
+                              <span class="material-icons ml-0">chevron_right</span>
+                            </a>
+                          </div>
+                          <div class="w-100 mb-3 d-inline-block">
+                            <span class="badge_on_order text-gray float-left px-2 py-1 mr-2">
+                              Size:
+                            </span>
+                            <span class="float-left material_prdct_spn font-500 px-4 py-1 mr-2">
+                              S
+                            </span>
+                            <span class="badge_on_order text-gray float-left px-2 py-1 mr-2">
+                              Qty:
+                            </span>
+                            <span class="material_prdct_spn float-left font-500 px-4 py-1 mr-2">
+                              2
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="d-inline-block text-right w-25 float-right pl-3 justify-content-end">
+                        <span class="font-600 font-20 text-dark price_fnl mr-1 d-block mb-5">
+                          ₹500.0
+                        </span>
+                        <a href="#" class="btn-theme-border w-100 text-center px-0 font-500 d-inline-block py-3">
+                          Cancel Order
+                        </a>
+                      </div>
+                      <div class="d-inline-block w-100 pt-4 order_track_sec_my_order">
+                        <div class="row">
+                          <div class="hh-grayBox">
+                            <div class="row justify-content-between">
+                              <div class="order-tracking completed">
+                                <span class="is-complete"></span>
+                                <p>
+                                  <span class="font-500 text-dark mb-2">Order Recieved</span>
+                                  <br>
+                                  <span class="mt-2 d-block font-14 text-gray">10:30 PM 20th October, 2020</span>
+                                </p>
+                              </div>
+                              <div class="order-tracking completed">
+                                <span class="is-complete"></span>
+                                <p>
+                                  <span class="font-500 text-dark mb-2">Order Packed</span>
+                                  <br>
+                                  <span class="mt-2 d-block font-14 text-gray">10:30 PM 20th October, 2020</span>
+                                </p>
+                              </div>
+                              <div class="order-tracking completed">
+                                <span class="is-complete"></span>status
+                                <p>
+                                  <span class="font-500 text-dark mb-2">Order Shipped</span>
+                                  <br>
+                                  <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span>
+                                </p>
+                              </div>
+                              <div class="order-tracking completed">
+                                <span class="is-complete"></span>
+                                <p>
+                                  <span class="font-500 text-dark mb-2">Shipment Has Arrived At Chandigarh
+                                    Facility</span>
+                                  <br>
+                                  <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span>
+                                </p>
+                              </div>
+                              <div class="order-tracking">
+                                <span class="is-complete"></span>
+                                <p>
+                                  <span class="font-500 text-dark mb-2">Shipment Has Arrived At Mumbai
+                                    Facility</span>
+                                  <br>
+                                  <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
+                                </p>
+                              </div>
+                              <div class="order-tracking">
+                                <span class="is-complete"></span>
+                                <p>
+                                  <span class="font-500 text-dark mb-2">Order Out for Delivery</span>
+                                  <br>
+                                  <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
+                                </p>
+                              </div>
+                              <div class="order-tracking">
+                                <span class="is-complete"></span>
+                                <p>
+                                  <span class="font-500 text-dark mb-2">Order Delivered</span>
+                                  <br>
+                                  <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
+                                </p>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -640,123 +810,123 @@
                     </div>
                   </div>
                 </div>
-              </div>
 
-              <!-- Exchanged Tab -->
-              <div class="tab-pane fade" id="pills-return" role="tabpanel" aria-labelledby="pills-return-tab">
-                <h5 class="text-dark font-500 mb-4 w-100">
-                  Exchanged
-                </h5>
-                <div class="my_order_crd_main">
-                  <div class="best_sellers_prdct_on_det_pg_list">
-                    <div class="d-flex float-left pl-0">
-                      <div class="best_sellers_prdct_on_det_pg_list_img">
-                        <img class="img-fluid" src="../../../../assets/images/product_list_img.png">
-                      </div>
-                    </div>
-                    <div class="d-flex w-50 float-left pl-3">
-                      <div class="prdct_sec_list_crd_mn_content p-0 w-100 d-inline-block">
-                        <h5 class="prdct_list_title mb-3 w-75 font-500 text-dark">
-                          Velvet Long Gown
-                        </h5>
-                        <p class="prdct_list_sub_title text-gray mb-2 w-75">
-                          Nam tempus turpis at scelerisque in placerat
-                          turpis at scelerisque Nam tempus turpis at in placerat
-                        </p>
-                        <div class="prdct_list_price_det w-100 mb-4">
-                          <span class="badge_on_order float-left px-2 py-1 mr-2">
-                            Ordered
-                          </span>
-                          <a href="#" class="font-16 text-dark p-1 ml-2 d-flex text-decoration-none">
-                            View Order Details
-                            <span class="material-icons ml-0">chevron_right</span>
-                          </a>
-                        </div>
-                        <div class="w-100 mb-3 d-inline-block">
-                          <span class="badge_on_order text-gray float-left px-2 py-1 mr-2">
-                            Size:
-                          </span>
-                          <span class="float-left material_prdct_spn font-500 px-4 py-1 mr-2">
-                            S
-                          </span>
-                          <span class="badge_on_order text-gray float-left px-2 py-1 mr-2">
-                            Qty:
-                          </span>
-                          <span class="material_prdct_spn float-left font-500 px-4 py-1 mr-2">
-                            2
-                          </span>
+                <!-- Exchanged Tab -->
+                <div class="tab-pane fade" id="pills-return" role="tabpanel" aria-labelledby="pills-return-tab">
+                  <h5 class="text-dark font-500 mb-4 w-100">
+                    Exchanged
+                  </h5>
+                  <div class="my_order_crd_main">
+                    <div class="best_sellers_prdct_on_det_pg_list">
+                      <div class="d-flex float-left pl-0">
+                        <div class="best_sellers_prdct_on_det_pg_list_img">
+                          <img class="img-fluid" src="../../../../assets/images/product_list_img.png">
                         </div>
                       </div>
-                    </div>
-                    <div class="d-inline-block text-right w-25 float-right pl-3 justify-content-end">
-                      <span class="font-600 font-20 text-dark price_fnl mr-1 d-block mb-5">
-                        ₹500.0
-                      </span>
-                      <a href="#" class="btn-theme-border w-100 text-center px-0 font-500 d-inline-block py-3">
-                        Cancel Order
-                      </a>
-                    </div>
-                    <div class="d-inline-block w-100 pt-4 order_track_sec_my_order">
-                      <div class="row">
-                        <div class="hh-grayBox">
-                          <div class="row justify-content-between">
-                            <div class="order-tracking completed">
-                              <span class="is-complete"></span>
-                              <p>
-                                <span class="font-500 text-dark mb-2">Order Recieved</span>
-                                <br>
-                                <span class="mt-2 d-block font-14 text-gray">10:30 PM 20th October, 2020</span>
-                              </p>
-                            </div>
-                            <div class="order-tracking completed">
-                              <span class="is-complete"></span>
-                              <p>
-                                <span class="font-500 text-dark mb-2">Order Packed</span>
-                                <br>
-                                <span class="mt-2 d-block font-14 text-gray">10:30 PM 20th October, 2020</span>
-                              </p>
-                            </div>
-                            <div class="order-tracking completed">
-                              <span class="is-complete"></span>
-                              <p>
-                                <span class="font-500 text-dark mb-2">Order Shipped</span>
-                                <br>
-                                <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span>
-                              </p>
-                            </div>
-                            <div class="order-tracking completed">
-                              <span class="is-complete"></span>
-                              <p>
-                                <span class="font-500 text-dark mb-2">Shipment Has Arrived At Chandigarh
-                                  Facility</span>
-                                <br>
-                                <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span>
-                              </p>
-                            </div>
-                            <div class="order-tracking">
-                              <span class="is-complete"></span>
-                              <p>
-                                <span class="font-500 text-dark mb-2">Shipment Has Arrived At Mumbai
-                                  Facility</span>
-                                <br>
-                                <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
-                              </p>
-                            </div>
-                            <div class="order-tracking">
-                              <span class="is-complete"></span>
-                              <p>
-                                <span class="font-500 text-dark mb-2">Order Out for Delivery</span>
-                                <br>
-                                <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
-                              </p>
-                            </div>
-                            <div class="order-tracking">
-                              <span class="is-complete"></span>
-                              <p>
-                                <span class="font-500 text-dark mb-2">Order Delivered</span>
-                                <br>
-                                <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
-                              </p>
+                      <div class="d-flex w-50 float-left pl-3">
+                        <div class="prdct_sec_list_crd_mn_content p-0 w-100 d-inline-block">
+                          <h5 class="prdct_list_title mb-3 w-75 font-500 text-dark">
+                            Velvet Long Gown
+                          </h5>
+                          <p class="prdct_list_sub_title text-gray mb-2 w-75">
+                            Nam tempus turpis at scelerisque in placerat
+                            turpis at scelerisque Nam tempus turpis at in placerat
+                          </p>
+                          <div class="prdct_list_price_det w-100 mb-4">
+                            <span class="badge_on_order float-left px-2 py-1 mr-2">
+                              Ordered
+                            </span>
+                            <a href="#" class="font-16 text-dark p-1 ml-2 d-flex text-decoration-none">
+                              View Order Details
+                              <span class="material-icons ml-0">chevron_right</span>
+                            </a>
+                          </div>
+                          <div class="w-100 mb-3 d-inline-block">
+                            <span class="badge_on_order text-gray float-left px-2 py-1 mr-2">
+                              Size:
+                            </span>
+                            <span class="float-left material_prdct_spn font-500 px-4 py-1 mr-2">
+                              S
+                            </span>
+                            <span class="badge_on_order text-gray float-left px-2 py-1 mr-2">
+                              Qty:
+                            </span>
+                            <span class="material_prdct_spn float-left font-500 px-4 py-1 mr-2">
+                              2
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="d-inline-block text-right w-25 float-right pl-3 justify-content-end">
+                        <span class="font-600 font-20 text-dark price_fnl mr-1 d-block mb-5">
+                          ₹500.0
+                        </span>
+                        <a href="#" class="btn-theme-border w-100 text-center px-0 font-500 d-inline-block py-3">
+                          Cancel Order
+                        </a>
+                      </div>
+                      <div class="d-inline-block w-100 pt-4 order_track_sec_my_order">
+                        <div class="row">
+                          <div class="hh-grayBox">
+                            <div class="row justify-content-between">
+                              <div class="order-tracking completed">
+                                <span class="is-complete"></span>
+                                <p>
+                                  <span class="font-500 text-dark mb-2">Order Recieved</span>
+                                  <br>
+                                  <span class="mt-2 d-block font-14 text-gray">10:30 PM 20th October, 2020</span>
+                                </p>
+                              </div>
+                              <div class="order-tracking completed">
+                                <span class="is-complete"></span>
+                                <p>
+                                  <span class="font-500 text-dark mb-2">Order Packed</span>
+                                  <br>
+                                  <span class="mt-2 d-block font-14 text-gray">10:30 PM 20th October, 2020</span>
+                                </p>
+                              </div>
+                              <div class="order-tracking completed">
+                                <span class="is-complete"></span>
+                                <p>
+                                  <span class="font-500 text-dark mb-2">Order Shipped</span>
+                                  <br>
+                                  <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span>
+                                </p>
+                              </div>
+                              <div class="order-tracking completed">
+                                <span class="is-complete"></span>
+                                <p>
+                                  <span class="font-500 text-dark mb-2">Shipment Has Arrived At Chandigarh
+                                    Facility</span>
+                                  <br>
+                                  <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span>
+                                </p>
+                              </div>
+                              <div class="order-tracking">
+                                <span class="is-complete"></span>
+                                <p>
+                                  <span class="font-500 text-dark mb-2">Shipment Has Arrived At Mumbai
+                                    Facility</span>
+                                  <br>
+                                  <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
+                                </p>
+                              </div>
+                              <div class="order-tracking">
+                                <span class="is-complete"></span>
+                                <p>
+                                  <span class="font-500 text-dark mb-2">Order Out for Delivery</span>
+                                  <br>
+                                  <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
+                                </p>
+                              </div>
+                              <div class="order-tracking">
+                                <span class="is-complete"></span>
+                                <p>
+                                  <span class="font-500 text-dark mb-2">Order Delivered</span>
+                                  <br>
+                                  <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
+                                </p>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -764,123 +934,123 @@
                     </div>
                   </div>
                 </div>
-              </div>
 
-              <!-- Returned Tab -->
-              <div class="tab-pane fade" id="pills-cancelled" role="tabpanel" aria-labelledby="pills-cancelled-tab">
-                <h5 class="text-dark font-500 mb-4 w-100">
-                  Returned
-                </h5>
-                <div class="my_order_crd_main">
-                  <div class="best_sellers_prdct_on_det_pg_list">
-                    <div class="d-flex float-left pl-0">
-                      <div class="best_sellers_prdct_on_det_pg_list_img">
-                        <img class="img-fluid" src="../../../../assets/images/product_list_img.png">
-                      </div>
-                    </div>
-                    <div class="d-flex w-50 float-left pl-3">
-                      <div class="prdct_sec_list_crd_mn_content p-0 w-100 d-inline-block">
-                        <h5 class="prdct_list_title mb-3 w-75 font-500 text-dark">
-                          Velvet Long Gown
-                        </h5>
-                        <p class="prdct_list_sub_title text-gray mb-2 w-75">
-                          Nam tempus turpis at scelerisque in placerat
-                          turpis at scelerisque Nam tempus turpis at in placerat
-                        </p>
-                        <div class="prdct_list_price_det w-100 mb-4">
-                          <span class="badge_on_order float-left px-2 py-1 mr-2">
-                            Ordered
-                          </span>
-                          <a href="#" class="font-16 text-dark p-1 ml-2 d-flex text-decoration-none">
-                            View Order Details
-                            <span class="material-icons ml-0">chevron_right</span>
-                          </a>
-                        </div>
-                        <div class="w-100 mb-3 d-inline-block">
-                          <span class="badge_on_order text-gray float-left px-2 py-1 mr-2">
-                            Size:
-                          </span>
-                          <span class="float-left material_prdct_spn font-500 px-4 py-1 mr-2">
-                            S
-                          </span>
-                          <span class="badge_on_order text-gray float-left px-2 py-1 mr-2">
-                            Qty:
-                          </span>
-                          <span class="material_prdct_spn float-left font-500 px-4 py-1 mr-2">
-                            2
-                          </span>
+                <!-- Returned Tab -->
+                <div class="tab-pane fade" id="pills-cancelled" role="tabpanel" aria-labelledby="pills-cancelled-tab">
+                  <h5 class="text-dark font-500 mb-4 w-100">
+                    Returned
+                  </h5>
+                  <div class="my_order_crd_main">
+                    <div class="best_sellers_prdct_on_det_pg_list">
+                      <div class="d-flex float-left pl-0">
+                        <div class="best_sellers_prdct_on_det_pg_list_img">
+                          <img class="img-fluid" src="../../../../assets/images/product_list_img.png">
                         </div>
                       </div>
-                    </div>
-                    <div class="d-inline-block text-right w-25 float-right pl-3 justify-content-end">
-                      <span class="font-600 font-20 text-dark price_fnl mr-1 d-block mb-5">
-                        ₹500.0
-                      </span>
-                      <a href="#" class="btn-theme-border w-100 text-center px-0 font-500 d-inline-block py-3">
-                        Cancel Order
-                      </a>
-                    </div>
-                    <div class="d-inline-block w-100 pt-4 order_track_sec_my_order">
-                      <div class="row">
-                        <div class="hh-grayBox">
-                          <div class="row justify-content-between">
-                            <div class="order-tracking completed">
-                              <span class="is-complete"></span>
-                              <p>
-                                <span class="font-500 text-dark mb-2">Order Recieved</span>
-                                <br>
-                                <span class="mt-2 d-block font-14 text-gray">10:30 PM 20th October, 2020</span>
-                              </p>
-                            </div>
-                            <div class="order-tracking completed">
-                              <span class="is-complete"></span>
-                              <p>
-                                <span class="font-500 text-dark mb-2">Order Packed</span>
-                                <br>
-                                <span class="mt-2 d-block font-14 text-gray">10:30 PM 20th October, 2020</span>
-                              </p>
-                            </div>
-                            <div class="order-tracking completed">
-                              <span class="is-complete"></span>
-                              <p>
-                                <span class="font-500 text-dark mb-2">Order Shipped</span>
-                                <br>
-                                <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span>
-                              </p>
-                            </div>
-                            <div class="order-tracking completed">
-                              <span class="is-complete"></span>
-                              <p>
-                                <span class="font-500 text-dark mb-2">Shipment Has Arrived At Chandigarh
-                                  Facility</span>
-                                <br>
-                                <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span>
-                              </p>
-                            </div>
-                            <div class="order-tracking">
-                              <span class="is-complete"></span>
-                              <p>
-                                <span class="font-500 text-dark mb-2">Shipment Has Arrived At Mumbai
-                                  Facility</span>
-                                <br>
-                                <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
-                              </p>
-                            </div>
-                            <div class="order-tracking">
-                              <span class="is-complete"></span>
-                              <p>
-                                <span class="font-500 text-dark mb-2">Order Out for Delivery</span>
-                                <br>
-                                <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
-                              </p>
-                            </div>
-                            <div class="order-tracking">
-                              <span class="is-complete"></span>
-                              <p>
-                                <span class="font-500 text-dark mb-2">Order Delivered</span>
-                                <br>
-                                <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
-                              </p>
+                      <div class="d-flex w-50 float-left pl-3">
+                        <div class="prdct_sec_list_crd_mn_content p-0 w-100 d-inline-block">
+                          <h5 class="prdct_list_title mb-3 w-75 font-500 text-dark">
+                            Velvet Long Gown
+                          </h5>
+                          <p class="prdct_list_sub_title text-gray mb-2 w-75">
+                            Nam tempus turpis at scelerisque in placerat
+                            turpis at scelerisque Nam tempus turpis at in placerat
+                          </p>
+                          <div class="prdct_list_price_det w-100 mb-4">
+                            <span class="badge_on_order float-left px-2 py-1 mr-2">
+                              Ordered
+                            </span>
+                            <a href="#" class="font-16 text-dark p-1 ml-2 d-flex text-decoration-none">
+                              View Order Details
+                              <span class="material-icons ml-0">chevron_right</span>
+                            </a>
+                          </div>
+                          <div class="w-100 mb-3 d-inline-block">
+                            <span class="badge_on_order text-gray float-left px-2 py-1 mr-2">
+                              Size:
+                            </span>
+                            <span class="float-left material_prdct_spn font-500 px-4 py-1 mr-2">
+                              S
+                            </span>
+                            <span class="badge_on_order text-gray float-left px-2 py-1 mr-2">
+                              Qty:
+                            </span>
+                            <span class="material_prdct_spn float-left font-500 px-4 py-1 mr-2">
+                              2
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="d-inline-block text-right w-25 float-right pl-3 justify-content-end">
+                        <span class="font-600 font-20 text-dark price_fnl mr-1 d-block mb-5">
+                          ₹500.0
+                        </span>
+                        <a href="#" class="btn-theme-border w-100 text-center px-0 font-500 d-inline-block py-3">
+                          Cancel Order
+                        </a>
+                      </div>
+                      <div class="d-inline-block w-100 pt-4 order_track_sec_my_order">
+                        <div class="row">
+                          <div class="hh-grayBox">
+                            <div class="row justify-content-between">
+                              <div class="order-tracking completed">
+                                <span class="is-complete"></span>
+                                <p>
+                                  <span class="font-500 text-dark mb-2">Order Recieved</span>
+                                  <br>
+                                  <span class="mt-2 d-block font-14 text-gray">10:30 PM 20th October, 2020</span>
+                                </p>
+                              </div>
+                              <div class="order-tracking completed">
+                                <span class="is-complete"></span>
+                                <p>
+                                  <span class="font-500 text-dark mb-2">Order Packed</span>
+                                  <br>
+                                  <span class="mt-2 d-block font-14 text-gray">10:30 PM 20th October, 2020</span>
+                                </p>
+                              </div>
+                              <div class="order-tracking completed">
+                                <span class="is-complete"></span>
+                                <p>
+                                  <span class="font-500 text-dark mb-2">Order Shipped</span>
+                                  <br>
+                                  <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span>
+                                </p>
+                              </div>
+                              <div class="order-tracking completed">
+                                <span class="is-complete"></span>
+                                <p>
+                                  <span class="font-500 text-dark mb-2">Shipment Has Arrived At Chandigarh
+                                    Facility</span>
+                                  <br>
+                                  <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span>
+                                </p>
+                              </div>
+                              <div class="order-tracking">
+                                <span class="is-complete"></span>
+                                <p>
+                                  <span class="font-500 text-dark mb-2">Shipment Has Arrived At Mumbai
+                                    Facility</span>
+                                  <br>
+                                  <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
+                                </p>
+                              </div>
+                              <div class="order-tracking">
+                                <span class="is-complete"></span>
+                                <p>
+                                  <span class="font-500 text-dark mb-2">Order Out for Delivery</span>
+                                  <br>
+                                  <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
+                                </p>
+                              </div>
+                              <div class="order-tracking">
+                                <span class="is-complete"></span>
+                                <p>
+                                  <span class="font-500 text-dark mb-2">Order Delivered</span>
+                                  <br>
+                                  <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
+                                </p>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -888,123 +1058,123 @@
                     </div>
                   </div>
                 </div>
-              </div>
 
-              <!-- Cancelled Tab -->
-              <div class="tab-pane fade" id="pills-cancelled" role="tabpanel" aria-labelledby="pills-cancelled-tab">
-                <h5 class="text-dark font-500 mb-4 w-100">
-                  Cancelled
-                </h5>
-                <div class="my_order_crd_main">
-                  <div class="best_sellers_prdct_on_det_pg_list">
-                    <div class="d-flex float-left pl-0">
-                      <div class="best_sellers_prdct_on_det_pg_list_img">
-                        <img class="img-fluid" src="../../../../assets/images/product_list_img.png">
-                      </div>
-                    </div>
-                    <div class="d-flex w-50 float-left pl-3">
-                      <div class="prdct_sec_list_crd_mn_content p-0 w-100 d-inline-block">
-                        <h5 class="prdct_list_title mb-3 w-75 font-500 text-dark">
-                          Velvet Long Gown
-                        </h5>
-                        <p class="prdct_list_sub_title text-gray mb-2 w-75">
-                          Nam tempus turpis at scelerisque in placerat
-                          turpis at scelerisque Nam tempus turpis at in placerat
-                        </p>
-                        <div class="prdct_list_price_det w-100 mb-4">
-                          <span class="badge_on_order float-left px-2 py-1 mr-2">
-                            Ordered
-                          </span>
-                          <a href="#" class="font-16 text-dark p-1 ml-2 d-flex text-decoration-none">
-                            View Order Details
-                            <span class="material-icons ml-0">chevron_right</span>
-                          </a>
-                        </div>
-                        <div class="w-100 mb-3 d-inline-block">
-                          <span class="badge_on_order text-gray float-left px-2 py-1 mr-2">
-                            Size:
-                          </span>
-                          <span class="float-left material_prdct_spn font-500 px-4 py-1 mr-2">
-                            S
-                          </span>
-                          <span class="badge_on_order text-gray float-left px-2 py-1 mr-2">
-                            Qty:
-                          </span>
-                          <span class="material_prdct_spn float-left font-500 px-4 py-1 mr-2">
-                            2
-                          </span>
+                <!-- Cancelled Tab -->
+                <div class="tab-pane fade" id="pills-cancelled" role="tabpanel" aria-labelledby="pills-cancelled-tab">
+                  <h5 class="text-dark font-500 mb-4 w-100">
+                    Cancelled
+                  </h5>
+                  <div class="my_order_crd_main">
+                    <div class="best_sellers_prdct_on_det_pg_list">
+                      <div class="d-flex float-left pl-0">
+                        <div class="best_sellers_prdct_on_det_pg_list_img">
+                          <img class="img-fluid" src="../../../../assets/images/product_list_img.png">
                         </div>
                       </div>
-                    </div>
-                    <div class="d-inline-block text-right w-25 float-right pl-3 justify-content-end">
-                      <span class="font-600 font-20 text-dark price_fnl mr-1 d-block mb-5">
-                        ₹500.0
-                      </span>
-                      <a href="#" class="btn-theme-border w-100 text-center px-0 font-500 d-inline-block py-3">
-                        Cancel Order
-                      </a>
-                    </div>
-                    <div class="d-inline-block w-100 pt-4 order_track_sec_my_order">
-                      <div class="row">
-                        <div class="hh-grayBox">
-                          <div class="row justify-content-between">
-                            <div class="order-tracking completed">
-                              <span class="is-complete"></span>
-                              <p>
-                                <span class="font-500 text-dark mb-2">Order Recieved</span>
-                                <br>
-                                <span class="mt-2 d-block font-14 text-gray">10:30 PM 20th October, 2020</span>
-                              </p>
-                            </div>
-                            <div class="order-tracking completed">
-                              <span class="is-complete"></span>
-                              <p>
-                                <span class="font-500 text-dark mb-2">Order Packed</span>
-                                <br>
-                                <span class="mt-2 d-block font-14 text-gray">10:30 PM 20th October, 2020</span>
-                              </p>
-                            </div>
-                            <div class="order-tracking completed">
-                              <span class="is-complete"></span>
-                              <p>
-                                <span class="font-500 text-dark mb-2">Order Shipped</span>
-                                <br>
-                                <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span>
-                              </p>
-                            </div>
-                            <div class="order-tracking completed">
-                              <span class="is-complete"></span>
-                              <p>
-                                <span class="font-500 text-dark mb-2">Shipment Has Arrived At Chandigarh
-                                  Facility</span>
-                                <br>
-                                <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span>
-                              </p>
-                            </div>
-                            <div class="order-tracking">
-                              <span class="is-complete"></span>
-                              <p>
-                                <span class="font-500 text-dark mb-2">Shipment Has Arrived At Mumbai
-                                  Facility</span>
-                                <br>
-                                <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
-                              </p>
-                            </div>
-                            <div class="order-tracking">
-                              <span class="is-complete"></span>
-                              <p>
-                                <span class="font-500 text-dark mb-2">Order Out for Delivery</span>
-                                <br>
-                                <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
-                              </p>
-                            </div>
-                            <div class="order-tracking">
-                              <span class="is-complete"></span>
-                              <p>
-                                <span class="font-500 text-dark mb-2">Order Delivered</span>
-                                <br>
-                                <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
-                              </p>
+                      <div class="d-flex w-50 float-left pl-3">
+                        <div class="prdct_sec_list_crd_mn_content p-0 w-100 d-inline-block">
+                          <h5 class="prdct_list_title mb-3 w-75 font-500 text-dark">
+                            Velvet Long Gown
+                          </h5>
+                          <p class="prdct_list_sub_title text-gray mb-2 w-75">
+                            Nam tempus turpis at scelerisque in placerat
+                            turpis at scelerisque Nam tempus turpis at in placerat
+                          </p>
+                          <div class="prdct_list_price_det w-100 mb-4">
+                            <span class="badge_on_order float-left px-2 py-1 mr-2">
+                              Ordered
+                            </span>
+                            <a href="#" class="font-16 text-dark p-1 ml-2 d-flex text-decoration-none">
+                              View Order Details
+                              <span class="material-icons ml-0">chevron_right</span>
+                            </a>
+                          </div>
+                          <div class="w-100 mb-3 d-inline-block">
+                            <span class="badge_on_order text-gray float-left px-2 py-1 mr-2">
+                              Size:
+                            </span>
+                            <span class="float-left material_prdct_spn font-500 px-4 py-1 mr-2">
+                              S
+                            </span>
+                            <span class="badge_on_order text-gray float-left px-2 py-1 mr-2">
+                              Qty:
+                            </span>
+                            <span class="material_prdct_spn float-left font-500 px-4 py-1 mr-2">
+                              2
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="d-inline-block text-right w-25 float-right pl-3 justify-content-end">
+                        <span class="font-600 font-20 text-dark price_fnl mr-1 d-block mb-5">
+                          ₹500.0
+                        </span>
+                        <a href="#" class="btn-theme-border w-100 text-center px-0 font-500 d-inline-block py-3">
+                          Cancel Order
+                        </a>
+                      </div>
+                      <div class="d-inline-block w-100 pt-4 order_track_sec_my_order">
+                        <div class="row">
+                          <div class="hh-grayBox">
+                            <div class="row justify-content-between">
+                              <div class="order-tracking completed">
+                                <span class="is-complete"></span>
+                                <p>
+                                  <span class="font-500 text-dark mb-2">Order Recieved</span>
+                                  <br>
+                                  <span class="mt-2 d-block font-14 text-gray">10:30 PM 20th October, 2020</span>
+                                </p>
+                              </div>
+                              <div class="order-tracking completed">
+                                <span class="is-complete"></span>
+                                <p>
+                                  <span class="font-500 text-dark mb-2">Order Packed</span>
+                                  <br>
+                                  <span class="mt-2 d-block font-14 text-gray">10:30 PM 20th October, 2020</span>
+                                </p>
+                              </div>
+                              <div class="order-tracking completed">
+                                <span class="is-complete"></span>
+                                <p>
+                                  <span class="font-500 text-dark mb-2">Order Shipped</span>
+                                  <br>
+                                  <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span>
+                                </p>
+                              </div>
+                              <div class="order-tracking completed">
+                                <span class="is-complete"></span>
+                                <p>
+                                  <span class="font-500 text-dark mb-2">Shipment Has Arrived At Chandigarh
+                                    Facility</span>
+                                  <br>
+                                  <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span>
+                                </p>
+                              </div>
+                              <div class="order-tracking">
+                                <span class="is-complete"></span>
+                                <p>
+                                  <span class="font-500 text-dark mb-2">Shipment Has Arrived At Mumbai
+                                    Facility</span>
+                                  <br>
+                                  <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
+                                </p>
+                              </div>
+                              <div class="order-tracking">
+                                <span class="is-complete"></span>
+                                <p>
+                                  <span class="font-500 text-dark mb-2">Order Out for Delivery</span>
+                                  <br>
+                                  <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
+                                </p>
+                              </div>
+                              <div class="order-tracking">
+                                <span class="is-complete"></span>
+                                <p>
+                                  <span class="font-500 text-dark mb-2">Order Delivered</span>
+                                  <br>
+                                  <!-- <span class="mt-2 d-block font-14 text-gray">Fri, June 28</span> -->
+                                </p>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -1012,18 +1182,12 @@
                     </div>
                   </div>
                 </div>
-              </div>
-
-
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-</div>
 
 
 
-<!-- Profile section End -->
+
+
+
+
+
+                <!-- Profile section End -->
