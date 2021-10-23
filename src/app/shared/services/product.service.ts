@@ -38,7 +38,7 @@ if(filters){
       console.log("color:"+colorId);
       query.where.and.push({
         "colorId": {
-          "in" : [colorId]
+          "in" : colorId
         }
         })
     }
@@ -46,7 +46,7 @@ if(filters){
       console.log("brand:"+brandId);
       query.where.and.push({
         "brandId": {
-          "in" : [brandId]
+          "in" : brandId
         }
         })
     }
@@ -77,7 +77,7 @@ if(filters){
       console.log("size:"+size);
       query.where.and.push({
         "size": {
-          "in" : [size]
+          "in" : size
         }
         })
     }

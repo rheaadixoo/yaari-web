@@ -177,36 +177,37 @@ export class ProductDetailComponent implements OnInit {
     })
     if (this.productKey) {
       this.productService.getGroupedProducts(this.productKey).subscribe((res: any[]) => {
+        console.log(this.productKey);
         this.products = res;
         console.log(this.products);
         console.log(typeof (this.products));
         // console.log(this.products['1'][0]['id']);
 
 
-        this.products = this.products[1];
+        // this.products = this.products[1];
         console.log(this.products.length);
-        for (let index = 0; index < this.products.length; index++) {
+        for (let index = 0; index < this.products[this.productKey].length; index++) {
 
-          if (this.products[index]['id'] == this.productId) {
+          if (this.products[this.productKey][index]['id'] == this.productId) {
 
             this.selectedProductIndex = index;
             console.log(this.selectedProductIndex);
           }
-          if (this.products[index]['color']) {
+          if (this.products[this.productKey][index]['color']) {
             this.colors.push({
               index,
-              hex: this.products[index]['color']['hex'],
-              name: this.products[index]['color']['name']
+              hex: this.products[this.productKey][index]['color']['hex'],
+              name: this.products[this.productKey][index]['color']['name']
             })
           }
-          if (this.products[index]['size']) {
+          if (this.products[this.productKey][index]['size']) {
             this.size.push({
               index,
-              size: this.products[index]['size']
+              size: this.products[this.productKey][index]['size']
             })
           }
         }
-        this.productObj = this.products[this.selectedProductIndex];
+        this.productObj = this.products[this.productKey][this.selectedProductIndex];
         console.log(this.productObj);
         this.productThumbImage = this.productObj.thumbImages
         console.log(this.productThumbImage);

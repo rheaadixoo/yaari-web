@@ -28,9 +28,13 @@ export class MyOrdersComponent implements OnInit {
   public modalRef: NgbModalRef;
   public reason = "0";
   //  page = 4;
-  TotalLength: any;
-  p: number = 1;
+  // TotalLength: any;
+  // p: number = 1;
 
+  public productCount:number=5;
+  public allProducts:any=[];
+ public order:any=[];
+public activities:any=[];
   cancelOrderForm = new FormGroup({
     reason: new FormControl('Select the reason for cancel order'),
     text: new FormControl('')
@@ -42,7 +46,8 @@ export class MyOrdersComponent implements OnInit {
     , private router: Router, private modalService: NgbModal,private pageloader:PageLoaderService) { }
 
   ngOnInit(): void {
-    this.getUserOrders();
+    // this.getUserOrders();
+       this.getAllProducts();
     // this.showtext();
   }
   // document.getElementById("try").onclick="showtext()"
@@ -56,7 +61,8 @@ export class MyOrdersComponent implements OnInit {
     this.orderService.cancelOrder(item.id,payload).subscribe(resp=>{
       console.log(resp);
       this.closeModal();
-      this.getUserOrders();
+      // this.getUserOrders();
+      // this.getAllProducts();
     })
 
   }
@@ -88,21 +94,63 @@ export class MyOrdersComponent implements OnInit {
     return JSON.parse(this.localStorageService.get('user-detail'));
   }
 
-  getUserOrders() {
+  // getUserOrders() {
 
-    this.pageloader.startLoading();
-    setTimeout(()=>{this.orderService.getOrders(this.userData.id).subscribe((res: any[]) => {
-      this.pageloader.stopLoading();
+  //   this.pageloader.startLoading();
+  //   setTimeout(()=>{this.orderService.getOrders(this.userData.id).subscribe((res: any[]) => {
+  //     console.log("getUserOrders method called");
+  //     this.pageloader.stopLoading();
+  //     this.myOrders = res;
+  //     this.getAllProducts(this.myOrders);
+
+  //     console.log(this.myOrders);
+     
+  //     // //GET —-> /delhiveries/track-order/{orderId}
+  //     // POST ——> /delhiveries/cancel-order/{orderId}
+  //     // console.log(this.data);
+  //   })
+  // },1000);
+  
+  
+  // }
+
+  getAllProducts(){
+    this.orderService.getOrders(this.userData.id).subscribe((res: any[]) => {
+     
+      // this.pageloader.stopLoading();
       this.myOrders = res;
-
-
       console.log(this.myOrders);
+      
+      // this.allOrders=this.myOrders;
+      for(let i=0;i<this.myOrders.length;i++){
+        this.order.push(this.myOrders[i].activities);
+        console.log(this.order)
+        
+        
+        for(let j=0;j< this.myOrders[i].cartDetails.length;j++){
+          this.allProducts.push(this.myOrders[i].cartDetails[j]);
+        }
+       
+      }
+      for(let k=0;k<this.order.length;k++){
+        let activity=this.order[k];
+         for(let l=0;l<2;l++){
+           this.activities.push(activity[l]);
+         }   
+  }
+
+  // this.activities.push(this.order.activity);
+      console.log(this.activities);
+      
      
       // //GET —-> /delhiveries/track-order/{orderId}
       // POST ——> /delhiveries/cancel-order/{orderId}
       // console.log(this.data);
     })
-  },1000);
+    
+
+    
+    console.log(this.allProducts);
   }
 
   cancelProductOrder(item) {
@@ -110,12 +158,20 @@ export class MyOrdersComponent implements OnInit {
     //   console.log("resp", resp);
     //   console.log(item);
       // this.show=true;
-      this.getUserOrders();
+      // this.getUserOrders();
       this.modalRef = this.modalService.open(this.modal, { windowClass: 'orderSummary', centered: true, keyboard: false });
       console.log(this.show);
       // this.showtext();
       // this.router.navigate(['app/cancelOrder']);
     // })
+  }
+
+  viewMore() {
+    this.productCount += 5; 
+  }
+
+  viewLess(){
+    
   }
 
 }
