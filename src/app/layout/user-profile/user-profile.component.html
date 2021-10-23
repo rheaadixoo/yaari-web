@@ -46,7 +46,7 @@
                 <nav aria-label="breadcrumb" class="d-flex justify-content-center">
                     <ol class="breadcrumb mb-0 bg-transparent">
                         <li class="breadcrumb-item">
-                            <a href="javascript:void(0)" class="text-gray font-400 text-font-18">Account</a>
+                            <a href="javascript:void(0)" [routerLink]="['/home']" class="text-gray font-400 text-font-18">Home</a>
                         </li>
                         <li class="breadcrumb-item active text-gray font-400 text-font-18" aria-current="page">
                             My Profile
@@ -156,7 +156,7 @@
                                     </div> -->
                                     <div class="form-group col-md-12 text-center px-3 mb-4">
                                         <button type="button" (click)="updateUser()" class="btn btn-theme font-18 py-3 px-5 mt-2"
-                                            [disabled]="!(userForm.valid && userForm.dirty)">Save</button>
+                                            [disabled]="!userForm.valid">Save</button>
                                     </div>
                                 </div>
                             </form>

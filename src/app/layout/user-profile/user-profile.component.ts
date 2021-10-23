@@ -149,7 +149,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   removeProfile(){
-    console.log("remove profile");
+    this.pageLoaderService.startLoading()
     this.imgUrl=this.defaultImg
     let payload={
       profileImage:this.defaultImg
@@ -158,6 +158,7 @@ export class UserProfileComponent implements OnInit {
         this.toastr.success("Profile have been removed")
         this.removeProfilebtn=true
         this.share.setimageAddress();
+        this.pageLoaderService.stopLoading()
     })
   }
 
@@ -193,7 +194,6 @@ export class UserProfileComponent implements OnInit {
             this.removeProfilebtn=false
           }
           this.share.setimageAddress(this.userObj.id,payload.profileImage)
-          window.open('/app/profile','_parent')
 
         }, err => {
           this.toastr.error(err, "Address");
@@ -208,7 +208,6 @@ export class UserProfileComponent implements OnInit {
             this.removeProfilebtn=false
           }
           this.share.setimageAddress(this.userObj.id,payload.profileImage)
-          window.open('/app/profile','_parent')
         }, err => {
           this.toastr.error(err, "Address");
         })
