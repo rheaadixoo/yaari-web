@@ -123,7 +123,7 @@ public filters : any;
     this.pageLoaderService.startLoading();    
 
       this.productService.getProductsList(this.subCatId,this.colorIds,this.brandIds,this.priceIds,this.discountIds,this.size,this.filters).subscribe((response:[]) => {
-        
+        console.log(response);
         if(response){
           this.productIds = Object.keys(response)
           this.products = response;
@@ -187,7 +187,15 @@ public filters : any;
   }
 
   showProductDetailView(id,productId) {
-    this.router.navigateByUrl(`app/products/detail/${id}/${productId}`)
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree([`app/products/detail/${id}/${productId}`])
+    );
+  
+    window.open(url, '_blank');
+    // console.log(productId);
+    // console.log(id);
+    // console.log(productId)
+    // this.router.navigateByUrl(`app/products/detail/${id}/${productId}`)
   }
 
   sortProductList(type) {

@@ -38,7 +38,7 @@ if(filters){
       console.log("color:"+colorId);
       query.where.and.push({
         "colorId": {
-          "in" : [colorId]
+          "in" : colorId
         }
         })
     }
@@ -46,7 +46,7 @@ if(filters){
       console.log("brand:"+brandId);
       query.where.and.push({
         "brandId": {
-          "in" : [brandId]
+          "in" : brandId
         }
         })
     }
@@ -77,7 +77,7 @@ if(filters){
       console.log("size:"+size);
       query.where.and.push({
         "size": {
-          "in" : [size]
+          "in" : size
         }
         })
     }
@@ -103,7 +103,7 @@ if(filters){
       where : {
         productId
       },
-      include: [{ "all": true }],
+       include: [{ "all": true }],
     }
     const options = {
       params : new HttpParams().append('filter',JSON.stringify(query))
@@ -172,6 +172,7 @@ if(filters){
         .append("filter", filter)
     };
     return this.http.get(this.apiUrl + 'products/grouped', options).pipe(map(response => {
+     
       return response;
     }))
   }

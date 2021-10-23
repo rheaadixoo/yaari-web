@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ShareDataService } from 'src/app/shared/services/share-data.service'
 import { PincodeService } from 'src/app/shared/services/pincode.service';
 import { PageLoaderService } from 'src/app/shared/page-loader/page-loader.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'yaari-user-profile',
@@ -27,7 +28,8 @@ export class UserProfileComponent implements OnInit {
     private userService: UserProfileService, private addressService: AddressService,
     private service : PincodeService,
     private share:ShareDataService,
-    private pageLoaderService: PageLoaderService) { }
+    private pageLoaderService: PageLoaderService,
+    private router: Router) { }
 
   ngOnInit(): void {
 
@@ -89,6 +91,7 @@ export class UserProfileComponent implements OnInit {
     // this.addressService.getAddressByUserId(this.userData.id).subscribe((response: any[]) => {
      this.userService.getUserDetailsById(this.userData.id).subscribe((response)=>{
      if (response) {
+      this.pageLoaderService.stopLoading();
         this.userObj = response;
         console.log(this.userObj);
         this.imgUrl = this.userObj['profileImage'];
@@ -113,7 +116,7 @@ export class UserProfileComponent implements OnInit {
         else{
           this.removeProfilebtn=false
         }
-        this.pageLoaderService.stopLoading();
+       
       }
       else{
         if(this.imgUrl===this.defaultImg){
@@ -147,7 +150,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   removeProfile(){
-    console.log("remove profile");
+    this.pageLoaderService.startLoading()
     this.imgUrl=this.defaultImg
     let payload={
       profileImage:this.defaultImg
@@ -156,6 +159,7 @@ export class UserProfileComponent implements OnInit {
         this.toastr.success("Profile have been removed")
         this.removeProfilebtn=true
         this.share.setimageAddress();
+        this.pageLoaderService.stopLoading()
     })
   }
 

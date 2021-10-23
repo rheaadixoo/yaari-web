@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RegisterService } from '../shared/services/register.service';
 import { ToastrService } from 'ngx-toastr';
 import { ForgotPasswordService } from '../shared/services/forgot-password.service';
@@ -24,7 +24,7 @@ export class RegisterComponent implements OnInit {
   public contactNo:any
   public defaultImg="https://res.cloudinary.com/adixoo-com/image/upload/v1634230303/fwyhme0rbiqvtnr3tmt7.jpg"
 
-  public otpForm: boolean = true;
+  public otpForm: boolean=true;
   public otpBtn: boolean = true;
   public showResendOtp=false;
   public timerOn = true;
@@ -37,12 +37,21 @@ export class RegisterComponent implements OnInit {
     private registerService: RegisterService,
     private router: Router, private toastr: ToastrService,
     private forgetpassword: ForgotPasswordService,
-    private userProfileUpdate:UserProfileService
+    private userProfileUpdate:UserProfileService,
+    private activeRoute:ActivatedRoute
     ) { }
 
   ngOnInit(): void {
     // this.buildRegistrationForm();
     this.buildGenerateOtpForm();
+    const otp=this.activeRoute.snapshot.queryParams.Otp
+    if(otp === 'true'){
+      this.otpForm=true
+    }
+    else{
+      // this.otpForm=false
+      this.router.navigateByUrl('/register?Otp=true')
+    }
   }
 
   buildRegistrationForm() {
@@ -258,7 +267,6 @@ export class RegisterComponent implements OnInit {
           this.otpForm = false
           this.contactNo=this.generateOtpForm.value.mobile;
           this.buildRegistrationForm();
-          console.log(this.contactNo)
         }
         else{
           this.toastr.error('Incorrect Otp');

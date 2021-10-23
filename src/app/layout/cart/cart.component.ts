@@ -6,6 +6,7 @@ import { WishlistService } from 'src/app/shared/services/wishlist.service.js';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 import { ToastrService } from 'ngx-toastr';
 import { ShareDataService } from 'src/app/shared/services/share-data.service';
+import { PageLoaderService } from 'src/app/shared/page-loader/page-loader.service';
 
 @Component({
   selector: 'app-cart',
@@ -23,13 +24,15 @@ export class CartComponent implements OnInit {
   public deliveryCharges : any = 0;
   constructor(private cartService: CartService, private cookie: CookieService, private router: Router,
     private toastr: ToastrService, private wishlistService: WishlistService,
-    private localStorageService: LocalStorageService,private share:ShareDataService) { }
+    private localStorageService: LocalStorageService,private share:ShareDataService,
+    private pageLoaderService: PageLoaderService) { }
 
   ngOnInit(): void {
     this.getCartDetail();
   }
 
   getCartDetail() {
+    this.pageLoaderService.startLoading();
     if (this.cookie.get('cart')) {
       this.cartObj = JSON.parse(this.cookie.get('cart'));
       this.cartService.getCart(this.cartObj.id).subscribe((res: any[]) => {
@@ -41,6 +44,7 @@ export class CartComponent implements OnInit {
         this.totalQuantity = 0;
         this.totalPrice = 0;
         this.setTotalAmount();
+      this.pageLoaderService.stopLoading();
       })
     }
   }
@@ -115,10 +119,13 @@ export class CartComponent implements OnInit {
   }
 
   removeProductFromCart(id) {
+
+    this.pageLoaderService.startLoading();
     this.cartService.deleteCartDetail(id).subscribe(res => {
       console.log("-success-- remove product");
       this.getCartDetail();
       this.share.setCartCount();
+      this.pageLoaderService.stopLoading();
     }, error => {
       console.log("error remove product", error);
     })

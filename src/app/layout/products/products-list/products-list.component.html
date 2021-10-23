@@ -123,6 +123,7 @@
                     </select>
                 </div>
 
+               
                 <div class="row w-100 mx-0" *ngIf="productIds.length > 0">
                     <ng-container *ngFor="let productId of productIds">
                         <div class="col-lg-4 col-md-6 my-3">
@@ -189,6 +190,7 @@
                         </div>
                     </ng-container>
                 </div>
+               
             </div>
             <div class="col-lg-9 col-md-9 px-4  prdct_sec_main_col_9" *ngIf="productIds && productIds.length === 0">
                 <h1 class="prdct_list_sub_title text-gray mb-3">
