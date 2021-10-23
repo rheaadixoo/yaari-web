@@ -176,6 +176,7 @@ export class ProductDetailComponent implements OnInit {
         }
     })
     if (this.productKey) {
+      this.pageLoaderService.startLoading();
       this.productService.getGroupedProducts(this.productKey).subscribe((res: any[]) => {
         console.log(this.productKey);
         this.products = res;
@@ -476,8 +477,7 @@ export class ProductDetailComponent implements OnInit {
 
   openInDetailView(item) {
     console.log(item);
-    this.router.navigate([`app/products/detail/${item.id}`]);
-    console.log(item);
+    this.router.navigate([`app/products/detail/${item.id}/${item.productId}`]);
   }
 
   get productImage() {

@@ -137,7 +137,7 @@ export class HeaderComponent implements OnInit,AfterViewInit
   }
 
   onChange(product) {
-    console.log(product);
+    console.log("Onchange"+product);
     if (product) {
       this.router.navigateByUrl(`app/products/detail/${product.id}/${product.productId}`);
     }
